@@ -1,5 +1,4 @@
 ``` mermaid
-```
   gantt
     dateFormat  YYYY-MM-DD
     title OceanAware - Development Schedule
