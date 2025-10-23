@@ -77,7 +77,7 @@ flowchart TD
         J5[/figs/map_tourism_mockup.png/]
     end
     
-gantt
+```gantt
     dateFormat  YYYY-MM-DD
     title OceanAware - Project Roadmap
 
@@ -96,4 +96,5 @@ gantt
     section Documentation
     README & Report (Quarto)      :         des7, 2025-11-17, 2025-11-22
     Final Presentation            :         des8, 2025-11-22, 2025-11-25
+```
 
