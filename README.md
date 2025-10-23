@@ -19,7 +19,7 @@ L’utilisateur pourra filtrer :
 
 Cette carte interactive sera accompagnée d’une légende intuitive et d’un design orienté “exploration” :
 - dégradé de couleurs pour la température de surface,
-- icônes d’espèces stylisées (🐬 🐢 🐠),
+- icônes ou photos d’espèces (🐬 🐢 🐠),
 - info-bulles avec conseils touristiques.
 
 ---
@@ -49,54 +49,4 @@ OceanAware rend la science accessible et utile aux voyageurs en valorisant :
 
 L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la donnée ouverte pour encourager la découverte et la protection du milieu marin.
 
-###Diagramme de gantt
-```{mermaid}
-flowchart TD
-    A[User Interface 🌐] --> B[Interactive Map 🗺️]
-    B --> C[Frontend - Quarto HTML JS]
-    C --> D[Backend - Python Flask]
-
-    D --> E[Data Processing Pipeline]
-    E --> F1[OBIS API 🐠 - Marine species]
-    E --> F2[Copernicus API 🌊 - Ocean data]
-    E --> F3[Open Meteo API ☀️ - Weather data]
-
-    F1 --> G[Data Integration and Cleaning]
-    F2 --> G
-    F3 --> G
-
-    G --> H[Processed Data Storage]
-    H --> I[Visualization Engine - Plotly Folium]
-    I --> B
-
-    subgraph Project Structure
-        J1[/main.py/]
-        J2[/data_pipeline.py/]
-        J3[/visualization.py/]
-        J4[/roadmap/README.qmd/]
-        J5[/figs/mockup_map.png/]
-    end
-```
-
-    
-```gantt
-    dateFormat  YYYY-MM-DD
-    title OceanAware - Project Roadmap
-
-    section Data Collection
-    OBIS Data Exploration         :done,    des1, 2025-10-10, 2025-10-15
-    Copernicus / Open-Meteo Setup :active,  des2, 2025-10-15, 2025-10-22
-
-    section Data Processing
-    Data Cleaning & Integration   :         des3, 2025-10-22, 2025-10-28
-    Pipeline Automation (Python)  :         des4, 2025-10-28, 2025-11-03
-
-    section Visualization
-    Interactive Map Prototype     :         des5, 2025-11-03, 2025-11-10
-    UI Design & Filters           :         des6, 2025-11-10, 2025-11-17
-
-    section Documentation
-    README & Report (Quarto)      :         des7, 2025-11-17, 2025-11-22
-    Final Presentation            :         des8, 2025-11-22, 2025-11-25
-```
 
