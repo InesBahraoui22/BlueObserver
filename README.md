@@ -50,7 +50,7 @@ OceanAware rend la science accessible et utile aux voyageurs en valorisant :
 L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la donnée ouverte pour encourager la découverte et la protection du milieu marin.
 
 ###Diagramme de gantt
-```{mermaid}
+```mermaid
 flowchart TD
     A[User Interface 🌐] --> B[Interactive Map 🗺️]
     B --> C[Frontend (Quarto / HTML / JS)]
@@ -76,6 +76,7 @@ flowchart TD
         J4[/roadmap/README.qmd/]
         J5[/figs/map_tourism_mockup.png/]
     end
+```
     
 ```gantt
     dateFormat  YYYY-MM-DD
