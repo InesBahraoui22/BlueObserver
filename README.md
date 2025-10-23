@@ -1,5 +1,5 @@
 # OceanAware
-Description :
+
 ## Figure of interest & Narration
 
 Notre figure d’intérêt principale est une **carte interactive touristique des océans**, combinant données de biodiversité marine (OBIS), conditions environnementales (Copernicus) et météo locale (Open-Meteo).  
@@ -39,9 +39,8 @@ Cette carte interactive sera accompagnée d’une légende intuitive et d’un d
 
 ---
 
-### Narration générale
-
-Cette figure raconte **une histoire positive de la rencontre entre tourisme durable et données scientifiques**.  
+### Idée générale
+  
 OceanAware rend la science accessible et utile aux voyageurs en valorisant :
 - la **diversité marine** (OBIS),  
 - la **qualité environnementale** (Copernicus),  
@@ -49,4 +48,6 @@ OceanAware rend la science accessible et utile aux voyageurs en valorisant :
 
 L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la donnée ouverte pour encourager la découverte et la protection du milieu marin.
 
+## Packages/software description for the project
 
+## Dataset choices / Download / Description
