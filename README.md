@@ -50,33 +50,34 @@ OceanAware rend la science accessible et utile aux voyageurs en valorisant :
 L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la donnée ouverte pour encourager la découverte et la protection du milieu marin.
 
 ###Diagramme de gantt
-```mermaid
+```{mermaid}
 flowchart TD
     A[User Interface 🌐] --> B[Interactive Map 🗺️]
-    B --> C[Frontend (Quarto / HTML / JS)]
-    C --> D[Backend (Python / Flask)]
+    B --> C[Frontend - Quarto HTML JS]
+    C --> D[Backend - Python Flask]
 
     D --> E[Data Processing Pipeline]
-    E --> F1[OBIS API 🐠 - Marine species data]
-    E --> F2[Copernicus API 🌊 - Ocean conditions]
-    E --> F3[Open-Meteo API ☀️ - Weather data]
+    E --> F1[OBIS API 🐠 - Marine species]
+    E --> F2[Copernicus API 🌊 - Ocean data]
+    E --> F3[Open Meteo API ☀️ - Weather data]
 
-    F1 --> G[Data Integration & Cleaning (pandas / geopandas)]
+    F1 --> G[Data Integration and Cleaning]
     F2 --> G
     F3 --> G
 
-    G --> H[Database / Processed CSV files]
-    H --> I[Visualization Engine (plotly / folium)]
+    G --> H[Processed Data Storage]
+    H --> I[Visualization Engine - Plotly Folium]
     I --> B
 
-    subgraph "Project Structure"
+    subgraph Project Structure
         J1[/main.py/]
         J2[/data_pipeline.py/]
         J3[/visualization.py/]
         J4[/roadmap/README.qmd/]
-        J5[/figs/map_tourism_mockup.png/]
+        J5[/figs/mockup_map.png/]
     end
 ```
+
     
 ```gantt
     dateFormat  YYYY-MM-DD
