@@ -1,11 +1,11 @@
 flowchart TD
-    A[User Interface 🌐] --> B[Interactive Map 🗺️]
+    A[User Interface ] --> B[Interactive Map ]
     B --> C[Frontend - Quarto HTML JS]
     C --> D[Backend - Python Flask]
     D --> E[Data Pipeline - pandas geopandas]
-    E --> F1[OBIS API 🐠 - Marine species]
-    E --> F2[Copernicus API 🌊 - Ocean data]
-    E --> F3[Open Meteo API ☀️ - Weather data]
+    E --> F1[OBIS API  - Marine species]
+    E --> F2[Copernicus API  - Ocean data]
+    E --> F3[Open Meteo API  - Weather data]
     F1 --> G[Data Integration & Cleaning]
     F2 --> G
     F3 --> G
