@@ -19,8 +19,8 @@ Chaque point sur la carte représente une observation d’espèce marine, avec :
 - et un **lien d’information touristique** (spot de plongée, période recommandée, etc.).  
 
 L’utilisateur pourra filtrer :
-- une **espèce** ou un **groupe d’espèces** (ex. tortues, dauphins, poissons tropicaux),  
-- une **région** (ex. Méditerranée, Caraïbes, Atlantique Nord),  
+- une **espèce** ou un **groupe d’espèces** (ex.  dauphins, requin),  
+- une **région** (ex. Méditerranée, Atlantique Nord),  
 - une **période** (ex. été, hiver).  
 
 Cette carte interactive sera accompagnée d’une légende intuitive et d’un design orienté “exploration” :
