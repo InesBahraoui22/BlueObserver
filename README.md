@@ -65,5 +65,24 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 
 
 ## Packages/software description for the project
+Cette partie a pour but de vérifier que le projet est réalisable sur le plan technique. Elle présente les outils, les environnements et les bibliothèques nécessaires pour créer le site web interactif qui montre la répartition des mammifères marines à partir des données d’OBIS.
+
+
+
+Pour ce projet, plusieurs logiciels ont été choisis.
+
+Le langage Python servira à traiter et analyser les données, car il est à la fois simple et efficace pour le travail scientifique. le Traitement des données qui sont aussi lourdes. Le code sera développé dans Visual Studio Code (VS Code), un outil pratique qui facilite le travail en équipe.
+
+
+
+Le site web sera aussi créer avec du python pour  et CSS pour la mise en forme. Le site et le code seront gérés sur GitHub, ce qui permettra de travailler à plusieurs et de mettre le site en ligne facilement.
+
+
+
+Pour les bibliothèques Python, pandas sera utilisée pour nettoyer et organiser les données d’OBIS, copernicus et kaggle et numpy aidera à faire les calculs nécessaires.
+
+
+
+Grâce à ces outils, le projet sera bien structuré, les données seront traitées et notre site pourra être mis en ligne sans difficulté.
 
 ## Dataset choices / Download / Description
