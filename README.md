@@ -1,9 +1,9 @@
 # OceanAware
 
 ## Membres
-Chloé MOMONT
-Ines BAHRAOUI
-Aly 
+Chloé MOMONT/
+Ines BAHRAOUI/
+Aly /
 Oscar Bonnet
 
 ## Figure of interest & Narration
