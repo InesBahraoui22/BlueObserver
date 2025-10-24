@@ -72,6 +72,8 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 - implémenatation (1semaine) mise en commun/ même environnement...
 - création du site (4 jours) avec les onglets fonctionnels
 - rédaction des textes explicatifs
+- édition
+- relecture
 
 
 
