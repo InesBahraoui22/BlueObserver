@@ -1,7 +1,7 @@
 # Projet développement logiciel : BlueObserver
 
 ## Membres
-Chloé MOMONT  
+Chloé MONMONT  
 Ines BAHRAOUI 21901184  
 Aly DAHOUD  
 Oscar BONNET    
