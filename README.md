@@ -83,6 +83,9 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 
 
 ## Packages/software description for the project
+
+nympy/scipy/python/panda
+
 Cette partie a pour but de vérifier que le projet est réalisable sur le plan technique. Elle présente les outils, les environnements et les bibliothèques nécessaires pour créer le site web interactif qui montre la répartition des mammifères marines à partir des données d’OBIS.
 
 
