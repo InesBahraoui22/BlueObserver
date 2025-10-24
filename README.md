@@ -4,7 +4,7 @@
 Chloé MOMONT  
 Ines BAHRAOUI 21901184  
 Aly DAHOUD  
-Oscar Bonnet  
+Oscar BONNET    
 
 ## Nom du Projet
 blue_observer
