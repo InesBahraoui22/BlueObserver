@@ -4,7 +4,9 @@
 Chloé MONMONT  
 Ines BAHRAOUI 21901184  
 Aly DAHOUD  
-Oscar BONNET    
+Oscar BONNET
+
+Lien vers : https://www.canva.com/design/DAG2r11zahc/DXjEfuwUDvOmZ7Sz-p8m5Q/edit?utm_content=DAG2r11zahc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 ## Nom du Projet
 blue_observer
