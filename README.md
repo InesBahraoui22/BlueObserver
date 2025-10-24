@@ -1,10 +1,10 @@
 # Projet développement logiciel : BlueObserver
 
 ## Membres
-Chloé MOMONT//
-Ines BAHRAOUI 21901184//
-Aly DAHOUD //
-Oscar Bonnet
+Chloé MOMONT  
+Ines BAHRAOUI 21901184  
+Aly DAHOUD  
+Oscar Bonnet  
 
 ## Nom du Projet
 blue_observer
@@ -119,3 +119,5 @@ Plotly et Folium pour rendre les graphiques et cartes interactifs directement da
 
 
 ## Dataset choices / Download / Description
+
+### description des classes
