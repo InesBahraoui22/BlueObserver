@@ -1,4 +1,4 @@
-# Projet développement logiciel : OceanAware
+# Projet développement logiciel : BlueObserver
 
 ## Membres
 Chloé MOMONT/
@@ -7,7 +7,7 @@ Aly DAHOUD/
 Oscar Bonnet
 
 ## Nom du Projet
-OceanAware
+blue_observer
 
 ## Figure of interest & Narration
 
