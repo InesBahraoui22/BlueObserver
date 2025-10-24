@@ -60,7 +60,18 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 
 ## Task managing
 (un tableau avec les taches de chacun)
-
+ - nettoyage de données
+   - vérifier que les données temporelles sont cohérentes
+   - quel est le format des données temporelles : limite temporelle 
+   - matcher les coordonnées de la carte géographique : limite géographique
+   - données manquantes/valeurs abérrantes/ enlever les colonnes manquantes
+   - ajouter le nom vernaculaire (commun) des especes en anglais et francais
+   - transformer les points en moyennes mensuelles pour les points (meteo/especes)
+- programme de collaboration des données
+- définitions des zones géographiques / délimiter les continents et récupération du fond de carte
+- implémenatation (1semaine) mise en commun/ même environnement...
+- création du site (4 jours) avec les onglets fonctionnels
+- rédaction des textes explicatifs
 
 
 
