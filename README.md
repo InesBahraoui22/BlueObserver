@@ -86,38 +86,25 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 
 ## Packages/software description for the project
 
-numpy
-pandas
-scipy
-matplotlib
-seaborn
-geopandas
-shapely
-folium
-plotly
-flask
-jinja2
-streamlit
-dash
+Le langage **Python** servira à traiter et analyser les données, car il est à la fois simple et efficace pour le travail scientifique, y compris pour des **données lourdes**.  
+Le code sera développé dans **Visual Studio Code (VS Code)**.
 
+Nous utilisons un environnement **Python 3.10+** avec des packages spécifiques pour le traitement des données, l’analyse, et la création du site web interactif.
 
-Le langage Python servira à traiter et analyser les données, car il est à la fois simple et efficace pour le travail scientifique. le Traitement des données qui sont aussi lourdes. Le code sera développé dans Visual Studio Code (VS Code).
+### Manipulation et analyse des données
 
+- **numpy** : calculs numériques et traitement efficace des tableaux de données  
+- **pandas** : lecture des fichiers CSV, nettoyage, filtrage et agrégation des données  
+- **scipy** : analyses statistiques avancées  
+- **matplotlib** et **seaborn** : visualisation des données sous forme de graphiques et statistiques  
+- **geopandas** et **shapely** : gestion des données géographiques et manipulations de points ou polygones  
+- **folium** et **plotly** : création de cartes et visualisations interactives, intégrables au site
 
+### Création du site web
 
-Nous utilisons un environnement Python 3.10+ avec des packages spécifiques pour le traitement des données, l’analyse, et la création du site web interactif.
-Pour la manipulation et l’analyse des données, nous nous appuyons sur :
-numpy pour les calculs numériques et le traitement efficace des tableaux de données.
-pandas pour la lecture des fichiers CSV, le nettoyage, le filtrage et l’agrégation des données.
-scipy pour les analyses statistiques avancées.
-matplotlib et seaborn pour visualiser les données sous forme de graphiques et de statistiques.
-geopandas et shapely pour gérer les données géographiques et les manipulations de points ou polygones.
-folium et plotly pour créer des cartes et visualisations interactives, intégrables au site.
-Pour la création du site web, nous utilisons :
-Flask et Jinja2 pour construire un site web léger avec des templates HTML.
-Streamlit ou Dash pour créer un site interactif et des dashboards dynamiques.
-Plotly et Folium pour rendre les graphiques et cartes interactifs directement dans le site.
-
+- **Flask** et **Jinja2** : construction d’un site web léger avec templates HTML  
+- **Streamlit** ou **Dash** : création d’un site interactif et de dashboards dynamiques  
+- **Plotly** et **Folium** : intégration de graphiques et cartes interactives directement dans le site
 
 
 ## Dataset choices / Download / Description
