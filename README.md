@@ -17,7 +17,7 @@ L’objectif est de permettre aux utilisateurs — plongeurs, navigateurs, touri
 
 Chaque point sur la carte représente une observation d’espèce marine, avec :
 - le **nom de l’espèce** (ex. *Delphinus delphis* — dauphin commun),  
-- la **date d’observation**,  
+- la **période d’observation**,  
 - la **température et salinité** de l’eau à ce moment,  
 - et un **lien d’information touristique** (spot de plongée, période recommandée, etc.).  
 
