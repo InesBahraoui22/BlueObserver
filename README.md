@@ -1,10 +1,13 @@
-# OceanAware
+# Projet développement logiciel : OceanAware
 
 ## Membres
 Chloé MOMONT/
 Ines BAHRAOUI/
 Aly DAHOUD/
 Oscar Bonnet
+
+## Nom du Projet
+OceanAware
 
 ## Figure of interest & Narration
 
