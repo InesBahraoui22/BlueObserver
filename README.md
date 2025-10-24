@@ -98,24 +98,24 @@ jinja2
 streamlit
 dash
 
-Cette partie a pour but de vérifier que le projet est réalisable sur le plan technique. Elle présente les outils, les environnements et les bibliothèques nécessaires pour créer le site web interactif qui montre la répartition des mammifères marines à partir des données d’OBIS.
+
+Le langage Python servira à traiter et analyser les données, car il est à la fois simple et efficace pour le travail scientifique. le Traitement des données qui sont aussi lourdes. Le code sera développé dans Visual Studio Code (VS Code).
 
 
 
-Pour ce projet, plusieurs logiciels ont été choisis.
+Nous utilisons un environnement Python 3.10+ avec des packages spécifiques pour le traitement des données, l’analyse, et la création du site web interactif.
+Pour la manipulation et l’analyse des données, nous nous appuyons sur :
+numpy pour les calculs numériques et le traitement efficace des tableaux de données.
+pandas pour la lecture des fichiers CSV, le nettoyage, le filtrage et l’agrégation des données.
+scipy pour les analyses statistiques avancées.
+matplotlib et seaborn pour visualiser les données sous forme de graphiques et de statistiques.
+geopandas et shapely pour gérer les données géographiques et les manipulations de points ou polygones.
+folium et plotly pour créer des cartes et visualisations interactives, intégrables au site.
+Pour la création du site web, nous utilisons :
+Flask et Jinja2 pour construire un site web léger avec des templates HTML.
+Streamlit ou Dash pour créer un site interactif et des dashboards dynamiques.
+Plotly et Folium pour rendre les graphiques et cartes interactifs directement dans le site.
 
-Le langage Python servira à traiter et analyser les données, car il est à la fois simple et efficace pour le travail scientifique. le Traitement des données qui sont aussi lourdes. Le code sera développé dans Visual Studio Code (VS Code), un outil pratique qui facilite le travail en équipe.
 
-
-
-Le site web sera aussi créer avec du python pour  et CSS pour la mise en forme. Le site et le code seront gérés sur GitHub, ce qui permettra de travailler à plusieurs et de mettre le site en ligne facilement.
-
-
-
-Pour les bibliothèques Python, pandas sera utilisée pour nettoyer et organiser les données d’OBIS, copernicus et kaggle et numpy aidera à faire les calculs nécessaires.
-
-
-
-Grâce à ces outils, le projet sera bien structuré, les données seront traitées et notre site pourra être mis en ligne sans difficulté.
 
 ## Dataset choices / Download / Description
