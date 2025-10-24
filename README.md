@@ -19,7 +19,7 @@ L’utilisateur pourra filtrer :
 
 Cette carte interactive sera accompagnée d’une légende intuitive et d’un design orienté “exploration” :
 - dégradé de couleurs pour la température de surface,
-- icônes ou photos d’espèces (🐬 🐢 🐠),
+- photos d’espèces ,
 - info-bulles avec conseils touristiques.
 
 ---
