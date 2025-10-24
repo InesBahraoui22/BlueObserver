@@ -55,7 +55,7 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
  -entrée utilisateur
 
 ### Logo du site
-
+![Logo du projet](prototype_logo.jpg)
 
 ---
 
