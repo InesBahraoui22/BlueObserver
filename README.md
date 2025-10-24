@@ -3,7 +3,7 @@
 ## Membres
 Chloé MOMONT/
 Ines BAHRAOUI/
-Aly /
+Aly DAHOUD/
 Oscar Bonnet
 
 ## Figure of interest & Narration
