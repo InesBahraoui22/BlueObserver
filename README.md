@@ -54,38 +54,9 @@ OceanAware rend la science accessible et utile aux voyageurs en valorisant :
 
 L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la donnée ouverte pour encourager la découverte et la protection du milieu marin.
 
-## Architecture
-```
-OceanAware/
-│
-├── my_module_name/                  # Core Python module
-│   ├── __init__.py
-│   ├── data_pipeline.py             # Data extraction, cleaning, and merging
-│   ├── species_map.py               # Main class SpeciesMap for visualization
-│   ├── utils.py                     # Helper functions (API requests, caching, formatting)
-│   └── analysis.py                  # Optional module for ecological analysis / stats
-│
-├── roadmap/
-│   └── README.qmd                   # Project outline and Gantt chart
-│
-├── slide/
-│   └── OceanAware_slide.qmd         # Slide deck for the final oral presentation
-│
-├── figs/
-│   ├── mockup_interface.png         # Mockup of the interactive map
-│   └── data_flow_diagram.png        # Schema of data processing
-│
-├── tests/
-│   ├── test_data_pipeline.py
-│   └── test_species_map.py
-│
-├── .github/workflows/
-│   └── ci.yml                       # GitHub Actions for Continuous Integration
-│
-├── .gitignore
-├── requirements.txt
-└── README.md                        # Main project description (for GitHub)
-```
+## Task managing
+(un tableau avec les taches de chacun)
+
 
 
 
