@@ -80,7 +80,7 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 
 | Étape | Description | Exemple |
 |-------|--------------|----------|
-| 1️⃣ Input utilisateur | Période, espèce, localisation | "2023-2024", "loup", "Alpes" |
+| 1️⃣ Input utilisateur | Période, espèce, localisation | "2023-2024", "requin", "Atlantique" |
 | 2️⃣ Préparation | Validation et formatage | Conversion des dates |
 | 3️⃣ Chargement | Lecture du CSV et nettoyage | `pd.read_csv()` |
 | 4️⃣ Filtrage | Données selon critères | Espèce = loup |
