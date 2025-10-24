@@ -76,7 +76,17 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 - relecture
 
 ## Pipeline
-<pre> ```text 🧩 PIPELINE DU PROJET ┌───────────────────────────┐ │ 🧍‍ Utilisateur │ │ (période, espèce, lieu) │ └────────────┬──────────────┘ │ ▼ ┌───────────────────────────┐ │ 📥 Préparation des inputs │ │ - Validation │ │ - Formatage des dates │ └────────────┬──────────────┘ │ ▼ ┌───────────────────────────┐ │ 📊 Chargement du CSV │ │ - Lecture & nettoyage │ │ - Gestion des NaN │ └────────────┬──────────────┘ │ ▼ ┌───────────────────────────┐ │ 🔍 Filtrage des données │ │ - Période / Espèce / Lieu │ └────────────┬──────────────┘ │ ▼ ┌───────────────────────────┐ │ ⚙️ Analyse / Modèle ML │ │ - Stats / Agrégations │ │ - Prédictions éventuelles │ └────────────┬──────────────┘ │ ▼ ┌───────────────────────────┐ │ 📈 Sortie / Visualisation │ │ - Graphiques / Cartes │ │ - Export CSV / Tableau │ └───────────────────────────┘ ``` </pre>
+
+
+| Étape | Description | Exemple |
+|-------|--------------|----------|
+| 1️⃣ Input utilisateur | Période, espèce, localisation | "2023-2024", "loup", "Alpes" |
+| 2️⃣ Préparation | Validation et formatage | Conversion des dates |
+| 3️⃣ Chargement | Lecture du CSV et nettoyage | `pd.read_csv()` |
+| 4️⃣ Filtrage | Données selon critères | Espèce = loup |
+| 5️⃣ Analyse | Stats, modèles ML | Moyenne, prédiction |
+| 6️⃣ Sortie | Graphiques / export | Matplotlib, CSV |
+
 
 
 ## Packages/software description for the project
