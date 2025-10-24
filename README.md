@@ -1,5 +1,11 @@
 # OceanAware
 
+## Membres
+Chloé MOMONT
+Ines BAHRAOUI
+Aly 
+Oscar Bonnet
+
 ## Figure of interest & Narration
 
 Notre figure d’intérêt principale est une **carte interactive touristique des océans**, combinant données de biodiversité marine (OBIS), conditions environnementales (Copernicus) et météo locale (Open-Meteo).  
