@@ -38,13 +38,6 @@ Cette carte interactive sera accompagnée d’une légende intuitive et d’un d
 > La carte devient ainsi un **outil de planification de voyage écologique et éducatif**.
 
 ---
-
-### Exemple de visuel attendu
-
-![Carte touristique interactive des observations d’espèces marines](figs/map_tourism_mockup.png){width=80%}
-
----
-
 ### Idée générale
   
 OceanAware rend la science accessible et utile aux voyageurs en valorisant :
@@ -53,6 +46,14 @@ OceanAware rend la science accessible et utile aux voyageurs en valorisant :
 - et la **météo adaptée** aux activités marines (Open-Meteo).  
 
 L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la donnée ouverte pour encourager la découverte et la protection du milieu marin.
+
+### Exemple de visuel attendu
+
+
+### Logo du site
+
+
+---
 
 ## Task managing
 (un tableau avec les taches de chacun)
