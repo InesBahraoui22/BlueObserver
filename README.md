@@ -51,7 +51,8 @@ OceanAware rend la science accessible et utile aux voyageurs en valorisant :
 L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la donnée ouverte pour encourager la découverte et la protection du milieu marin.
 
 ### Exemple de visuel attendu
-
+ -menu déroulant pour le choix d'espèce
+ -entrée utilisateur
 
 ### Logo du site
 
@@ -76,7 +77,7 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 - relecture
 
 ## Pipeline
-
+ canva Aly
 
 
 
