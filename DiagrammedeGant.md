@@ -35,7 +35,7 @@ gantt
     section  Soutenance & préparation
     Préparation de l’oral :e1, after d4, 2d
 
-    Milestones
+    Phase 6: Milestones
     Deadline (livrable final) :milestone_deadline, milestone, 2025-12-10, 0d
     Oral (soutenance)         :milestone_oral, milestone, 2025-12-12, 0d
 ```
