@@ -95,39 +95,12 @@ https://www.canva.com/design/DAG20mu9XhQ/tUndsWOyFw9X-NQNDNyi1w/edit?ui=e30
 - Édition
 - Relecture
 
-gantt
-    title  Pipeline et Développement du Projet — Finalisé avec Deadline & Oral
-    dateFormat  YYYY-MM-DD
-    axisFormat  %d/%m
+Une première version de l'organisation du projet dans ses tâches et dans les temps nécessaires à les compléter a été réalisée dans un souci de simplicité structurelle et de facilité de lecture. La voici ci-dessous :
+<img width="1604" height="628" alt="image" src="https://github.com/user-attachments/assets/d9cc2d41-f517-4768-9fd7-de4f724c32d2" />
+Elle est aussi disponible dans le dossier sous sa version originale.
 
-    section Phase 1 - Préparation & Nettoyage
-    Nettoyage de données                                              :a1, 2025-10-24, 3d
-    Vérifier cohérence des données temporelles                        :a2, after a1, 2d
-    Identifier le format des données temporelles (limite temporelle)  :a3, after a2, 1d
-    Matcher les coordonnées géographiques (limite géographique)       :a4, after a3, 2d
-    Gérer données manquantes / valeurs aberrantes / colonnes inutiles :a5, after a4, 3d
-    Ajouter nom vernaculaire (FR/EN) des espèces                      :a6, after a5, 2d
-
-    section Phase 2 - Transformation & Analyse
-    Transformer les points en moyennes mensuelles (météo/espèces)     :b1, after a6, 3d
-    Programme de collaboration des données                            :b2, after b1, 2d
-    Définir zones géographiques / continents / fond de carte          :b3, after b2, 3d
-
-    section Phase 3 - Implémentation
-    Implémentation & mise en commun de l’environnement                :c1, after b3, 7d
-    Création du site (onglets fonctionnels)                           :c2, after c1, 4d
-
-    section Phase 4 - Finalisation & Tests
-    Rédaction des textes explicatifs                                  :d1, after c2, 3d
-    Tests & validation du site                                        :d2, after d1, 3d
-    Édition                                                           :d3, after d2, 2d
-    Relecture finale                                                  :d4, after d3, 2d
-
-    section Phase 5 - Soutenance
-    Préparation de l’oral                                             :e1, after d4, 2d
-
-
-
+Une seconde version a été proposée afin d'augmenter la granularité du graphique, et la précision des tâches, bien qu'on lui refère la première version pour la hiérarchisation et l'absence de codification superflue.
+<img width="1590" height="2165" alt="gantt Oscar" src="https://github.com/user-attachments/assets/f1cabde3-3c59-4d8d-ae88-fd2e30590268" />
 ## Pipeline
 
 Lien vers : https://www.canva.com/design/DAG2r11zahc/DXjEfuwUDvOmZ7Sz-p8m5Q/edit?utm_content=DAG2r11zahc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
