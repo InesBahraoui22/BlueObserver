@@ -52,7 +52,7 @@ BlueObserver rend la science accessible et utile aux voyageurs en valorisant :
 
 L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la donnée ouverte pour encourager la découverte et la protection du milieu marin.
 
-### Exemple de visuel attendu
+### Exemple de visuel attendu/Maquette du site
 
 <img width="2215" height="1256" alt="image" src="https://github.com/user-attachments/assets/3c319a23-5008-47a3-a43e-fcace7c18854" />
 
@@ -63,10 +63,9 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 <img width="2208" height="1252" alt="image" src="https://github.com/user-attachments/assets/42ef5783-4bad-49fc-9243-c6f8a09745cc" />
 
 <img width="2204" height="1252" alt="image" src="https://github.com/user-attachments/assets/7066eca4-f904-4492-baf5-d4edbc3be18f" />
- -menu déroulant pour le choix d'espèce
- -entrée utilisateur
 
-#### Maquette du site
+ -menu déroulant pour le choix d'espèce
+
 
 Suivre le lien ci-dessous :
 https://www.canva.com/design/DAG20mu9XhQ/tUndsWOyFw9X-NQNDNyi1w/edit?ui=e30
@@ -133,7 +132,9 @@ gantt
 
 Lien vers : https://www.canva.com/design/DAG2r11zahc/DXjEfuwUDvOmZ7Sz-p8m5Q/edit?utm_content=DAG2r11zahc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
-![Uploading image.png…]()
+<img width="930" height="719" alt="image" src="https://github.com/user-attachments/assets/595d06d4-2882-4221-b562-3858f8ea7b53" />
+
+
 
 ## Packages/software description for the project
 
