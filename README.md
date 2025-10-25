@@ -213,6 +213,8 @@ N'ayant pas réussi à ce jour à obtenir les plages de données temporelles et 
 ## Branches 
 
 Deux branches principales ont été créées pour organiser le travail :
-dev pour le développement et les tests du code,
-base_de_donnees pour la gestion et la structuration des données.
-D’autres branches pourront être ajoutées par la suite selon les besoins du projet (nouvelles fonctionnalités, intégration ou corrections).
+
+- **`dev`** : dédiée au développement et aux tests du code  
+- **`base_de_donnees`** : consacrée à la gestion et à la structuration des données  
+
+D’autres branches pourront être ajoutées par la suite selon les besoins du projet (par exemple pour de nouvelles fonctionnalités, l’intégration ou la correction de bugs).
