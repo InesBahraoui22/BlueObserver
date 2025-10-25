@@ -62,21 +62,23 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 ---
 
 ## Task managing
+
 (un tableau avec les taches de chacun)
- - nettoyage de données
-   - vérifier que les données temporelles sont cohérentes
-   - quel est le format des données temporelles : limite temporelle 
-   - matcher les coordonnées de la carte géographique : limite géographique
-   - données manquantes/valeurs abérrantes/ enlever les colonnes manquantes
-   - ajouter le nom vernaculaire (commun) des especes en anglais et francais
-   - transformer les points en moyennes mensuelles pour les points (meteo/especes)
-- programme de collaboration des données
-- définitions des zones géographiques / délimiter les continents et récupération du fond de carte
-- implémenatation (1semaine) mise en commun/ même environnement...
-- création du site (4 jours) avec les onglets fonctionnels
-- rédaction des textes explicatifs
-- édition
-- relecture
+
+ - Nettoyage de données
+   - Vérifier que les données temporelles sont cohérentes
+   - Quel est le format des données temporelles : limite temporelle 
+   - Matcher les coordonnées de la carte géographique : limite géographique
+   - Données manquantes/valeurs abérrantes/ enlever les colonnes manquantes
+   - Ajouter le nom vernaculaire (commun) des especes en anglais et francais
+   - Transformer les points en moyennes mensuelles pour les points (meteo/especes)
+- Programme de collaboration des données
+- Définitions des zones géographiques / délimiter les continents et récupération du fond de carte
+- Implémenatation (1semaine) mise en commun/ même environnement...
+- Création du site (4 jours) avec les onglets fonctionnels
+- Rédaction des textes explicatifs
+- Édition
+- Relecture
 
 ## Pipeline
 
@@ -107,18 +109,20 @@ Nous utilisons un environnement **Python 3.10+** avec des packages spécifiques 
 
 ## Dataset choices / Download / Description
 
-### description des classes
+### Description des classes
 
-Espèces et groupe d'espèces : 
+# Espèces et groupe d'espèces : OBIS 
 
-Tableau de données téléchargeable sur OBIS, en sélectionnant deux conditions de récupération : les données d'observation doivent datées de la période comprise entre 01/01/2000 et au plus proche, 25/10/2025. Elles doivent secondairement être restreinte à la zone géographique délimitée arbitrairement par le groupe de travail comme "l'Europe de l'Ouest". Soit : lon −25 → 45, lat 27 → 69.
+Tableau de données téléchargeable sur **OBIS**, en sélectionnant deux conditions de récupération : les données d'observation doivent datées de la **période comprise entre 01/01/2000 et au plus proche, 25/10/2025**. Elles doivent secondairement être restreinte à la zone géographique délimitée arbitrairement par le groupe de travail comme "les mers et océans de l'Europe occidentale". Soit : **lon −25 → 45, lat 27 → 69.**
 Cela inclut :
-
-tout l’Atlantique Nord-Est depuis les Açores et Madère jusqu’à la mer de Norvège,
-la mer du Nord, la mer Baltique,
-la mer Celtique, la mer d’Irlande,
-la mer Méditerranée occidentale et centrale (mais pas la Méditerranée orientale au-delà d’environ 45°E),
-pas l’Arctique profond, ni la mer de Barents entière, ni les zones groenlandaises.
+- tout l’Atlantique Nord-Est depuis les Açores et Madère jusqu’à la mer de Norvège,
+  - la mer du Nord, la mer Baltique,
+  - la mer Celtique, la mer d’Irlande,
+- la mer Méditerranée occidentale et centrale (mais pas la Méditerranée orientale au-delà d’environ 45°E).
+Cela excepte :
+- l’Arctique profond,
+- - la mer de Barents entière
+  - les zones groenlandaises.
 
 Fichiers individuels de chaque espèces, amenées à être restrustructurés et probablement rassemblés, après avoir produit des moyennes parmi plusieurs variables quantitatives.
 
