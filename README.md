@@ -105,7 +105,8 @@ Une seconde version a été proposée afin d'augmenter la granularité du graphi
 
 Lien vers : https://www.canva.com/design/DAG2r11zahc/DXjEfuwUDvOmZ7Sz-p8m5Q/edit?utm_content=DAG2r11zahc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
-<img width="930" height="719" alt="image" src="https://github.com/user-attachments/assets/595d06d4-2882-4221-b562-3858f8ea7b53" />
+<img width="884" height="714" alt="image" src="https://github.com/user-attachments/assets/e7b5d562-8e79-4d29-995c-d388516e5e01" />
+
 
 <img width="1458" height="779" alt="image" src="https://github.com/user-attachments/assets/ba4abe4e-2c50-41a2-ae91-1adac8ca10d4" />
 
