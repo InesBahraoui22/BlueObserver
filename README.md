@@ -38,14 +38,14 @@ Cette carte interactive sera accompagnée d’une légende intuitive et d’un d
 ### Exemple de scénario narratif
 
 > Un utilisateur choisit “dauphin” et “été” sur la carte.  
-> OceanAware lui montre les zones les plus favorables à son observation en mer, avec des températures entre 20 °C et 27 °C.  
+> BlueObserver lui montre les zones les plus favorables à son observation en mer, avec des températures entre 20 °C et 27 °C.  
 > Il découvre que la Méditerranée orientale est particulièrement propice à cette période.  
 > La carte devient ainsi un **outil de planification de voyage écologique et éducatif**.
 
 ---
 ### Idée générale
   
-OceanAware rend la science accessible et utile aux voyageurs en valorisant :
+BlueObserver rend la science accessible et utile aux voyageurs en valorisant :
 - la **diversité marine** (OBIS),  
 - la **qualité environnementale** (Copernicus),  
 - et la **météo adaptée** aux activités marines (Open-Meteo).  
