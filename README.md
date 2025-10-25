@@ -103,7 +103,6 @@ Nous utilisons un environnement **Python 3.10+** avec des packages spécifiques 
 ### Création du site web
 
 - **Flask** et **Jinja2** 
-- **Streamlit** ou **Dash** 
 - **Plotly** et **Folium** : intégration de graphiques et cartes interactives directement dans le site
 
 
