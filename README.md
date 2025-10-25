@@ -141,7 +141,7 @@ Les colonnes de chacun de ces fichiers, actuellement sous format tsv, sont les m
 - country	         → inutile, bientôt supprimée
 - depth	           → inutile, bientôt supprimée
 
-Le format est amené à évoluer pour prendre l'extension .csv ou .xlsx grâce au code qui est en cours de rédaction depuis que les contributeurs de ce projet ont appris qu'ils peuvent faire une telle manipulation.
+Le format est amené à évoluer pour prendre l'extension .csv ou .xlsx grâce au code qui est en cours de rédaction depuis que les contributeurs de ce projet ont appris qu'ils peuvent faire une telle manipulation. Le programme en question est le suivant : https://github.com/InesBahraoui22/BlueObserver/blob/base_de_donnees/Test_code_obis.py
 
 Les classes prévues sont espèces et groupes d'espèces, auxquelles seront associées :
 - nom espèce vernaculaire
@@ -156,6 +156,10 @@ Les longitudes et latitudes permettront de créer deux nouvelles variables : le 
 
 #### Données océanographiques : COPERNICUS
 
+Les paramètres climatologiques liées à l'océan qui nous permettront de jauger des périodes idéales (= hors tempêtes) pour observer les espèces sont trouvables sur COPERNICUS. Les paramètres retenues ont été choisis sur des critères de tolérance humaine et de règlementation navale. Très simplement, l'ulitisateur ne sera pas inviter à sortir lorsque l'eau est trop froide pour s'y baigner et/ou lorsque les vagues sont trop hautes pour naviguer ou se baigner.
+Ainsi les paramètres en question sont :
+- la température de surface
+- la hauteur significative des vagues
 
+- 
 
-### liste des branches
