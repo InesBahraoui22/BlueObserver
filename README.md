@@ -101,14 +101,14 @@ Elle est aussi disponible dans le dossier sous sa version originale.
 
 Une seconde version a été proposée afin d'augmenter la granularité du graphique, et la précision des tâches, bien qu'on lui refère la première version pour la hiérarchisation et l'absence de codification superflue.
 <img width="1590" height="2165" alt="gantt Oscar" src="https://github.com/user-attachments/assets/f1cabde3-3c59-4d8d-ae88-fd2e30590268" />
+
+<img width="1458" height="779" alt="image" src="https://github.com/user-attachments/assets/ba4abe4e-2c50-41a2-ae91-1adac8ca10d4" />
+
 ## Pipeline
 
 Lien vers : https://www.canva.com/design/DAG2r11zahc/DXjEfuwUDvOmZ7Sz-p8m5Q/edit?utm_content=DAG2r11zahc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 <img width="884" height="714" alt="image" src="https://github.com/user-attachments/assets/e7b5d562-8e79-4d29-995c-d388516e5e01" />
-
-
-<img width="1458" height="779" alt="image" src="https://github.com/user-attachments/assets/ba4abe4e-2c50-41a2-ae91-1adac8ca10d4" />
 
 
 ## Packages/software description for the project
