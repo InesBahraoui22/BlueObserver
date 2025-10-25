@@ -6,7 +6,7 @@ Ines BAHRAOUI 21901184
 Aly DAHOUD  
 Oscar BONNET
 
-Lien vers : https://www.canva.com/design/DAG2r11zahc/DXjEfuwUDvOmZ7Sz-p8m5Q/edit?utm_content=DAG2r11zahc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 
 ## Nom du Projet
 blue_observer
@@ -79,10 +79,8 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 - relecture
 
 ## Pipeline
- canva Aly
 
-
-
+Lien vers : https://www.canva.com/design/DAG2r11zahc/DXjEfuwUDvOmZ7Sz-p8m5Q/edit?utm_content=DAG2r11zahc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 ## Packages/software description for the project
 
@@ -110,4 +108,21 @@ Nous utilisons un environnement **Python 3.10+** avec des packages spécifiques 
 ## Dataset choices / Download / Description
 
 ### description des classes
+
+Espèces et groupe d'espèces : 
+
+Tableau de données téléchargeable sur OBIS, en sélectionnant deux conditions de récupération : les données d'observation doivent datées de la période comprise entre 01/01/2000 et au plus proche, 25/10/2025. Elles doivent secondairement être restreinte à la zone géographique délimitée arbitrairement par le groupe de travail comme "l'Europe de l'Ouest". Soit : lon −25 → 45, lat 27 → 69.
+Cela inclut :
+
+tout l’Atlantique Nord-Est depuis les Açores et Madère jusqu’à la mer de Norvège,
+la mer du Nord, la mer Baltique,
+la mer Celtique, la mer d’Irlande,
+la mer Méditerranée occidentale et centrale (mais pas la Méditerranée orientale au-delà d’environ 45°E),
+pas l’Arctique profond, ni la mer de Barents entière, ni les zones groenlandaises.
+
+Fichiers individuels de chaque espèces, amenées à être restrustructurés et probablement rassemblés, après avoir produit des moyennes parmi plusieurs variables quantitatives.
+
+Colonne de ces fichiers, actuellement sous format t
+
+
 ### liste des branches
