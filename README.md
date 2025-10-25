@@ -113,7 +113,8 @@ Nous utilisons un environnement **Python 3.10+** avec des packages spécifiques 
 
 #### Espèces et groupe d'espèces : OBIS 
 
-Tableau de données téléchargeable sur **OBIS**, en sélectionnant deux conditions de récupération : les données d'observation doivent datées de la **période comprise entre 01/01/2000 et au plus proche, 25/10/2025**. Elles doivent secondairement être restreinte à la zone géographique délimitée arbitrairement par le groupe de travail comme "les mers et océans de l'Europe occidentale". Soit : **lon −25 → 45, lat 27 → 69.**
+Les données compilant les localisations datées de chaque espèce retenue sont ordonnées dans des tableaux de données téléchargeables sur **OBIS**, en sélectionnant deux conditions de récupération : les données d'observation doivent datées de la **période comprise entre 01/01/2000 et au plus proche, 25/10/2025**. 
+Elles doivent secondairement être restreinte à la zone géographique délimitée arbitrairement par le groupe de travail comme "les mers et océans de l'Europe occidentale". Soit : **lon −25 → 45, lat 27 → 69.**
 Cela inclut :
 - tout l’Atlantique Nord-Est depuis les Açores et Madère jusqu’à la mer de Norvège,
   - la mer du Nord, la mer Baltique,
@@ -124,9 +125,38 @@ Cela excepte :
 - - la mer de Barents entière
   - les zones groenlandaises.
 
-Fichiers individuels de chaque espèces, amenées à être restrustructurés et probablement rassemblés, après avoir produit des moyennes parmi plusieurs variables quantitatives.
+Les colonnes de chacun de ces fichiers, actuellement sous format tsv, sont les mêmes pour tous les fichiers . Il y en a 15. La majorité de ces colonnes sont téléchargées automatiquement lorsqu'on n'utilise pas de code pour télécharger ces fichiers, et seront supprimées ultérieurement puisqu'elle ne sont ici pas utiles . On a au total :
+- scientificName → retenue et exploitée
+-	taxonRank      → inutile, bientôt supprimée
+- aphiaID          → inutile, bientôt supprimée
+- species          → inutile, bientôt supprimée
+- decimalLongitude → retenue et exploitée
+- decimalLatitude  → retenue et exploitée	
+- eventDate	       → retenue et exploitée, va être très utile par la suite
+- date_year	       → inutile, bientôt supprimée
+- basisOfRecord    → inutile, bientôt supprimée	
+- datasetID	       → inutile, bientôt supprimée
+- datasetName	   → inutile, bientôt supprimée
+- occurrenceID	   → inutile, bientôt supprimée
+- institutionCode  → inutile, bientôt supprimée	
+- country	       → inutile, bientôt supprimée
+- depth	           → inutile, bientôt supprimée
 
-Colonne de ces fichiers, actuellement sous format t
+Le format est amené à évoluer pour prendre l'extension .csv ou .xlsx grâce au code qui est en cours de rédaction depuis que les contributeurs de ce projet ont appris qu'ils peuvent faire une telle manipulation.
+
+Les classes prévues sont espèces et groupes d'espèces, auxquelles seront associées :
+- nom espèce vernaculaire
+- nom espèce scientifique
+- longitude
+- latitude
+- date d'observation, qui donnera deux sous-catégories
+  - mois d'observation
+  - saison d'observation
+ 
+Les longitudes et latitudes permettront de créer deux nouvelles variables : le pays et la région.
+
+#### Données océanographiques : COPERNICUS
+
 
 
 ### liste des branches
