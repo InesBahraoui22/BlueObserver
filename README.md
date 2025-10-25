@@ -102,8 +102,8 @@ Nous utilisons un environnement **Python 3.10+** avec des packages spécifiques 
 
 ### Création du site web
 
-- **Flask** et **Jinja2** : construction d’un site web léger avec templates HTML  
-- **Streamlit** ou **Dash** : création d’un site interactif et de dashboards dynamiques  
+- **Flask** et **Jinja2** 
+- **Streamlit** ou **Dash** 
 - **Plotly** et **Folium** : intégration de graphiques et cartes interactives directement dans le site
 
 
