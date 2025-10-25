@@ -53,6 +53,16 @@ OceanAware rend la science accessible et utile aux voyageurs en valorisant :
 L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la donnée ouverte pour encourager la découverte et la protection du milieu marin.
 
 ### Exemple de visuel attendu
+
+<img width="2215" height="1256" alt="image" src="https://github.com/user-attachments/assets/3c319a23-5008-47a3-a43e-fcace7c18854" />
+
+
+<img width="2208" height="1252" alt="image" src="https://github.com/user-attachments/assets/17957a88-38bb-43c7-8645-d2de015a5dad" />
+
+
+<img width="2208" height="1252" alt="image" src="https://github.com/user-attachments/assets/42ef5783-4bad-49fc-9243-c6f8a09745cc" />
+
+<img width="2204" height="1252" alt="image" src="https://github.com/user-attachments/assets/7066eca4-f904-4492-baf5-d4edbc3be18f" />
  -menu déroulant pour le choix d'espèce
  -entrée utilisateur
 
