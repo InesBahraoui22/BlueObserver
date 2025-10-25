@@ -70,6 +70,7 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 
 Suivre le lien ci-dessous :
 https://www.canva.com/design/DAG20mu9XhQ/tUndsWOyFw9X-NQNDNyi1w/edit?ui=e30
+<img width="930" height="719" alt="image" src="https://github.com/user-attachments/assets/595d06d4-2882-4221-b562-3858f8ea7b53" />
 
 ### Logo du site
 ![Logo du projet](prototype_logo.jpg)
@@ -95,9 +96,13 @@ https://www.canva.com/design/DAG20mu9XhQ/tUndsWOyFw9X-NQNDNyi1w/edit?ui=e30
 - Édition
 - Relecture
 
+
+
 ## Pipeline
 
 Lien vers : https://www.canva.com/design/DAG2r11zahc/DXjEfuwUDvOmZ7Sz-p8m5Q/edit?utm_content=DAG2r11zahc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
+![Uploading image.png…]()
 
 ## Packages/software description for the project
 
