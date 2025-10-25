@@ -111,7 +111,7 @@ Nous utilisons un environnement **Python 3.10+** avec des packages spécifiques 
 
 ### Description des classes
 
-# Espèces et groupe d'espèces : OBIS 
+#### Espèces et groupe d'espèces : OBIS 
 
 Tableau de données téléchargeable sur **OBIS**, en sélectionnant deux conditions de récupération : les données d'observation doivent datées de la **période comprise entre 01/01/2000 et au plus proche, 25/10/2025**. Elles doivent secondairement être restreinte à la zone géographique délimitée arbitrairement par le groupe de travail comme "les mers et océans de l'Europe occidentale". Soit : **lon −25 → 45, lat 27 → 69.**
 Cela inclut :
