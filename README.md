@@ -69,7 +69,7 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 
 Suivre le lien ci-dessous :
 https://www.canva.com/design/DAG20mu9XhQ/tUndsWOyFw9X-NQNDNyi1w/edit?ui=e30
-<img width="930" height="719" alt="image" src="https://github.com/user-attachments/assets/595d06d4-2882-4221-b562-3858f8ea7b53" />
+
 
 ### Logo du site
 ![Logo du projet](prototype_logo.jpg)
