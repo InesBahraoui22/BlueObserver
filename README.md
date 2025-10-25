@@ -56,6 +56,11 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
  -menu déroulant pour le choix d'espèce
  -entrée utilisateur
 
+#### Maquette du site
+
+Suivre le lien ci-dessous :
+https://www.canva.com/design/DAG20mu9XhQ/tUndsWOyFw9X-NQNDNyi1w/edit?ui=e30
+
 ### Logo du site
 ![Logo du projet](prototype_logo.jpg)
 
@@ -161,5 +166,13 @@ Ainsi les paramètres en question sont :
 - la température de surface
 - la hauteur significative des vagues
 
-- 
+La grille des données océanographiques de Copernicus couvre la planète entière (≈ 1800×899 points), avec des longitudes qu'il faudra corriger pour faire correspondre à celles des fichiers expèces (exemple : min lat = -89.800). La résolution est de 0.2°.
+
+L’axe time de la première base de données comporte 12 mois (janvier → décembre), ce qui indique une climatologie (moyenne mensuelle multi-annuelle). Les données couvrent la période allant de 1993 à 2020, ce qui demande un ajustement de la fenêtre temporelle sur les fichiers espèces. Deux paramètres ont été retenus pour décrire la force des vagues : la hauteur significative des vagues de surface (en m) et la période moyenne des vagues (en s).
+
+La deuxième base de données 
+
+#### Données météorologiques : KAGGEL (abandon de Open-Meteo)
+
+
 
