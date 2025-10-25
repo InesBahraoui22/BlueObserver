@@ -9,7 +9,7 @@ Oscar BONNET
 
 
 ## Nom du Projet
-blue_observer
+Blue_Observer
 
 ## Figure of interest & Narration
 
@@ -63,7 +63,7 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 
 ## Task managing
 
-(un tableau avec les taches de chacun)
+(un tableau avec les tâches de chacun)
 
  - Nettoyage de données
    - Vérifier que les données temporelles sont cohérentes
@@ -125,8 +125,8 @@ Cela excepte :
   - les zones groenlandaises.
 
 Les colonnes de chacun de ces fichiers, actuellement sous format tsv, sont les mêmes pour tous les fichiers . Il y en a 15. La majorité de ces colonnes sont téléchargées automatiquement lorsqu'on n'utilise pas de code pour télécharger ces fichiers, et seront supprimées ultérieurement puisqu'elle ne sont ici pas utiles . On a au total :
-- scientificName → retenue et exploitée
--	taxonRank      → inutile, bientôt supprimée
+- scientificName   → retenue et exploitée
+-	taxonRank        → inutile, bientôt supprimée
 - aphiaID          → inutile, bientôt supprimée
 - species          → inutile, bientôt supprimée
 - decimalLongitude → retenue et exploitée
@@ -135,10 +135,10 @@ Les colonnes de chacun de ces fichiers, actuellement sous format tsv, sont les m
 - date_year	       → inutile, bientôt supprimée
 - basisOfRecord    → inutile, bientôt supprimée	
 - datasetID	       → inutile, bientôt supprimée
-- datasetName	   → inutile, bientôt supprimée
+- datasetName	     → inutile, bientôt supprimée
 - occurrenceID	   → inutile, bientôt supprimée
 - institutionCode  → inutile, bientôt supprimée	
-- country	       → inutile, bientôt supprimée
+- country	         → inutile, bientôt supprimée
 - depth	           → inutile, bientôt supprimée
 
 Le format est amené à évoluer pour prendre l'extension .csv ou .xlsx grâce au code qui est en cours de rédaction depuis que les contributeurs de ce projet ont appris qu'ils peuvent faire une telle manipulation.
