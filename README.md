@@ -178,11 +178,21 @@ Ainsi les paramètres en question sont :
 
 La grille des données océanographiques de Copernicus couvre la planète entière (≈ 1800×899 points), avec des longitudes qu'il faudra corriger pour faire correspondre à celles des fichiers expèces (exemple : min lat = -89.800). La résolution est de 0.2°.
 
-L’axe time de la première base de données comporte 12 mois (janvier → décembre), ce qui indique une climatologie (moyenne mensuelle multi-annuelle). Les données couvrent la période allant de 1993 à 2020, ce qui demande un ajustement de la fenêtre temporelle sur les fichiers espèces. Deux paramètres ont été retenus pour décrire la force des vagues : la hauteur significative des vagues de surface (en m) et la période moyenne des vagues (en s).
+L’axe time de la première base de données comporte 12 mois (janvier → décembre), ce qui indique une climatologie (moyenne mensuelle multi-annuelle). Les données couvrent la période allant de 1993 à 2025, ce qui demande éventuellement un ajustement de la fenêtre temporelle sur les fichiers espèces. Deux paramètres ont été retenus pour décrire la force des vagues : la hauteur significative des vagues de surface (en m) et la période moyenne des vagues (en s).
 
-La deuxième base de données 
+La deuxième base de données comporte aussi 12 mois (janvier → décembre), pour obtenir une climatologie identique. Les données couvrent la période allant de 1980 à 2020, ce qui demande éventuellement un ajustement de la fenêtre temporelle sur les fichiers espèces. 
+Plusieurs paramètres ont été retenus pour décrire la physique des mers et océans retenues :
+- la température de surface (en °C)
+- la vitesse des courants venant d'est (en m.s^(1), positive quand la direction est l'est, négative quand la direction est l'ouest)
+- la vitesse des courants venant du nord (en m.s^(1), positive quand la direction est le Nord, négative quand la direction est le Sud)
+- hauteur des vagues au-dessus de la géoïde (= la hauteur de l'eau) (en m).
 
 #### Données météorologiques : KAGGEL (abandon de Open-Meteo)
 
+Les paramètres météorologiques retenus pour proposer une expérience d'écotourisme agréable à l'utilisateur sont donc l'abscence de tempêtes, mais d'un point de vue atmosphérique plutôt qu'océaniques. Ainsi sont retenues la température atmosphérique (en °C), la force du vent (en km/h) et la quantité de précipitations (pluie ou neige, en mm/j). Ceci, afin d'isoler les jours et les endroits où on peut non seulement observer les espèces, mais le faire sans être gêner par un rideau de pluie ou de neige, sans que les températures extérieures soient intolérables.
+
+La composante du vent permettra de faire une double vérification des conditions de navigation avec les paramètres retenus dans la base de données Copernicus.
+
+N'ayant pas réussi à ce jour à obtenir les plages de données temporelles et spatiales désirées via open-meteo, volet Historical weather, pour une raison encore inconnue, l'équipe de travail va tenter de trouver un équivalent via KAGGEL, avec les mêmes paramètres que pour les autres bases de données.
 
 
