@@ -210,4 +210,9 @@ La composante du vent permettra de faire une double vérification des conditions
 
 N'ayant pas réussi à ce jour à obtenir les plages de données temporelles et spatiales désirées via open-meteo, volet Historical weather, pour une raison encore inconnue, l'équipe de travail va tenter de trouver un équivalent via KAGGEL, avec les mêmes paramètres que pour les autres bases de données.
 
+## Branches 
 
+Deux branches principales ont été créées pour organiser le travail :
+dev pour le développement et les tests du code,
+base_de_donnees pour la gestion et la structuration des données.
+D’autres branches pourront être ajoutées par la suite selon les besoins du projet (nouvelles fonctionnalités, intégration ou corrections).
