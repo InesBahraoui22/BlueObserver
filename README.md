@@ -54,6 +54,9 @@ L’objectif est de **favoriser un tourisme responsable**, qui s’appuie sur la
 
 ### Exemple de visuel attendu/Maquette du site
 
+[📄 Ouvrir le rapport complet (PDF)](Maquettes_site.pdf)
+
+
 <img width="2215" height="1256" alt="image" src="https://github.com/user-attachments/assets/3c319a23-5008-47a3-a43e-fcace7c18854" />
 
 
