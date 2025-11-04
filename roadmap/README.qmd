@@ -1,3 +1,1 @@
-Description :
-Our main figure of interest is an interactive ocean tourism map, combining marine biodiversity data (OBIS), environmental conditions (Copernicus), and local weather information (Open-Meteo).
-The goal is to allow users — divers, sailors, tourists, or ocean enthusiasts — to discover which marine species can be observed depending on the region, the season, and the oceanic conditions.
+
