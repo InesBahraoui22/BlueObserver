@@ -218,3 +218,35 @@ Deux branches principales ont été créées pour organiser le travail :
 - **`base_de_donnees`** : consacrée à la gestion et à la structuration des données  
 
 D’autres branches pourront être ajoutées par la suite selon les besoins du projet (par exemple pour de nouvelles fonctionnalités, l’intégration ou la correction de bugs).
+
+## Importations (suite)
+
+(Ligne de code entre [])
+
+Abandon des fichiers téléchargés de Copernicus.
+Tentative par programmation de récupération des bases de données
+
+
+Étape 1 - installation de la Toolbox Copernicus, outil de téléchargement des données
+
+On tape dans le terminal test_conda
+[	conda install -c conda-forge copernicusmarine	]
+Puis 
+[	y	]
+pour terminer l'installation de la toolbox de marinecopernicus.
+
+
+Étape 2 - Identification
+
+Toujours dans le terminal, on entre
+[	copernicusmarine login	]
+Mes identifiants :
+username : cmonmont
+mdp : DevLogiciel2025%
+
+Étape 3 - Programme python pour télécharger
+
+D'expérience, les fichiers risque d'être super lourds (quel plaisir) du coup on va télécharger par année, et prier d'être capables de compiler par mois plus tard
+
+
+
