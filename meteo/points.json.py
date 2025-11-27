@@ -11,7 +11,7 @@ import time
 # Chemins relatifs
 # -----------------------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))   # dossier du script (meteo/)
-OBIS_DIR = "/Users/ines/Desktop/M1/OceanAware/obis_tsv"  # dossier TSV
+OBIS_DIR = "/Users/ines/Desktop/M1/OceanAware/dataset"  # dossier TSV
 OUTPUT_JSON = "/Users/ines/Desktop/M1/OceanAware/meteo/_site/data/points.json"  # sortie JSON
 
 os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
