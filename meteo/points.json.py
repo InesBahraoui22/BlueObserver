@@ -10,9 +10,9 @@ import time
 # -----------------------------
 # Chemins relatifs
 # -----------------------------
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))   # dossier du script (meteo/)
-OBIS_DIR = "/Users/ines/Desktop/M1/OceanAware/dataset"  # dossier TSV
-OUTPUT_JSON = "/Users/ines/Desktop/M1/OceanAware/meteo/_site/data/points.json"  # sortie JSON
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+OBIS_DIR = "/Users/ines/Desktop/M1/OceanAware/dataset"
+OUTPUT_JSON = "/Users/ines/Desktop/M1/OceanAware/meteo/_site/data/points.json"
 
 os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
 
@@ -39,6 +39,7 @@ month_ranges = {
 }
 
 def get_weather(lat, lon, start_date, end_date):
+    """Récupère météo quotidienne depuis Open-Meteo et calcule les moyennes"""
     url = "https://archive-api.open-meteo.com/v1/archive"
     params = {
         "latitude": lat,
@@ -51,22 +52,18 @@ def get_weather(lat, lon, start_date, end_date):
     responses = openmeteo.weather_api(url, params=params)
     response = responses[0]
     daily = response.Daily()
-    dates = pd.date_range(
-        start=pd.to_datetime(daily.Time(), unit="s", utc=True),
-        end=pd.to_datetime(daily.TimeEnd(), unit="s", utc=True),
-        freq=pd.Timedelta(seconds=daily.Interval()),
-        inclusive="left"
-    )
+    
     df = pd.DataFrame({
-        "date": dates,
         "temp_max": daily.Variables(0).ValuesAsNumpy(),
         "temp_min": daily.Variables(1).ValuesAsNumpy(),
         "rain_sum": daily.Variables(2).ValuesAsNumpy(),
         "wind_max": daily.Variables(3).ValuesAsNumpy()
     })
+    
     avg_temp = round(((df["temp_max"] + df["temp_min"]) / 2).mean(), 2)
     avg_rain = round(df["rain_sum"].mean(), 2)
     avg_wind = round(df["wind_max"].mean(), 2)
+    
     return {
         "avg_temp": f"{avg_temp:.2f}",
         "avg_rain": f"{avg_rain:.2f}",
@@ -85,29 +82,28 @@ else:
 processed_coords = {(p["lat"], p["lng"], p["month"]) for p in updated_points}
 
 # -----------------------------
-# Création / enrichissement du points.json
+# Lecture fichiers TSV OBIS
 # -----------------------------
 all_points = []
 
 for tsv_file in glob(f"{OBIS_DIR}/*.tsv"):
     species_name = os.path.splitext(os.path.basename(tsv_file))[0]
-    df = pd.read_csv(tsv_file, sep='\t')
+    df = pd.read_csv(tsv_file, sep='\t', low_memory=False)
 
-    # Vérifie les colonnes correctes
     if "decimalLongitude" not in df.columns or "decimalLatitude" not in df.columns:
         print(f"⚠️ Colonnes manquantes dans {tsv_file}: {df.columns}")
         continue
 
-    # Filtre Europe occidentale
+    # Filtre zone Europe occidentale
     df["decimalLatitude"] = pd.to_numeric(df["decimalLatitude"], errors="coerce")
     df["decimalLongitude"] = pd.to_numeric(df["decimalLongitude"], errors="coerce")
     df = df[
         (df["decimalLongitude"] >= -25) & (df["decimalLongitude"] <= 45) &
         (df["decimalLatitude"] >= 27) & (df["decimalLatitude"] <= 69)
     ]
-
     df["species"] = species_name
 
+    # Gestion des dates
     if "eventDate" in df.columns:
         df["eventDate_parsed"] = pd.to_datetime(df["eventDate"], errors="coerce", utc=True)
         df["month"] = df["eventDate_parsed"].dt.month_name().str.lower().fillna("january")
@@ -116,14 +112,14 @@ for tsv_file in glob(f"{OBIS_DIR}/*.tsv"):
 
     df = df[["decimalLatitude", "decimalLongitude", "species", "month"]]
     df = df.rename(columns={"decimalLatitude": "lat", "decimalLongitude": "lng"})
-
     all_points.extend(df.to_dict(orient="records"))
 
 # -----------------------------
-# Enrichissement météo avec reprise et rate limit
+# Enrichissement météo avec reprise
 # -----------------------------
 for i, point in enumerate(all_points):
-    if (point["lat"], point["lng"], point["month"]) in processed_coords:
+    key = (point["lat"], point["lng"], point["month"])
+    if key in processed_coords:
         continue  # déjà traité
 
     month = point.get("month", "january").lower()
@@ -131,19 +127,15 @@ for i, point in enumerate(all_points):
 
     try:
         weather = get_weather(point["lat"], point["lng"], start_date, end_date)
-        point["avg_temp"] = weather["avg_temp"]
-        point["avg_rain"] = weather["avg_rain"]
-        point["avg_wind"] = weather["avg_wind"]
+        point.update(weather)
     except Exception as e:
         print(f"⚠️ Erreur météo pour {point['species']} ({point['lat']},{point['lng']}): {e}")
-        point["avg_temp"] = None
-        point["avg_rain"] = None
-        point["avg_wind"] = None
+        point.update({"avg_temp": None, "avg_rain": None, "avg_wind": None})
 
     updated_points.append(point)
-    processed_coords.add((point["lat"], point["lng"], point["month"]))
+    processed_coords.add(key)
 
-    # Rate limit : pause 1 sec
+    # Pause pour limiter le nombre de requêtes/min
     time.sleep(1)
 
     # Sauvegarde intermédiaire toutes les 100 requêtes
