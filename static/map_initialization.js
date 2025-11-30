@@ -27,15 +27,19 @@ window.handleReset = () => {
 };
 
 
-// --- 4. Fonction d'Affichage des Détails au Clic ---
+// --- Fonction d'Affichage des Détails au Clic (MODIFIÉE) ---
 function displayDetails(data) {
-    // Remplacement du chemin absolu local par un chemin statique Flask
-    // NOTE : Assurez-vous que le dossier 'especes' est bien copié dans votre dossier 'static'
-    const imageBaseDir = '/static/especes/'; 
-    const imageFileName = data.image.split('/').pop(); // Extrait juste le nom du fichier
-    const imageUrl = imageBaseDir + imageFileName;
+    
+    // 1. Extraire uniquement le nom du fichier du chemin absolu
+    // Ex: '/Users/.../Balaenoptera_edeni.jpg' devient 'Balaenoptera_edeni.jpg'
+    const imageFileName = data.image.split('/').pop(); 
 
-    detailsPanel.innerHTML = `
+    // 2. Construire l'URL statique correcte pour Flask : /static/photos/Nom_Du_Fichier.jpg
+    const imageUrl = `/static/photos/${imageFileName}`;
+
+    const panel = document.getElementById('details-panel');
+    
+    panel.innerHTML = `
         <h3 class="text-xl font-bold text-blue-800">${data.common_name}</h3>
         <p class="text-sm italic text-gray-600">${data.species}</p>
         <div class="my-3 flex items-center justify-between border-t pt-3">
@@ -95,69 +99,104 @@ function drawPoints(observations) {
     console.log(`Dessin de ${observations.length} points sur la carte.`);
 }
 
-
 // --- 6. Logique de Filtrage ---
 function applyFilters() {
-    const groupFilter = document.getElementById('group-filter').value;
-    const speciesFilter = document.getElementById('region-filter').value; 
-    const monthFilter = document.getElementById('season-filter').value; 
+    // Récupérer les valeurs sélectionnées dans les menus déroulants
+    const groupFilter = document.getElementById('group-filter').value;     // Nom Commun
+    const regionFilter = document.getElementById('region-filter').value;   // Région Marine
+    const monthFilter = document.getElementById('season-filter').value;    // Mois
 
     // Filtrer le tableau d'observations complet
     let filteredData = allObservations.filter(d => {
         
-        // Filtrer par Nom Commun
+        // 1. Filtrer par Nom Commun
         const matchGroup = groupFilter === 'all' || d.common_name === groupFilter;
 
-        // Filtrer par Nom Scientifique
-        const matchSpecies = speciesFilter === 'all' || d.species === speciesFilter;
+        // 2. Filtrer par Région (Utilise la propriété d.region calculée)
+        const matchRegion = regionFilter === 'all' || d.region === regionFilter;
         
-        // Filtrer par Mois
+        // 3. Filtrer par Mois
         const matchMonth = monthFilter === 'all' || d.month === monthFilter;
 
-        return matchGroup && matchSpecies && matchMonth;
+        // Retourne true si toutes les conditions sont satisfaites
+        return matchGroup && matchRegion && matchMonth;
     });
 
-    // Mettre à jour le décompte
+    // Mettre à jour le décompte affiché à l'utilisateur
     document.getElementById('observation-count').textContent = 
         `${filteredData.length} ${filteredData.length > 1 ? 'observations trouvées' : 'observation trouvée'}.`;
 
-    // Redessiner uniquement les points filtrés de manière optimisée
+    // Redessiner uniquement les points filtrés de manière optimisée (Data Join)
     drawPoints(filteredData);
 }
+/**
+ * Détermine la région marine basée sur les coordonnées.
+ * @param {number} lat - Latitude
+ * @param {number} lng - Longitude
+ * @returns {string} Le nom de la région
+ */
+function assignRegion(lat, lng) {
+    // Utilisons des seuils simples pour les grandes régions de l'Atlantique Nord / Méditerranée
+    
+    // Méditerranée (Lat: 30-45, Lng: 0-30)
+    if (lat < 45 && lng > 0 && lng < 30) {
+        return "Méditerranée";
+    }
+    // Ouest de l'Europe/Golfe de Gascogne (Lat: 40-55, Lng: -10 à 0)
+    if (lat > 40 && lat < 55 && lng > -10 && lng < 0) {
+        return "Atlantique Nord-Est";
+    }
+    // Plus au Nord (Islande, Mer du Nord)
+    if (lat >= 55) {
+        return "Atlantique Nord-Ouest";
+    }
+    // Régions plus à l'Ouest (Açores, Canaries, etc.)
+    if (lng < -10) {
+        return "Atlantique Central";
+    }
+    
+    return "Autre Région / Large";
+}
+// Dans la fonction loadObservations :
 
-
-// --- 7. Chargement des Données et Configuration des Filtres ---
 async function loadObservations() {
     try {
         const data = await d3.json(dataUrl);
-        allObservations = data;
         
-        // Extraction des valeurs uniques (en utilisant les propriétés plates de votre JSON)
+        // --- NOUVEAU : Traitement des données pour assigner une région ---
+        allObservations = data.map(d => ({
+            ...d, // Conserver toutes les propriétés existantes
+            // Ajouter la nouvelle propriété 'region'
+            region: assignRegion(d.lat, d.lng) 
+        }));
+        
+        console.log(`Données chargées : ${allObservations.length} observations.`);
+        
+        // 1. Extraction des valeurs uniques (MODIFIÉES)
+        
         const allCommonNames = [...new Set(allObservations.map(d => d.common_name))].sort();
-        const allScientificNames = [...new Set(allObservations.map(d => d.species))].sort();
-        // Correction pour s'assurer que les mois sont bien en minuscules si besoin
+        // --- UTILISATION DE LA NOUVELLE PROPRIÉTÉ 'region' ---
+        const allRegions = [...new Set(allObservations.map(d => d.region))].sort(); 
         const allMonths = [...new Set(allObservations.map(d => d.month.toLowerCase()))].sort(); 
 
-        // Peupler les menus
+        // 2. Peupler les menus déroulants
         populateFilter('group-filter', 'Toutes les espèces (Nom Commun)', allCommonNames);
-        populateFilter('region-filter', 'Tous les noms scientifiques', allScientificNames); 
+        populateFilter('region-filter', 'Toutes les régions marines', allRegions); // CHANGEMENT DE LABEL
         populateFilter('season-filter', 'Toutes les périodes (Mois)', allMonths);
+        
+        // ... (Reste du code inchangé) ...
         
         // Lier la fonction de filtrage aux événements 'change'
         document.getElementById('group-filter').addEventListener('change', applyFilters);
         document.getElementById('region-filter').addEventListener('change', applyFilters);
         document.getElementById('season-filter').addEventListener('change', applyFilters);
 
-        // Initialiser la carte avec tous les points
         applyFilters(); 
 
     } catch (error) {
-        console.error("Erreur lors du chargement des données d'observation (Vérifiez la route Flask /data/observations.json):", error);
-        document.getElementById('observation-count').textContent = "Erreur de chargement des données.";
-        detailsPanel.innerHTML = `<p class="text-red-500">Erreur : Le serveur n'a pas pu charger le fichier JSON.</p>`;
+        // ...
     }
 }
-
 // --- 8. Fonction Utilitaire pour Peupler les Menus ---
 function populateFilter(elementId, defaultLabel, optionsArray) {
     const select = document.getElementById(elementId);
