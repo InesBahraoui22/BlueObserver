@@ -23,6 +23,10 @@ else:
     print(f"Fichier de données non trouvé à l'emplacement: {DATA_FILE_PATH}. Les points seront vides.")
     points = {}
 
+@app.route('/about') #about us
+def about():
+    """Route pour la page 'À propos de nous'."""
+    return render_template('about.html')
 
 @app.route('/')
 def index():
