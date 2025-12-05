@@ -1,5 +1,0 @@
-Addition
-========
-
-
-.. autofunction:: exemple.add
