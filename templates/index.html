@@ -25,6 +25,38 @@
                 #b91c1c
             );
         }
+        /* Style pour le tableau de réglementation (via Tailwind) */
+        #regulations-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        #regulations-content th, #regulations-content td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        #regulations-content th {
+            background-color: #eff6ff; /* blue-50 */
+            color: #1d4ed8; /* blue-700 */
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+        #regulations-content tr:nth-child(even) {
+            background-color: #f9fafb; /* gray-50 */
+        }
+        #regulations-content tr:hover {
+            background-color: #f3f4f6; /* gray-100 */
+        }
+        /* Style pour la bibliographie */
+        #bibliography a {
+            color: #2563eb;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -45,6 +77,9 @@
             </button>
             <button id="tab-regulations" onclick="showContent('regulations-content', 'tab-regulations')" class="px-6 py-2 border-b-2 font-semibold transition-colors text-gray-600 border-transparent hover:border-gray-400">
                 ⚖️ Réglementations
+            </button>
+            <button id="tab-about" onclick="showContent('about-content', 'tab-about')" class="px-6 py-2 border-b-2 font-semibold transition-colors text-gray-600 border-transparent hover:border-gray-400">
+                ℹ️ About Us
             </button>
         </div>
 
@@ -117,24 +152,110 @@
                     </aside>
                 </div>
             </div>
-            
+
+            <!-- 2. Contenu des Réglementations (CODE INTÉGRÉ) -->
             <div id="regulations-content" class="tab-content hidden p-8 bg-white rounded-xl shadow-2xl">
-                <h2 class="text-3xl font-bold text-blue-800 mb-6">Réglementations Marines en vigueur</h2>
+                <h2 class="text-3xl font-bold text-blue-800 mb-6">Réglementations et Chartes pour l'Observation Marine</h2>
+                
                 <div class="space-y-4 text-gray-700">
                     <p>
-                        Les observations de cétacés sont soumises à des directives strictes, notamment la 
-                        Directive Habitats Faune Flore et les règles spécifiques à chaque sanctuaire marin (ex: 
-                        Sanctuaire Pelagos).
+                        L'observation de la faune marine, en particulier des cétacés (baleines, dauphins, etc.), est strictement encadrée en France par le Code de l'environnement, notamment l'arrêté du 1er juillet 2011 qui interdit de perturber les espèces marines protégées. Ces règles sont cruciales pour garantir la conservation de la biodiversité et le bien-être animal.
                     </p>
-                    <h3 class="text-xl font-semibold mt-6 text-gray-800">Règles Clés de l'Approche :</h3>
-                    <ul class="list-disc list-inside ml-4 space-y-2">
-                        <li>Respecter une distance minimale de 100 mètres avec les cétacés.</li>
-                        <li>Couper le moteur ou naviguer au ralenti si l'animal s'approche.</li>
-                        <li>Interdiction d'alimenter ou de nager avec les animaux.</li>
+                    <p>
+                        Des initiatives locales et nationales, comme celles promues par l'Office Français de la Biodiversité (OFB), le Réseau National Échouages (RNE, coordonné par Pelagis), et la Charte d'Approche des Cétacés, fournissent un cadre précis pour toute interaction. Le non-respect de ces directives peut entraîner des sanctions pénales. 
+                    </p>
+                    <p class="font-bold text-lg mt-6">L'objectif principal de ces réglementations est double :</p>
+                    <ul class="list-disc list-inside ml-4 space-y-1">
+                        <li>Préserver l'intégrité des animaux en évitant le dérangement, la modification de leur comportement naturel (alimentation, repos, reproduction).</li>
+                        <li>Sécuriser les observateurs, car une approche inappropriée peut mettre en danger l'homme et l'animal.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold mt-6 text-gray-800 border-b pb-2">Tableau Récapitulatif des Conditions d'Approche des Cétacés (Règles Générales)</h3>
+                    <p class="text-sm italic text-gray-600">Ces règles s'appliquent à tous (professionnels et plaisanciers) pour minimiser le dérangement.</p>
+
+                    <!-- DÉBUT DU TABLEAU -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Règle / Condition</th>
+                                <th>Description Détaillée</th>
+                                <th>Objectif de la Règle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Zone d'Exclusion (No Go Zone)</td>
+                                <td>Interdiction absolue de pénétrer dans le cercle de 100 mètres autour de l'animal.</td>
+                                <td>Éviter toute pression directe et laisser l'initiative à l'animal.</td>
+                            </tr>
+                            <tr>
+                                <td>Distance d'Approche</td>
+                                <td>Maintenir une distance d'au moins 100 mètres. Les animaux peuvent s'approcher d'eux-mêmes ; il faut alors maintenir une vitesse faible ou couper le moteur.</td>
+                                <td>Prévenir le dérangement et les collisions.</td>
+                            </tr>
+                            <tr>
+                                <td>Vitesse</td>
+                                <td>Ne pas dépasser 5 nœuds ou la vitesse de l'animal le plus lent du groupe, et toujours naviguer au ralenti dans la zone des 300 mètres.</td>
+                                <td>Éviter le stress et permettre à l'animal de s'éloigner calmement.</td>
+                            </tr>
+                            <tr>
+                                <td>Angle d'Approche</td>
+                                <td>Toujours approcher les animaux par l'arrière ou légèrement de côté (jamais de face ou en coupant leur trajectoire).</td>
+                                <td>Minimiser l'effet de surprise et ne pas les encercler.</td>
+                            </tr>
+                            <tr>
+                                <td>Temps d'Observation</td>
+                                <td>Limiter le temps d'observation à 10-15 minutes maximum par bateau.</td>
+                                <td>Minimiser l'impact cumulé sur les animaux.</td>
+                            </tr>
+                            <tr>
+                                <td>Interdictions Absolues</td>
+                                <td>Il est formellement interdit de nourrir, de jeter des objets à l'eau, de nager avec les animaux, ou de les toucher.</td>
+                                <td>Respecter le comportement naturel et prévenir l'accoutumance dangereuse.</td>
+                            </tr>
+                            <tr>
+                                <td>Signalement d'Échouage</td>
+                                <td>En cas de découverte d'un mammifère marin échoué ou en difficulté, alerter immédiatement le Réseau National Échouages (via Pelagis).</td>
+                                <td>Permettre une intervention rapide et le recueil de données scientifiques.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- FIN DU TABLEAU -->
+
+                    <h3 class="text-xl font-semibold mt-6 text-gray-800 border-b pb-2">La Procédure en Cas de Découverte</h3>
+                    <ol class="list-decimal list-inside ml-4 space-y-2 text-gray-700">
+                        <li>Dès 300m : Réduisez votre vitesse.</li>
+                        <li>Entre 100m et 300m : Maintenez une vitesse lente (5 nœuds maximum), constante et parallèle à la trajectoire des animaux.</li>
+                        <li>Moins de 100m (Initiative de l'animal) : Débrayez ou mettez au point mort. Laissez les animaux déterminer la durée de l'interaction. Ne jamais poursuivre s'ils s'éloignent.</li>
+                    </ol>
+                    <p class="mt-4">
+                        En suivant ces règles, vous contribuez activement à la protection de la biodiversité marine tout en profitant de l'expérience d'observation.
+                    </p>
+                </div>
+                <!-- BIBLIOGRAPHIE DÉPLACÉE ICI -->
+                <div id="bibliography" class="mt-12 p-6 bg-white rounded-xl shadow-md border border-gray-200">
+                    <h2 class="text-2xl font-bold text-blue-700 mb-4 border-b pb-2">Bibliographie</h2>
+                    <ul class="list-disc list-inside ml-4 space-y-1 text-sm text-gray-700">
+                        <li><a href="https://ofb.gouv.fr/doc/les-especes-marines-protegees-en-france-identification-et-regime-juridique" target="_blank">Office Français de la Biodiversité (OFB) - Les espèces marines protégées en France.</a></li>
+                        <li><a href="https://www.observatoire-pelagis.cnrs.fr/echouages/signaler-un-echouage/" target="_blank">Observatoire Pelagis - Signaler un échouage.</a></li>
+                        <li><a href="https://iwc.int/" target="_blank">International Whaling Commission (IWC).</a></li>
+                        <li><a href="https://www.observatoire-pelagis.cnrs.fr/expertise/" target="_blank">Observatoire Pelagis - Expertise et réseaux.</a></li>
+                        <li><a href="https://www.calameo.com/ofbiodiversite/read/003502948472eda3488ad" target="_blank">OFB - Catalogue d'identification des espèces marines protégées (Calameo).</a></li>
+                        <li><a href="https://www.gecc-normandie.org/la-charte/" target="_blank">Groupe d'Étude des Cétacés du Cotentin (GECC) - La charte d'approche.</a></li>
+                        <li><a href="https://www.milieumarinfrance.fr/sites/default/files/2024-11/FRANCAIS_rapport_22-23_VF2.pdf" target="_blank">Milieu Marin France - Rapport d'activité.</a></li>
                     </ul>
                 </div>
             </div>
-        </div>
+            <div id="about-content" class="tab-content hidden p-8 bg-white rounded-xl shadow-2xl">
+                <h2 class="text-3xl font-bold text-blue-800 mb-6">À propos de BlueObserver</h2>
+                <div class="space-y-4 text-gray-700">
+                    <p>
+                        BlueObserver est une initiative dédiée à la cartographie et à l'analyse des observations de la biodiversité marine en Europe. Notre objectif est de fournir une interface visuelle simple pour comprendre la répartition des espèces et l'influence des conditions environnementales (température, vent, pluie) sur ces observations.
+                    </p>
+                </div>
+            </div>
+            
+        </div> <!-- Fin de max-w-7xl mx-auto (conteneur des 3 onglets) -->
     </div>
 </body>
 </html>
