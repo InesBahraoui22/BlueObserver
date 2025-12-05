@@ -1,11 +1,11 @@
 ### 🌊 BlueObserver — Carte interactive des espèces marines
-##📘 Projet de développement logiciel
+## 📘 Projet de développement logiciel
 BlueObserver est une application web interactive permettant d'explorer la biodiversité marine à partir de données ouvertes (OBIS, Copernicus, Open-Meteo).
-#🔗 Lien du site
+# 🔗 Lien du site
+(ajouter ici)
+# 🧩 Structure du projet
+# 📁 Organisation générale
 
-
-#🧩 Structure du projet
-#📁 Organisation générale
 BlueObserver/
 ├─ app.py
 ├─ finalpoints/
@@ -16,6 +16,7 @@ BlueObserver/
 │   ├─ styles.css
 │   └─ images/
 └─ README.md
+
 # 📦 data_processing/
 Scripts dédiés au traitement des données :
 collect/ — récupération OBIS, Copernicus, Open-Meteo
