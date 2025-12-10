@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.env
+.venv/
+
+# Données Copernicus (volumineuses)
+*.nc
+vagues/
+temp/
+
+# Fichiers système
+.DS_Store
+*.log
