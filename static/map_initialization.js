@@ -53,107 +53,100 @@ function assignRegion(lat, lng) {
 
 
 // --- 5. Fonction d'Affichage des Détails au Clic ---
+// --- 5. Fonction d'Affichage des Détails au Clic ---
 function displayDetails(data) {
-    const imageFileName = data.image.split('/').pop(); 
-    // Construit l'URL statique correcte pour Flask (Vérifiez si c'est 'especes' ou 'photos' !)
-    const imageUrl = `/static/photos/${imageFileName}`; // Utilisé 'photos' selon votre dernier snippet
-
+    console.log("Données:", data);
+    
+    // 1. Récupérer la hauteur de vague
+    let waveHeight = data.avg_wave || data.avg_wave_height || data.VHM0;
+    console.log("Hauteur vague:", waveHeight);
+    
+    const wave = interpretWaveHeight(waveHeight);
+    
+    // 2. Formater les données
+    const month = data.month ? 
+        data.month.charAt(0).toUpperCase() + data.month.slice(1) : 
+        'Non spécifié';
+    
+    // 3. Construire l'HTML
     detailsPanel.innerHTML = `
-        <h3 class="text-xl font-bold text-blue-800">${data.common_name}</h3>
-        <p class="text-sm italic text-gray-600">${data.species}</p>
-        <div class="my-3 flex items-center justify-between border-t pt-3">
-            <div class="text-2xl font-extrabold" style="color: ${tempColorScale(parseFloat(data.avg_temp))};">
-                ${data.avg_temp}°C
+        <!-- Message d'instruction caché -->
+        <p class="text-gray-500 italic mb-4 hidden">
+            Cliquez sur un point coloré sur la carte pour voir les détails.
+        </p>
+        
+        <!-- Carte des vagues COMPACTE -->
+        <div class="mb-4 p-3 rounded-lg border-l-4 ${wave.class}">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h4 class="font-bold text-gray-700 text-sm">🌊 Vagues (VHM0)</h4>
+                    <p class="text-lg font-bold mt-1">${wave.text}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs text-gray-600">${wave.description}</p>
+                </div>
             </div>
-            <p class="text-sm text-gray-700">Mois: ${data.month}</p>
         </div>
         
-        <p class="text-xs mt-2">Vent: ${data.avg_wind} km/h | Pluie: ${data.avg_rain} mm</p>
+        <!-- Espèce -->
+        <div class="mb-4">
+            <h3 class="text-lg font-bold text-blue-800">${data.common_name || 'Observation'}</h3>
+            <p class="text-sm italic text-gray-600">${data.species ? data.species.replace(/_/g, ' ') : ''}</p>
+        </div>
         
-        <img src="${imageUrl}" alt="${data.common_name}" class="w-full h-24 object-cover mt-4 rounded-md shadow-md">
+        <!-- Température et Mois (compact) -->
+        <div class="flex items-center justify-between mb-4 p-3 bg-blue-50 rounded-lg">
+            <div class="text-center">
+                <p class="text-xs text-gray-500">Température</p>
+                <p class="text-2xl font-bold" style="color: ${tempColorScale(parseFloat(data.avg_temp || 0))}">
+                    ${parseFloat(data.avg_temp || 0).toFixed(1)}°C
+                </p>
+            </div>
+            <div class="h-8 w-px bg-gray-300"></div>
+            <div class="text-center">
+                <p class="text-xs text-gray-500">Mois</p>
+                <p class="text-lg font-semibold text-gray-700">${month}</p>
+            </div>
+        </div>
+        
+        <!-- Vent et Pluie -->
+        <div class="grid grid-cols-2 gap-3 mb-4">
+            <div class="p-3 bg-gray-50 rounded border">
+                <div class="flex items-center">
+                    <span class="text-gray-500 mr-2">🌬️</span>
+                    <div>
+                        <p class="text-xs text-gray-500">Vent</p>
+                        <p class="font-bold">${parseFloat(data.avg_wind || 0).toFixed(1)} km/h</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 bg-gray-50 rounded border">
+                <div class="flex items-center">
+                    <span class="text-gray-500 mr-2">🌧️</span>
+                    <div>
+                        <p class="text-xs text-gray-500">Pluie</p>
+                        <p class="font-bold">${parseFloat(data.avg_rain || 0).toFixed(1)} mm</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Position -->
+        <div class="text-xs text-gray-500 mb-3">
+            📍 ${parseFloat(data.lat || 0).toFixed(4)}°N, ${parseFloat(data.lng || 0).toFixed(4)}°E
+        </div>
+        
+        <!-- Image (si disponible) -->
+        ${data.image && data.image !== 'default.jpg' ? `
+        <div class="mt-3">
+            <img src="/static/photos/${data.image.split('/').pop()}" 
+                 alt="${data.common_name || 'Observation'}"
+                 class="w-full h-32 object-cover rounded-lg shadow">
+        </div>
+        ` : ''}
     `;
 }
 
-function getWaveEligibility(waveHeight) {
-    let waveStatus;
-    let waveTextColor;
-    let waveBorderColor;
-    let waveBackgroundColor = "bg-white"; 
-
-    // Seuils de danger basés sur l'échelle de l'agitation de la mer et la navigation de plaisance.
-    // 0.3m: Mer très calme
-    // 2.0m: Conditions encore acceptables pour un bateau de taille moyenne
-    // 4.0m: Limite haute pour la plupart des observations de plaisance
-    
-    if (waveHeight <= 0.3) {
-        waveStatus = "Conditions idéales (Mer calme à belle)";
-        waveTextColor = "text-green-800";
-        waveBorderColor = "border-green-500";
-        waveBackgroundColor = "bg-green-50";
-    } else if (waveHeight <= 2.0) {
-        waveStatus = "Bonnes conditions (Mer peu agitée)";
-        waveTextColor = "text-yellow-800";
-        waveBorderColor = "border-yellow-500";
-        waveBackgroundColor = "bg-yellow-50";
-    } else if (waveHeight <= 4.0) {
-        waveStatus = "Conditions limitantes (Mer agitée à forte)";
-        waveTextColor = "text-orange-800";
-        waveBorderColor = "border-orange-500";
-        waveBackgroundColor = "bg-orange-50";
-    } else {
-        waveStatus = "SORTIE INTERDITE (Mer très forte / dangereuse)";
-        waveTextColor = "text-red-800";
-        waveBorderColor = "border-red-500";
-        waveBackgroundColor = "bg-red-50";
-    }
-    
-    return { waveStatus, waveTextColor, waveBorderColor, waveBackgroundColor };
-}
-
-/**
- * Détermine les styles CSS (en classes Tailwind) pour une jauge de vague visuelle.
- * Elle calcule la largeur de la barre (en pourcentage) et la position du label.
- * * @param {number} waveHeight La hauteur de vague moyenne significative (VHM0) en mètres.
- * @param {number} [maxScale=5.0] La valeur maximale pour la jauge (pour le calcul du pourcentage).
- * @returns {object} Un objet contenant la largeur, les classes de couleur de la barre, la position du label et sa transformation.
- */
-function getWaveGaugeStyle(waveHeight, maxScale = 5.0) {
-    // Le pourcentage ne dépasse jamais 100%
-    const percentage = Math.min(100, (waveHeight / maxScale) * 100);
-    
-    let barColorClass;
-    const labelColorClass = "text-white bg-gray-900"; 
-    
-    // Les classes de couleur de la barre suivent les mêmes seuils que l'éligibilité
-    if (waveHeight <= 0.3) {
-        barColorClass = "bg-green-600";
-    } else if (waveHeight <= 2.0) {
-        barColorClass = "bg-yellow-500";
-    } else if (waveHeight <= 4.0) {
-        barColorClass = "bg-orange-500";
-    } else {
-        barColorClass = "bg-red-600";
-    }
-
-    // Calcule la position gauche du label (position sur la jauge de 0% à 100%)
-    const labelLeft = Math.max(0, Math.min(100, percentage)); 
-    
-    // Ajustement de la transformation pour éviter que le label ne sorte du cadre
-    let labelTransform = 'translateX(-50%)'; // Centré par défaut
-    if (labelLeft < 5) {
-         labelTransform = 'translateX(0%)'; // Aligner à gauche si proche de 0
-    } else if (labelLeft > 95) {
-         labelTransform = 'translateX(-100%)'; // Aligner à droite si proche de 100
-    }
-    
-    return {
-        width: `${percentage}%`,
-        barColorClass,
-        labelLeft: `${labelLeft}%`,
-        labelTransform,
-        labelColorClass
-    };
-}
 
 // --- 6. Fonction de Dessin des Points (Optimisée) ---
 function drawPoints(observations) {
@@ -333,6 +326,26 @@ function showContent(contentId, tabId) {
         activeTab.classList.add('bg-white', 'text-blue-700', 'border-blue-700');
         activeTab.classList.remove('text-gray-600', 'border-transparent', 'hover:border-gray-400');
     }
+}
+function interpretWaveHeight(v) {
+    if (v === null || v === undefined) {
+        return {
+            text: "Données indisponibles",
+            description: "",
+            class: "wave-class-0"
+        };
+    }
+
+    if (v < 0.5)
+        return { text: `${v.toFixed(2)} m`, description: "Conditions idéales – Mer calme", class: "wave-class-0" };
+    if (v < 1)
+        return { text: `${v.toFixed(2)} m`, description: "Bonne visibilité – Mer peu agitée", class: "wave-class-1" };
+    if (v < 2)
+        return { text: `${v.toFixed(2)} m`, description: "Mer agitée – vigilance recommandée", class: "wave-class-2" };
+    if (v < 3)
+        return { text: `${v.toFixed(2)} m`, description: "Mer forte – conditions difficiles", class: "wave-class-3" };
+
+    return { text: `${v.toFixed(2)} m`, description: "Mer très forte – conditions dangereuses", class: "wave-class-4" };
 }
 
 /**

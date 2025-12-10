@@ -11,6 +11,39 @@
     <script defer src="{{ url_for('static', filename='map_initialization.js') }}"></script>
 
     <style>
+        /* Carte des vagues compacte */
+        .wave-class-0 { 
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-color: #22c55e;
+        }
+        .wave-class-1 { 
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-color: #10b981;
+        }
+        .wave-class-2 { 
+            background: linear-gradient(135deg, #fef9c3 0%, #fef08a 100%);
+            border-color: #eab308;
+        }
+        .wave-class-3 { 
+            background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);
+            border-color: #f97316;
+        }
+        .wave-class-4 { 
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: #ef4444;
+        }
+        
+        /* Animation subtile */
+        #details-panel > div {
+            transition: all 0.2s ease;
+        }
+        
+        /* Style compact pour la carte des vagues */
+        .wave-card-compact {
+            padding: 0.75rem !important;
+            margin-bottom: 1rem !important;
+        }
+        
         #legend-scale {
             /* Simule l'échelle interpolateWarm de D3 (du froid au chaud) */
             background: linear-gradient(to right, 
@@ -57,6 +90,13 @@
             color: #2563eb;
             text-decoration: underline;
         }
+        /* Couleurs pour les classes de vague */
+        .wave-class-0 { background-color: #f0fdf4; border-color: #4ade80; }
+        .wave-class-1 { background-color: #ecfdf5; border-color: #34d399; }
+        .wave-class-2 { background-color: #fef9c3; border-color: #facc15; }
+        .wave-class-3 { background-color: #ffedd5; border-color: #fb923c; }
+        .wave-class-4 { background-color: #fee2e2; border-color: #f87171; }
+
     </style>
 </head>
 <body class="bg-gray-50">
@@ -143,6 +183,7 @@
                         
                         <div class="flex-grow">
                             <h2 class="text-2xl font-bold mb-4 text-blue-700 border-b pb-2">Détails de l'Observation</h2>
+
                             <div id="details-panel" class="bg-gray-50 p-4 rounded-lg min-h-[250px] border border-gray-200 shadow-inner">
                                 <p class="text-gray-500 italic">
                                     Cliquez sur un point coloré sur la carte pour voir les détails.
@@ -267,8 +308,7 @@
                 </div>
             </div>
             
-        </div> <!-- Fin de max-w-7xl mx-auto (conteneur des 3 onglets) -->
-        
+        </div> <!-- Fin de max-w-7xl mx-auto (conteneur des 3 onglets) -->        
     </div>
 </body>
-</html>
+</html> 
