@@ -74,6 +74,86 @@ function displayDetails(data) {
     `;
 }
 
+function getWaveEligibility(waveHeight) {
+    let waveStatus;
+    let waveTextColor;
+    let waveBorderColor;
+    let waveBackgroundColor = "bg-white"; 
+
+    // Seuils de danger basés sur l'échelle de l'agitation de la mer et la navigation de plaisance.
+    // 0.3m: Mer très calme
+    // 2.0m: Conditions encore acceptables pour un bateau de taille moyenne
+    // 4.0m: Limite haute pour la plupart des observations de plaisance
+    
+    if (waveHeight <= 0.3) {
+        waveStatus = "Conditions idéales (Mer calme à belle)";
+        waveTextColor = "text-green-800";
+        waveBorderColor = "border-green-500";
+        waveBackgroundColor = "bg-green-50";
+    } else if (waveHeight <= 2.0) {
+        waveStatus = "Bonnes conditions (Mer peu agitée)";
+        waveTextColor = "text-yellow-800";
+        waveBorderColor = "border-yellow-500";
+        waveBackgroundColor = "bg-yellow-50";
+    } else if (waveHeight <= 4.0) {
+        waveStatus = "Conditions limitantes (Mer agitée à forte)";
+        waveTextColor = "text-orange-800";
+        waveBorderColor = "border-orange-500";
+        waveBackgroundColor = "bg-orange-50";
+    } else {
+        waveStatus = "SORTIE INTERDITE (Mer très forte / dangereuse)";
+        waveTextColor = "text-red-800";
+        waveBorderColor = "border-red-500";
+        waveBackgroundColor = "bg-red-50";
+    }
+    
+    return { waveStatus, waveTextColor, waveBorderColor, waveBackgroundColor };
+}
+
+/**
+ * Détermine les styles CSS (en classes Tailwind) pour une jauge de vague visuelle.
+ * Elle calcule la largeur de la barre (en pourcentage) et la position du label.
+ * * @param {number} waveHeight La hauteur de vague moyenne significative (VHM0) en mètres.
+ * @param {number} [maxScale=5.0] La valeur maximale pour la jauge (pour le calcul du pourcentage).
+ * @returns {object} Un objet contenant la largeur, les classes de couleur de la barre, la position du label et sa transformation.
+ */
+function getWaveGaugeStyle(waveHeight, maxScale = 5.0) {
+    // Le pourcentage ne dépasse jamais 100%
+    const percentage = Math.min(100, (waveHeight / maxScale) * 100);
+    
+    let barColorClass;
+    const labelColorClass = "text-white bg-gray-900"; 
+    
+    // Les classes de couleur de la barre suivent les mêmes seuils que l'éligibilité
+    if (waveHeight <= 0.3) {
+        barColorClass = "bg-green-600";
+    } else if (waveHeight <= 2.0) {
+        barColorClass = "bg-yellow-500";
+    } else if (waveHeight <= 4.0) {
+        barColorClass = "bg-orange-500";
+    } else {
+        barColorClass = "bg-red-600";
+    }
+
+    // Calcule la position gauche du label (position sur la jauge de 0% à 100%)
+    const labelLeft = Math.max(0, Math.min(100, percentage)); 
+    
+    // Ajustement de la transformation pour éviter que le label ne sorte du cadre
+    let labelTransform = 'translateX(-50%)'; // Centré par défaut
+    if (labelLeft < 5) {
+         labelTransform = 'translateX(0%)'; // Aligner à gauche si proche de 0
+    } else if (labelLeft > 95) {
+         labelTransform = 'translateX(-100%)'; // Aligner à droite si proche de 100
+    }
+    
+    return {
+        width: `${percentage}%`,
+        barColorClass,
+        labelLeft: `${labelLeft}%`,
+        labelTransform,
+        labelColorClass
+    };
+}
 
 // --- 6. Fonction de Dessin des Points (Optimisée) ---
 function drawPoints(observations) {
