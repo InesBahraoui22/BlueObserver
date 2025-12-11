@@ -6,7 +6,7 @@
 
 def recuperer_product_id_vagues(message = "Entrez l'identifiant du produit Copernicus que vous souhaitez utiliser. "
 "Si vous ne proposez rien, le produit utilisé par les créateurs de ce programme sera exploité par défaut : ",
-produit_defaut_vagues = "GLOBAL_MULTIYEAR_WAV_001_032"):
+    produit_defaut_vagues = "GLOBAL_MULTIYEAR_WAV_001_032"):
     produit_id_vagues = input(f"{message} (défaut ={produit_defaut_vagues}) : ").strip()  # enlève les espaces au début/fin
 
     if produit_id_vagues == "":
@@ -18,7 +18,7 @@ produit_defaut_vagues = "GLOBAL_MULTIYEAR_WAV_001_032"):
 # Fonction de récupération de l'identifiant du produit Copernicus contenant la variable : température de la mer
 def recuperer_product_id_temp(message = "Entrez l'identifiant du produit Copernicus que vous souhaitez utiliser. "
 "Si vous ne proposez rien, le produit utilisé par les créateurs de ce programme sera exploité par défaut : ",
-produit_defaut_temp = "GLOBAL_MULTIYEAR_PHY_ENS_001_031"):
+    produit_defaut_temp = "GLOBAL_MULTIYEAR_PHY_ENS_001_031"):
     produit_id_temp = input(f"{message} (défaut ={produit_defaut_temp}) : ").strip()  # enlève les espaces au début/fin
 
     if produit_id_vagues == "":
