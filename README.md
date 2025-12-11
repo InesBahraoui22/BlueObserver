@@ -166,4 +166,3 @@ ls -lh finalpoints/final_points.json
 python app.py
 # Appuyer sur Ctrl+C pour arrêter
 ```
-Ines BAHRAOUI — 21901184
