@@ -128,6 +128,13 @@ print("La variable utilisée pour connaître la hauteur des vagues"
       f"\n est '{variable_vagues}'.Elle est exprimée en {unite_vagues}.")
 
 
+
+#__________________________________________________________________________________________
+
+
+# ÉTAPE 5 | BOUCLE DE TÉLÉCHARGEMENT DES FICHIERS .NC
+
+
 for an in annees :
 
     deb = f"{an}-01-01T00:00:00" # f-string = f juste devant les guillements et entre {} 
@@ -222,3 +229,7 @@ raise_if_updating: bool = False,
 platform_ids: Optional[List[str]] = None) -> copernicusmarine.core_functions.models.ResponseSubset
 """
 
+#__________________________________________________________________________________________
+
+
+# ÉTAPE 6 | MOYENNAGE MENSUEL + MÉNAGE DES FICHIERS

@@ -125,6 +125,10 @@ variable_vagues, unite_vagues = choisir_variable_dans_dataset(
 print("La variable utilisée pour connaître la hauteur des vagues"
       f"\n est '{variable_vagues}'.Elle est exprimée en {unite_vagues}.")
 
+
+#__________________________________________________________________________________________
+
+
 # ÉTAPE 5 | BOUCLE
 
 for an in annees :
