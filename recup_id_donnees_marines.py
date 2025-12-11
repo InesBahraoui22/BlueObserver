@@ -1,6 +1,20 @@
 ### Programme d'assignation des identifiants des produits copernicus, soient les variables destinées à se retrouver
 ### stocker dans le dossier "conditions_limitantes_sortie/conditions_marines"
 
+# =================================================================================================================
+# Fonction d'assignation de l'année la plus récente pour la récupération des données
+# =================================================================================================================
+
+def renseigner_dates_de_fin(date_fin,annee_fin) :
+    date_fin = "2025-01-01T00:00:00"
+
+# Il va falloir faire une boucle qui me fabrique mes fichiers annuels, et donc les bornes de
+# l'intervalle
+
+annee_deb = 2001
+annee_fin = 2025
+annees = list(range(2000, annee_fin + 1))
+
 # ==================================================================================================================
 # Fonction de récupération de l'identifiant du produit Copernicus contenant la variable : hauteur des vagues 
 # ==================================================================================================================
@@ -108,7 +122,7 @@ def choisir_dataset_id(
     return dataset_choisi
 
 # =================================================================================================================
-# Fonction d'assignation automatique du dataset par défaut si détection du produit par défaut'
+# Fonction d'assignation automatique du dataset par défaut si détection du produit par défaut
 # =================================================================================================================
 
 def choisir_id_dataset_sachant_par_defaut(

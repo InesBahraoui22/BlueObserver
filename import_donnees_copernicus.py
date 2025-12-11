@@ -52,15 +52,17 @@ LAT_MIN, LAT_MAX = 27.0, 69.0 # Sud, Nord
 polygone = (-25, 45, 27, 69) # Ouest, Est, Sud, Nord
 # On change le format des dates pour coller à celui demandé par Copernicus, aka format ISO 8601
 date_debut = "2000-01-01T00:00:00"
+
 date_fin = "2025-01-01T00:00:00"
 
 # Il va falloir faire une boucle qui me fabrique mes fichiers annuels, et donc les bornes de
 # l'intervalle
 
-annee_deb = 2001
-annee_fin = 2025
-annees = list(range(2000, 2025 + 1))
+annee_deb = 2000
 
+annee_fin = 2025
+annees = list(range(annee_deb, annee_fin + 1))
+print(annees)
 #_______________________________________________________________________________________________
 
 
@@ -107,59 +109,6 @@ donnees_vagues = choisir_id_dataset_sachant_par_defaut(
     product_id = produit_id_vagues,
     mapping_defaut = MAPPING_DATASETS_PAR_DEFAUT)
 print(f"Le dataset utilisé pour obtenir des données sur les vagues est '{donnees_vagues}'.")
-# Inspection des datasets stockés dans ce catalogues et récupération de leurs id
-for dataset in catalogue_temp.products[0].datasets:
-    print(dataset.dataset_id)
-
-# Inspection des datasets stockés dans ce catalogues et récupération de leurs id
-for dataset in catalogue_vagues.products[0].datasets:
-    print(dataset.dataset_id)
-
-# Récupération des noms des variables du premier dataset, celui qui nous intéresse
-variables = catalogue_temp.products[0].datasets[0].versions[0].parts[0].services[0].variables
-print(variables)
-
-for variable in variables:
-    print(f"Standard name : {variable.standard_name}")
-    print(f"Shortname : {variable.short_name}")
-    print(f"Unité : {variable.units}")
-    print(" ")
-
-"""
-C-GLORS
-
-Développé par le CMCC (Italie).
-Assimilation d'observations via une technique variational/EnKF hybride.
-Très bon sur circulation de surface et SST.
-
-2️⃣ GLORYS2V4
-
-Produit par Mercator Ocean International (France).
-Très utilisé dans les atlas Copernicus.
-Excellente représentation de la circulation de subsurface, des courants de bord ouest, et des structures fines en haute résolution.
-
-3️⃣ ORAS5
-
-Réanalyse océanique du ECMWF.
-Très robuste pour les bilan thermiques, chaleur océanique, et la variabilité interannuelle.
-Approche d'assimilation spécifique (NEMOVAR).
-"""
-
-
-
-# Inspection des datasets stockés dans ce catalogues et récupération de leurs id
-for dataset in catalogue_vagues.products[0].datasets:
-    print(dataset.dataset_id)
-
-# Récupération des noms des variables du premier dataset, celui qui nous intéresse
-variables = catalogue_vagues.products[0].datasets[0].versions[0].parts[0].services[0].variables
-print(variables)
-
-for variable in variables:
-    print(f"Standard name : {variable.standard_name}")
-    print(f"Shortname : {variable.short_name}")
-    print(f"Unité : {variable.units}")
-    print(" ")
 
 
 
