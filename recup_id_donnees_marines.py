@@ -218,6 +218,29 @@ def choisir_variable_dans_dataset(
             "Vérifiez éventuellement l'orthographe."
         )
     
-    variables_disponibles = dataset_trouve?
+    variables_disponibles = dataset_trouve.versions[0].parts[0].services[0].variables
+    shortnames_disponibles = [var.short_name for var in variables_disponibles]
 
+    print(f"Variables disponibles dans le dataset '{dataset_id}' :")
+    for var in variables_disponibles :
+        print(f"Standard name : {var.standard_name}")
+        print(f"Shortname     : {var.short_name}")
+        print(f"Unité         : {var.units}")
+        print(" ")
 
+    var_defaut_dataset = mapping_vars_par_defaut.get(dataset_id, None)
+    
+    message = "Veuillez renseigner le short name de la variable que vous souhaitez retenir."
+    if var_defaut_dataset is not None :
+        message += f"Par défaut, la variable sera {var_defaut_dataset}"
+    message += " : "
+
+    short_name = input(message).strip()
+
+    if short_name != "" :
+        if short_name not in shortnames_disponibles :
+            raise ValueError(f"La variable '{short_name}' n'existe pas dans le dataset retenu"
+                             "Vérifiez éventuellement l'orthographe."
+            )
+        print(f"La variable choisie est : {short_name}")
+    return short_name
