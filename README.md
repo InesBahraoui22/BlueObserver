@@ -40,6 +40,8 @@ graph TD
     H --> I[Insight Generation] 
 
 ```
+
+
 BlueObserver/
 ├── app.py                      # Flask application
 ├── requirements.txt            # Python dependencies
@@ -87,11 +89,8 @@ BlueObserver/
 
 ## 👤 Author
 
-**Ines Bahraoui** - Master 1 Oceanography Student
+**Ines Bahraoui** 
 
-- **GitHub**: [@InesBahraoui22](https://github.com/InesBahraoui22)
-- **Project Repository**: [BlueObserver](https://github.com/InesBahraoui22/BlueObserver)
-- **Academic Context**: M1 Project in Oceanography and Marine Data Science
 
 ## 📄 License
 
