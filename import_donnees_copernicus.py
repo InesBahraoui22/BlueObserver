@@ -2,14 +2,14 @@
 ###################### Importation des fichiers COPERNICUS par codage #############################
 ###################################################################################################
 
-# ÉTAPE 1   | Importation des packages nécessaires aux téléchargements
 
 """
+PRÉAMBULE
 Comme le type des fichiers téléchargés et les organes qui contrôlent leur téléchargements sont
 différents de ceux d'OBIS, on n'utilise pas les mêmes packages pour faire la récupération.
 Ainsi, comme les satanées données copernicus sont des sortes d'images 3D (lon,lat,temps), je ne peux pas
-directement les traduire en tableaux. En plus il ne ma faut pas le monde entier, seulement la
-fenêtre géographique que j'ai sélectionné, donc il faut que :
+directement les traduire en tableaux. En plus il ne me faut pas le monde entier, seulement la
+fenêtre géographique que nous avons pré-définie, donc il faut que :
 1 - J'ouvre l'image
 2 - j'extraie ma zone d'intérêt
 3 - je convertie les dimensions en index temporel
@@ -19,14 +19,17 @@ D'ailleurs il fallait aussi encoder les paramètres dans une URL qu'on construis
 requêtes à l'API. C'était parce qu'on récupérait un tableau JSON. Ici c'est un NetCDF (quel plaisir)
 via la toolbox de Copernicus, donc on peut pas faire pareil :)))
 
-donc tous les autres packages utilisés pour obis deviennent inutils ils servaient à construire l'URL
-et appeler l'API.
+donc tous les autres packages utilisés pour Obis deviennent inutiles puisqu'ils servaient à construire
+l'URL et appeler l'API.
 
-# finalement, après dispute avec la documentation et défaite de ne pas pouvoir éviter de me servir de
+# Finalement, après dispute avec la documentation et défaite de ne pas pouvoir éviter de me servir de
 # chatGPT, on utilse pathlib plutôt que os.path
 
-Par contre, on utilise ce que conseille la docu du site
+Par contre, on utilise ce que conseille la docu du site, parce que chatGPT est complètement inutile.
 """
+
+# ÉTAPE 1   | Importation des packages nécessaires aux téléchargements
+
 import pprint
 from pathlib import Path
 import pandas as pd
@@ -34,7 +37,8 @@ import xarray as xr
 import copernicusmarine as cm
 import inspect
 import os # Pour lire et écrire des fichiers
-
+from recup_id_donnees_marines import recuperer_product_id_temp
+from recup_id_donnees_marines import recuperer_product_id_vagues
 #________________________________________________________________________________________________
 
 
@@ -73,6 +77,7 @@ doss_temp.mkdir(exist_ok = True)
 # ÉTAPE 4 | On récupère les adresses et les appelations qui nous intéressent
 
 #  Inspection du fichier qui nous intéresse sur Copernicus concernant la TEMPÉRATURE :
+produit_id_temp = recuperer_product_id_temp()
 catalogue_temp = cm.describe(product_id="GLOBAL_MULTIYEAR_PHY_ENS_001_031")
 pprint.pprint(catalogue_temp)
 
