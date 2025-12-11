@@ -4,6 +4,8 @@ import glob
 import os
 
 # Configuration
+
+
 dossier_nc = r"C:/Users/chloe/OneDrive/Bureau/M1_SSD/DEVELOPPEMENT_LOGICIEL/vagues"
 variable_interesse = "VHM0"
 
@@ -45,3 +47,8 @@ df.to_csv(fichier_sortie, index=False)
 print(f"✓ Fichier créé : {fichier_sortie}")
 
 ds.close()
+
+moyennage pour temp et vagues 
+suppression des .nc
+suppression des dossiers temp et vagues
+déplacement des fichiers dans donnees_marines
