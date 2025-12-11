@@ -110,7 +110,22 @@ donnees_vagues = choisir_id_dataset_sachant_par_defaut(
     mapping_defaut = MAPPING_DATASETS_PAR_DEFAUT)
 print(f"Le dataset utilisé pour obtenir des données sur les vagues est '{donnees_vagues}'.")
 
+variable_temp, unite_temp = choisir_variable_dans_dataset(
+    catalogue = catalogue_temp,
+    dataset_id = donnees_temp,
+    type_variable = "temp",
+    mapping_vars_par_defaut = MAPPING_VARS_DEFAUT)
+print(f"La variable utilisée pour connaître la température est '{variable_temp}'."
+      f"\n Elle est exprimée en {unite_temp}.")
 
+
+variable_vagues, unite_vagues = choisir_variable_dans_dataset(
+    catalogue = catalogue_vagues,
+    dataset_id = donnees_vagues,
+    type_variable = "vagues",
+    mapping_vars_par_defaut = MAPPING_VARS_DEFAUT)
+print("La variable utilisée pour connaître la hauteur des vagues"
+      f"\n est '{variable_vagues}'.Elle est exprimée en {unite_vagues}.")
 
 # ÉTAPE 5 | BOUCLE
 

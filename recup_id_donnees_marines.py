@@ -1,16 +1,18 @@
 ### Programme d'assignation des identifiants des produits copernicus, soient les variables destinées à se retrouver
 ### stocker dans le dossier "conditions_limitantes_sortie/conditions_marines"
 
+from datetime import datetime
 # =================================================================================================================
 # Fonction d'assignation de l'année la plus récente pour la récupération des données
 # =================================================================================================================
 
-def renseigner_dates_de_fin(date_fin,annee_fin) :
-    date_fin = "2025-01-01T00:00:00"
-
-    
-    annee_fin = 2025
+def renseigner_annee_fin():
+    """
+    Retourne l'année actuelle et la liste des années allant de 2000 à cette année.
+    """
+    annee_fin = datetime.now().year
     annees = list(range(2000, annee_fin + 1))
+    return annee_fin, annees
 
 # ==================================================================================================================
 # Fonction de récupération de l'identifiant du produit Copernicus contenant la variable : hauteur des vagues 
@@ -18,7 +20,7 @@ def renseigner_dates_de_fin(date_fin,annee_fin) :
 
 def recuperer_product_id_vagues(
         message = "Entrez l'identifiant du produit Copernicus que vous souhaitez utiliser. "
-        "Si vous ne proposez rien, le produit utilisé par les créateurs de ce programme sera exploité par défaut : ",
+        "\n Si vous ne proposez rien, le produit utilisé par les créateurs de ce programme sera exploité par défaut : ",
         produit_defaut_vagues = "GLOBAL_MULTIYEAR_WAV_001_032"):
     produit_id_vagues = input(f"{message} (défaut ={produit_defaut_vagues}) : ").strip()  # enlève les espaces au début/fin
 
@@ -35,7 +37,7 @@ def recuperer_product_id_vagues(
 
 def recuperer_product_id_temp(
         message = "Entrez l'identifiant du produit Copernicus que vous souhaitez utiliser. "
-        "Si vous ne proposez rien, le produit utilisé par les créateurs de ce programme sera exploité par défaut : ",
+        "\n Si vous ne proposez rien, le produit utilisé par les créateurs de ce programme sera exploité par défaut : ",
         produit_defaut_temp = "GLOBAL_MULTIYEAR_PHY_ENS_001_031"):
     produit_id_temp = input(f"{message} (défaut ={produit_defaut_temp}) : ").strip()  # enlève les espaces au début/fin
 
@@ -52,8 +54,8 @@ def recuperer_product_id_temp(
 def choisir_dataset_id(
         catalogue,
         message = "Entrez le nom du dataset dont vous souhaitez utiliser le panel de variables."
-        "Si vous ne proposez rien, l'id du dataset du produit utilisé par les créateurs de ce programme sera "
-        "exploité par défaut : ") :
+        "\n Si vous ne proposez rien, l'id du dataset du produit utilisé par les créateurs de ce programme sera "
+        "\n exploité par défaut : ") :
     
     """
     Permet à l'utilisateur de choisir un dataset_id parmi ceux d'un catalogue Copernicus.
@@ -101,13 +103,13 @@ def choisir_dataset_id(
                 dataset_choisi = candidats[0]
                 print(
                     f"Aucun choix n'a été fait, la sélection se fait automatiquement sur le"
-                    "dataset mensuel : {dataset_choisi}")
+                    "\n dataset mensuel : {dataset_choisi}")
                 return dataset_choisi
         
         # si aucun dataset ne se termine avec un suffixe indiquant le pas d'observation :
         raise ValueError("Impossible de sélectionner automatiquement un dataset puisque leurs suffixes"
-                         "sont non-existants ou ne permettent pas de connaître la périodicité de la "
-                         "mesure ({priorites})."
+                         "\n sont non-existants ou ne permettent pas de connaître la périodicité de la "
+                         "\n mesure ({priorites})."
 
         )
     
@@ -159,13 +161,13 @@ def choisir_id_dataset_sachant_par_defaut(
         if dataset_defaut in dataset_ids :
             print(
                 f"Le produit utilisé par les créateurs a été détecté ({product_id})."
-                f"  Par conséquent, le dataset concordant est utilisé par défaut : {dataset_defaut}"
+                f"\n Par conséquent, le dataset concordant est utilisé par défaut : {dataset_defaut}"
             )
             return dataset_defaut
         else:
             print(
                 f"Attention : le dataset par défaut '{dataset_defaut}' n'existe pas "
-                "dans ce catalogue pour product_id = {product_id}.")
+                "\ndans ce catalogue pour product_id = {product_id}.")
     return choisir_dataset_id(catalogue)
 
 # ==============================================================================================================
@@ -197,9 +199,8 @@ def choisir_variable_dans_dataset(
 
     Retourne
     --------
-    str
-        Le shortname de la variable à utiliser.
-
+    (str, str)
+        (shortname de la variable à utiliser, unité associée)
     """
          
     if mapping_vars_par_defaut is None:
@@ -215,7 +216,7 @@ def choisir_variable_dans_dataset(
     if dataset_trouve is None :
         raise ValueError(
             f"Le dataset '{dataset_id}' est introuvable dans le catalogue."
-            "Vérifiez éventuellement l'orthographe."
+            "\nVérifiez éventuellement l'orthographe."
         )
     
     variables_disponibles = dataset_trouve.versions[0].parts[0].services[0].variables
@@ -240,7 +241,49 @@ def choisir_variable_dans_dataset(
     if short_name != "" :
         if short_name not in shortnames_disponibles :
             raise ValueError(f"La variable '{short_name}' n'existe pas dans le dataset retenu"
-                             "Vérifiez éventuellement l'orthographe."
+                             "\nVérifiez éventuellement l'orthographe."
             )
         print(f"La variable choisie est : {short_name}")
-    return short_name
+        unite = next(var.units for var in variables_disponibles if var.short_name == short_name)
+        return short_name, unite
+
+    if (var_defaut_dataset is not None) and (var_defaut_dataset in shortnames_disponibles) :
+        print(
+        "Aucun short_name n'a été renseigné et le dataset des créateurs du programme"
+        "\nest détecté. Celui-ci et la variable ({var_defaut_dataset}) qu'ils ont utilisés vont être utilisés."
+        )
+        unite = next(var.units for var in variables_disponibles if var.short_name == var_defaut_dataset)
+        return var_defaut_dataset, unite
+    
+    if type_variable == "vagues" :
+        ["VHM0",
+         "VHM0_WW",
+         "VHM0_SW1", 
+         "VHM0_SW2"]
+    elif type_variable == "temp" :
+        preferences = ["thetao_cglo",
+                       "thetao_oras",
+                       "thetao_glor",
+                       "thetao",
+                       "sst",
+                       "tos"]
+    else :
+        preferences = []
+    
+    for candidat in preferences :
+        if candidat in shortnames_disponibles :
+            print(
+                "Aucun short name n'a été renseigné mais le dataset utilisé est différent "
+                f"\nde celui utilisé par les créateurs du programme pour le type '{type_variable}"
+                f"\n : {candidat}"
+            )
+            unite = next(v.units for v in variables_disponibles if v.short_name == candidat)
+            return candidat, unite
+    
+    raise ValueError(
+        "Impossible de choisir automatiquement une variable. Il est nécessaire"
+        "\n de renseigner manuellement le short name de la variable souhaitée,"
+        "\n éventuellement de vérifier l'orthographe."
+        
+    )
+
