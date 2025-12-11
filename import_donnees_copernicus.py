@@ -41,6 +41,7 @@ from recup_id_donnees_marines import recuperer_product_id_temp
 from recup_id_donnees_marines import recuperer_product_id_vagues
 from recup_id_donnees_marines import choisir_dataset_id
 from recup_id_donnees_marines import choisir_id_dataset_sachant_par_defaut
+from datetime import datetime
 #________________________________________________________________________________________________
 
 
@@ -50,13 +51,6 @@ LON_MIN, LON_MAX = -25.0, 45.0 # Ouest, Est
 LAT_MIN, LAT_MAX = 27.0, 69.0 # Sud, Nord
 
 polygone = (-25, 45, 27, 69) # Ouest, Est, Sud, Nord
-# On change le format des dates pour coller à celui demandé par Copernicus, aka format ISO 8601
-date_debut = "2000-01-01T00:00:00"
-
-date_fin = "2025-01-01T00:00:00"
-
-# Il va falloir faire une boucle qui me fabrique mes fichiers annuels, et donc les bornes de
-# l'intervalle
 
 annee_deb = 2000
 
@@ -80,23 +74,26 @@ doss_temp.mkdir(exist_ok = True)
 
 # ÉTAPE 4 | On récupère les adresses et les appelations qui nous intéressent
 
-#  Inspection du fichier qui nous intéresse sur Copernicus concernant la TEMPÉRATURE :
-produit_id_temp = recuperer_product_id_temp()
-catalogue_temp = cm.describe(product_id = produit_id_temp)
-print("Produit choisi :", produit_id_temp)
-
-#  Inspection du fichier qui nous intéresse sur Copernicus concernant les VAGUES :
-produit_id_vagues = recuperer_product_id_vagues()
-catalogue_vagues = cm.describe(product_id = produit_id_vagues)
-print("Produit choisi :", produit_id_vagues)
-
-
-# ÉTAPE 4 | On récupère les adresses et les appelations qui nous intéressent
-
+# Dico des outils et ressources par défaut
 MAPPING_DATASETS_PAR_DEFAUT = {
     "GLOBAL_MULTIYEAR_PHY_ENS_001_031": "cmems_mod_glo_phy-all_my_0.25deg_P1D-m",
     "GLOBAL_MULTIYEAR_WAV_001_032": "cmems_mod_glo_wav_my_0.2deg_PT3H-i",
 }
+
+MAPPING_VARS_DEFAUT = {
+    "cmems_mod_glo_phy-all_my_0.25deg_P1D-m": "thetao_cglo",  # adapte si besoin
+    "cmems_mod_glo_wav_my_0.2deg_PT3H-i": "VHM0",
+}
+
+#       VAGUES :
+produit_id_vagues = recuperer_product_id_vagues()
+catalogue_vagues = cm.describe(product_id = produit_id_vagues)
+
+#       TEMPÉRATURE :
+produit_id_temp = recuperer_product_id_temp()
+catalogue_temp = cm.describe(product_id = produit_id_temp)
+print("Produit choisi :", produit_id_temp)
+
 
 donnees_temp = choisir_id_dataset_sachant_par_defaut(
     catalogue = catalogue_temp,
@@ -141,9 +138,10 @@ for an in annees :
                                                # celui que je veux.)
 
     print(f"Température : téléchargement vers {fichier_temp}")
+    print(f"\nVariable choisie : {variable_temp} ({unite_temp})")
 
     produit_temp = cm.subset(dataset_id = donnees_temp,
-                             variables = ["thetao_cglo"],
+                             variables = [variable_temp],
                              minimum_latitude = LAT_MIN,
                              maximum_latitude = LAT_MAX,
                              minimum_longitude = LON_MIN,
@@ -159,7 +157,7 @@ for an in annees :
                              )
     
     print(f"Téléchargement du fichier {an} (réponse : {produit_temp.status})")
-
+    print(" ")
 
     # LES  VAGUES
     fichier_vagues = doss_vagues /f"vagues_{an}.nc"
@@ -167,7 +165,7 @@ for an in annees :
     print(f"Téléchargement des données de l'an {2000} des vagues vers {fichier_vagues}")
     
     produit_vagues = cm.subset(dataset_id = donnees_vagues,
-                             variables = ["VHM0"], # variable de surface
+                             variables = [variable_vagues],
                              minimum_latitude = LAT_MIN,
                              maximum_latitude = LAT_MAX,
                              minimum_longitude = LON_MIN,
@@ -181,7 +179,7 @@ for an in annees :
     )
                              
     print(f"Téléchargement du fichier {an} (réponse : {produit_vagues.status})")
-
+    print(" ")
 
 """
 (dataset_id: Optional[str] = None,
