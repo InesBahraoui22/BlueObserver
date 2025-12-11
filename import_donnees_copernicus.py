@@ -37,10 +37,10 @@ import xarray as xr
 import copernicusmarine as cm
 import inspect
 import os # Pour lire et écrire des fichiers
-from recup_id_donnees_marines import recuperer_product_id_temp
-from recup_id_donnees_marines import recuperer_product_id_vagues
-from recup_id_donnees_marines import choisir_dataset_id
-from recup_id_donnees_marines import choisir_id_dataset_sachant_par_defaut
+from fonctions_import_copernicus import recuperer_product_id_temp
+from fonctions_import_copernicus import recuperer_product_id_vagues
+from fonctions_import_copernicus import choisir_dataset_id
+from fonctions_import_copernicus import choisir_id_dataset_sachant_par_defaut
 from datetime import datetime
 #________________________________________________________________________________________________
 
