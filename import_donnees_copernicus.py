@@ -78,13 +78,19 @@ doss_temp.mkdir(exist_ok = True)
 
 #  Inspection du fichier qui nous intéresse sur Copernicus concernant la TEMPÉRATURE :
 produit_id_temp = recuperer_product_id_temp()
-catalogue_temp = cm.describe(product_id="GLOBAL_MULTIYEAR_PHY_ENS_001_031")
-pprint.pprint(catalogue_temp)
+catalogue_temp = cm.describe(product_id = produit_id_temp)
+# pprint.pprint(catalogue_temp)
+print("Produit choisi :", produit_id_temp)
+
 
 # Inspection des datasets stockés dans ce catalogues et récupération de leurs id
 for dataset in catalogue_temp.products[0].datasets:
     print(dataset.dataset_id)
 
+# Inspection des datasets stockés dans ce catalogues et récupération de leurs id
+for dataset in catalogue_vagues.products[0].datasets:
+    print(dataset.dataset_id)
+    
 # Récupération des noms des variables du premier dataset, celui qui nous intéresse
 variables = catalogue_temp.products[0].datasets[0].versions[0].parts[0].services[0].variables
 print(variables)
@@ -114,9 +120,11 @@ Réanalyse océanique du ECMWF.
 Très robuste pour les bilan thermiques, chaleur océanique, et la variabilité interannuelle.
 Approche d'assimilation spécifique (NEMOVAR).
 """
+
 #  Inspection du fichier qui nous intéresse sur Copernicus concernant les VAGUES :
-catalogue_vagues = cm.describe(product_id="GLOBAL_MULTIYEAR_WAV_001_032")
-pprint.pprint(catalogue_vagues)
+produit_id_vagues = recuperer_product_id_vagues()
+catalogue_vagues = cm.describe(product_id = produit_id_vagues)
+# pprint.pprint(catalogue_vagues)
 
 # Inspection des datasets stockés dans ce catalogues et récupération de leurs id
 for dataset in catalogue_vagues.products[0].datasets:
