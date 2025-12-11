@@ -8,12 +8,9 @@
 def renseigner_dates_de_fin(date_fin,annee_fin) :
     date_fin = "2025-01-01T00:00:00"
 
-# Il va falloir faire une boucle qui me fabrique mes fichiers annuels, et donc les bornes de
-# l'intervalle
-
-annee_deb = 2001
-annee_fin = 2025
-annees = list(range(2000, annee_fin + 1))
+    
+    annee_fin = 2025
+    annees = list(range(2000, annee_fin + 1))
 
 # ==================================================================================================================
 # Fonction de récupération de l'identifiant du produit Copernicus contenant la variable : hauteur des vagues 
@@ -170,3 +167,57 @@ def choisir_id_dataset_sachant_par_defaut(
                 f"Attention : le dataset par défaut '{dataset_defaut}' n'existe pas "
                 "dans ce catalogue pour product_id = {product_id}.")
     return choisir_dataset_id(catalogue)
+
+# ==============================================================================================================
+# Fonction d'exploration et de choix des variables exploitées pour hauteur des vagues et température de la mer
+# ==============================================================================================================
+
+def choisir_variable_dans_dataset(
+        catalogue,
+        dataset_id,
+        type_variable,
+        mapping_vars_par_defaut = None) :
+        
+        
+    """
+    Affiche les variables d'un dataset donné et permet à l'utilisateur d'en choisir une.
+
+    Paramètres
+    ----------
+    catalogue : CopernicusMarineCatalogue
+        Résultat de cm.describe(product_id=...).
+    dataset_id : str
+        Nom du dataset (par ex. 'cmems_mod_glo_phy-all_my_0.25deg_P1D-m').
+        En pratique : la valeur renvoyée par choisir_id_dataset_sachant_par_defaut().
+    type_variable : str
+        'temp' pour température de la mer, 'vagues' pour les vagues.
+        Sert à faire un choix intelligent si l'utilisateur ne tape rien.
+    mapping_vars_par_defaut : dict[str, str]
+        Dictionnaire optionnel : {dataset_id: shortname_variable_par_defaut}.
+
+    Retourne
+    --------
+    str
+        Le shortname de la variable à utiliser.
+
+    """
+         
+    if mapping_vars_par_defaut is None:
+        mapping_vars_par_defaut = {}
+    
+    datasets = catalogue.products[0].datasets
+    dataset_trouve = None
+    for d in datasets :
+        if d.dataset_id == dataset_id:
+            dataset_trouve = d
+            break
+    
+    if dataset_trouve is None :
+        raise ValueError(
+            f"Le dataset '{dataset_id}' est introuvable dans le catalogue."
+            "Vérifiez éventuellement l'orthographe."
+        )
+    
+    variables_disponibles = dataset_trouve?
+
+

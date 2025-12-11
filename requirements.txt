@@ -39,6 +39,7 @@ openmeteo_sdk==1.23.0
 packaging==25.0
 pandas==2.3.3
 partd==1.4.2
+pathlib==1.0.1
 platformdirs==4.5.1
 pyarrow==22.0.0
 pydantic==2.12.5
