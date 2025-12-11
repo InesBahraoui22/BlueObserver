@@ -19,29 +19,18 @@ BlueObserver is an interactive web application that visualizes marine species ob
 - 📱 **Responsive design** for all devices
 
 
-
-graph LR
-    A[OBIS API] --> D[Data Fusion]
+```mermaid
+graph TD
+   A[OBIS API] --> D[Data Fusion]
     B[Copernicus Marine] --> D
     C[Meteo Data] --> D
     D --> E[Final Points JSON]
     E --> F[Flask App]
     F --> G[Interactive Map]
 
-```mermaid
-graph TD
-    A[OBIS Species Data] --> E[Data Fusion & Cleaning]
-    B[Copernicus Temperature] --> E
-    C[Copernicus Wave Data] --> E
-    D[Meteorological Data] --> E
-    E --> F[Statistical Analysis]
-    F --> G[Feature Engineering]
-    G --> H[Interactive Visualization]
-    H --> I[Insight Generation] 
-
 ```
 
-
+```mermaid
 BlueObserver/
 ├── app.py                      # Flask application
 ├── requirements.txt            # Python dependencies
@@ -63,7 +52,7 @@ BlueObserver/
 └── especes/                   # Species data files
     └── nomsespecefin.csv      # Species name mapping
 
-
+```
 
 ## 📊 Features in Detail
 
