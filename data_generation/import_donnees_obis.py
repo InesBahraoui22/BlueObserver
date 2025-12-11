@@ -4,6 +4,7 @@ import os
 import csv
 import time
 import datetime as dt
+from pathlib import Path
 import requests
 
 # Définition des paramètres de filtration
@@ -16,9 +17,38 @@ START_DATE = "2000-01-01"  # Date définie comme début pour tous les fichiers
 END_DATE = dt.date.today().isoformat()  # "aujourd'hui" au format AAAA-MM-JJ ou en eng YYYY-MM-DD
 
 SPECIES = [
-    "Delphinus delphis",
-    "Balaenoptera acutorostrata"
+    "Balaenoptera acutorostrata",
+    "Balaenoptera edeni",
+    "Balaenoptera musculus",
+    "Balaenoptera physalus",
+    "Balaenoptera borealis",
+    "Eschrichtius robustus",
+    "Eubalaena glacialis",
+    "Feresa attenuata",
+    "Globicephala macrorhynchus",
+    "Globicephala melas",
+    "Grampus griseus",
+    "Hyperoodon ampullatus",
+    "Kogia sima",
+    "Lagenorhynchus acutus",
+    "Lagenorhynchus albirostratus",
+    "Mesoplodon bidens",
+    "Mesoplodon densirostris",
+    "Mesoplodon europaeus",
+    "Mesoplodon mirus",
+    "Monachus monachus",
+    "Odobenus rosmarus",
+    "Orcinus orca",
+    "Peponocephala electra",
+    "Pseudorca crassidens",
+    "Stenella attenuata",
+    "Stenella frontalis",
+    "Steno bredanensis",
+    "Ziphius cavirostris"
     ]
+
+
+FILE_PATH = "../data/obis_observation_espèces/"
 
 SIZE = 10000  # Nombre d'enregistrements à demander par sous-requête
 
@@ -26,7 +56,6 @@ SLEEP = 0.2  # Pause entre chaque requête pour ne pas surcharger l'API
 
 FIELDS = ["scientificName", "decimalLongitude", "decimalLatitude", "eventDate"]
 BASE_URL = "https://api.obis.org/v3/occurrence"
-
 OFFSET_FILE = "offset.state"
 
 # POLYGÔNE zone de délimitation
@@ -37,6 +66,11 @@ POLYGON = f"""POLYGON((
     {LON_MIN} {LAT_MAX},
     {LON_MIN} {LAT_MIN}
     ))"""
+
+SCRIPT_DIR = Path(__file__).parent
+DATA_DIR = SCRIPT_DIR / FILE_PATH
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+OFFSET_PATH = SCRIPT_DIR / OFFSET_FILE
 
 
 def fetch_page(session, base_url, scientific_name, polygon, start_date, end_date, size, offset, fields):
@@ -82,7 +116,7 @@ def save_offset(file_path, offset):
 
 
 def get_species_data(session, species):
-    tsv_output_path = f"{species.replace(' ', '_')}.tsv"
+    tsv_output_path = DATA_DIR / f"{species.replace(' ', '_')}.tsv"
 
     # Récupération du nombre total d'occurrences disponibles
     total_occurences_request = fetch_page(
@@ -104,13 +138,13 @@ def get_species_data(session, species):
         return
 
     # Fichier temporaire : pour reprendre là où on s'était arrêté si crash
-    offset = load_offset(OFFSET_FILE)
+    offset = load_offset(OFFSET_PATH)
 
     # Fabrication du TSV
     writer = None
     written = offset
 
-    with open(tsv_output_path, "w", newline="", encoding="utf-8") as f:
+    with tsv_output_path.open("w", newline="", encoding="utf-8") as f:
         while offset < total_occurences:
             remaining = total_occurences - offset
             page_size = min(SIZE, remaining)
@@ -142,13 +176,13 @@ def get_species_data(session, species):
             print(f"Téléchargées : {written}/{total_occurences}")
 
             offset += n
-            save_offset(OFFSET_FILE, offset)
+            save_offset(OFFSET_PATH, offset)
             time.sleep(SLEEP)
 
     print(f"✅ Terminé (ou stoppé proprement). Lignes écrites : {written}/{total_occurences}")
 
-    if os.path.exists(OFFSET_FILE) and written >= total_occurences:
-        os.remove(OFFSET_FILE)
+    if OFFSET_PATH.exists() and written >= total_occurences:
+        OFFSET_PATH.unlink()
 
 
 def main():
