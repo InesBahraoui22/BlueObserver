@@ -102,8 +102,57 @@ def choisir_dataset_id(
     
     if dataset_choisi not in dataset_ids:
         raise ValueError(
-            f"Le dataset '{}' renseigné ne correspond à aucun de ceux appartenant au produit"
-        )
+            f"Le dataset '{dataset_choisi}' renseigné ne correspond à aucun de ceux appartenant au produit")
     
     print(f"Le dataset selectionné est {dataset_choisi}")
     return dataset_choisi
+
+# =================================================================================================================
+# Fonction d'assignation automatique du dataset par défaut si détection du produit par défaut'
+# =================================================================================================================
+
+def choisir_id_dataset_sachant_par_defaut(
+        catalogue,
+        product_id,
+        mapping_defaut) :
+    """
+    Choisit un dataset_id pour un produit Copernicus, avec gestion de cas par défaut.
+
+    - Si product_id est dans mapping_defauts :
+        → on essaie de choisir le dataset indiqué dans mapping_defauts[product_id].
+        → si ce dataset n'existe pas dans le catalogue : on bascule sur choisir_dataset_id().
+    - Sinon :
+        → on appelle directement choisir_dataset_id().
+
+    Paramètres
+    ----------
+    catalogue : CopernicusMarineCatalogue
+        Résultat de cm.describe(product_id=...).
+    product_id : str
+        Identifiant du produit choisi (par l'utilisateur ou par défaut).
+    mapping_defauts : dict
+        Dictionnaire {product_id: dataset_id_defaut}.
+
+    Retourne
+    --------
+    str
+        Le dataset_id retenu.
+    """
+
+    datasets = catalogue.products[0].datasets
+    dataset_ids = [d.dataset_id for d in datasets]
+
+    # Cas où on a un dataset par défaut associé à ce product_id
+    if product_id in mapping_defaut :
+        dataset_defaut = mapping_defaut[product_id]
+        if dataset_defaut in dataset_ids :
+            print(
+                f"Le produit utilisé par les créateurs a été détecté ({product_id})."
+                f"  Par conséquent, le dataset concordant est utilisé par défaut : {dataset_defaut}"
+            )
+            return dataset_defaut
+        else:
+            print(
+                f"Attention : le dataset par défaut '{dataset_defaut}' n'existe pas "
+                "dans ce catalogue pour product_id = {product_id}.")
+    return choisir_dataset_id(catalogue)

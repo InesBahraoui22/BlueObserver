@@ -39,6 +39,8 @@ import inspect
 import os # Pour lire et écrire des fichiers
 from recup_id_donnees_marines import recuperer_product_id_temp
 from recup_id_donnees_marines import recuperer_product_id_vagues
+from recup_id_donnees_marines import choisir_dataset_id
+from recup_id_donnees_marines import choisir_id_dataset_sachant_par_defaut
 #________________________________________________________________________________________________
 
 
@@ -76,86 +78,30 @@ doss_temp.mkdir(exist_ok = True)
 
 # ÉTAPE 4 | On récupère les adresses et les appelations qui nous intéressent
 
-#       VAGUES
+MAPPING_DATASETS_PAR_DEFAUT = {
+    "GLOBAL_MULTIYEAR_PHY_ENS_001_031": "cmems_mod_glo_phy-all_my_0.25deg_P1D-m",
+    "GLOBAL_MULTIYEAR_WAV_001_032": "cmems_mod_glo_wav_my_0.2deg_PT3H-i",
+}
 
-#  Inspection du fichier qui nous intéresse sur Copernicus concernant les VAGUES :
+#       VAGUES :
 produit_id_vagues = recuperer_product_id_vagues()
 catalogue_vagues = cm.describe(product_id = produit_id_vagues)
-#pprint.pprint(catalogue_vagues)
 
-# Inspection des datasets stockés dans ce catalogues et récupération de leurs id
-for dataset in catalogue_vagues.products[0].datasets:
-    print(dataset.dataset_id)
 
-# Récupération des noms des variables du premier dataset, celui qui nous intéresse
-variables = catalogue_vagues.products[0].datasets[0].versions[0].parts[0].services[0].variables
-print(variables)
-
-for variable in variables:
-    print(f"Standard name : {variable.standard_name}")
-    print(f"Shortname : {variable.short_name}")
-    print(f"Unité : {variable.units}")
-    print(" ")
-
-dataset_ids = []
-
-for product in catalogue_vagues.products:
-
-    for dataset in product.datasets:
-        dataset_ids.append(dataset.dataset_id)
-
-for ds in dataset_ids:
-    print(ds)
-
-#       TEMPÉRATURE
-
-#  Inspection du fichier qui nous intéresse sur Copernicus concernant la TEMPÉRATURE :
+#       TEMPÉRATURE :
 produit_id_temp = recuperer_product_id_temp()
 catalogue_temp = cm.describe(product_id = produit_id_temp)
-#pprint.pprint(catalogue_temp)
 print("Produit choisi :", produit_id_temp)
 
 
-# Inspection des datasets stockés dans ce catalogues et récupération de leurs id
-for dataset in catalogue_temp.products[0].datasets:
-    print(dataset.dataset_id)
+donnees_temp = choisir_id_dataset_sachant_par_defaut(
+    catalogue = catalogue_temp,
+    product_id = produit_id_temp,
+    mapping_defaut = MAPPING_DATASETS_PAR_DEFAUT)
+print(f"Le dataset utilisé pour obtenir des données sur la température de la mer est '{donnees_temp}'.")
 
-# Récupération des noms des variables du premier dataset, celui qui nous intéresse
-variables = catalogue_temp.products[0].datasets[0].versions[0].parts[0].services[0].variables
-# print(variables)
-
-for variable in variables:
-    print(f"Standard name : {variable.standard_name}")
-    print(f"Shortname : {variable.short_name}")
-    print(f"Unité : {variable.units}")
-    print(" ")
-
-"""
-C-GLORS
-
-Développé par le CMCC (Italie).
-Assimilation d'observations via une technique variational/EnKF hybride.
-Très bon sur circulation de surface et SST.
-
-2️⃣ GLORYS2V4
-
-Produit par Mercator Ocean International (France).
-Très utilisé dans les atlas Copernicus.
-Excellente représentation de la circulation de subsurface, des courants de bord ouest, et des structures fines en haute résolution.
-
-3️⃣ ORAS5
-
-Réanalyse océanique du ECMWF.
-Très robuste pour les bilan thermiques, chaleur océanique, et la variabilité interannuelle.
-Approche d'assimilation spécifique (NEMOVAR).
-"""
-
-
-donnees_temp = "cmems_mod_glo_phy-all_my_0.25deg_P1D-m" # identifiant du fichier pour temp,
-                                                        # récupéré dans la premier tentative
-                                                        # de récupération des données
-
-donnees_vagues = "cmems_mod_glo_wav_my_0.2deg_PT3H-i" # idem mais pour waves, même si on
-                                                      # abandonne le premier choix, puisque
-                                                      # c'étaient des moyennes mensuelles,
-                                                      # et j'ai besoin de plus précis
+donnees_vagues = choisir_id_dataset_sachant_par_defaut(
+    catalogue = catalogue_vagues,
+    product_id = produit_id_vagues,
+    mapping_defaut = MAPPING_DATASETS_PAR_DEFAUT)
+print(f"Le dataset utilisé pour obtenir des données sur les vagues est '{donnees_vagues}'.")
