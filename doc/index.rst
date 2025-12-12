@@ -47,7 +47,7 @@ Quick Install
 User guide book
 ===================
 
-See main README principal for additional details on the executing of the pipeline.
+See main README for additional details on the executing of the pipeline.
 
 .. toctree::
    :hidden:
