@@ -30,7 +30,6 @@ Par contre, on utilise ce que conseille la docu du site, parce que chatGPT est c
 
 # ÉTAPE 1   | Importation des packages nécessaires aux téléchargements
 
-import pprint
 from pathlib import Path
 import pandas as pd
 import xarray as xr
@@ -60,8 +59,7 @@ polygone = (-25, 45, 27, 69) # Ouest, Est, Sud, Nord
 
 annee_deb = 2000
 
-annee_fin = 2025
-annees = list(range(annee_deb, annee_fin + 1))
+annee_fin, annees = renseigner_annee_fin()
 print(annees)
 #_______________________________________________________________________________________________
 
@@ -226,4 +224,13 @@ for dossier in [doss_temp, doss_vagues] :
 print("La pipeline visant à récupérer et moyenner les données issues de Copernicus est à présent "
       "\nterminé. Les fichiers finaux sont dans :", conditions_marines)
 
+#_________________________________________________________________________________________
+
+# ÉTAPE 7 : 
+
+def creer_fichiers_tests_nc():
+    ...
+
+if __name__ == "__main__":
+    creer_fichiers_tests_nc()
 
