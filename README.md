@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/InesBahraoui22/BlueObserver?style=social)](https://github.com/InesBahraoui22/BlueObserver)
 
-## 📋 Overview
+## Overview
 
 BlueObserver is an interactive web application that visualizes marine species observations combined with oceanographic data (temperature, waves, wind, rain). The platform allows researchers and marine enthusiasts to explore species distribution patterns across different regions and seasons.
 
@@ -29,23 +29,23 @@ graph TD
 
 ```
 
-```mermaid
+```bash
 BlueObserver/
-├── data/                           # Toutes les données (brutes, traitées, finales)
-├── data_generation/                # Scripts du pipeline de données
-│   ├── import_donnees_obis.py      # Étape 1 : Récupération OBIS
-│   ├── import_donnees_copernicus.py# Étape 2 : Récupération Copernicus
-│   ├── enrich_meteo_data.py        # Étape 3 : Enrichissement météo
-│   ├── jointure.py                 # Étape 4 : Fusion finale
-│   ├── fonctions_import_copernicus.py # Fonctions helpers pour Copernicus
-│   └── openmeteo_functions.py      # Fonctions helpers pour Open-Meteo
-├── tests/                          # Tests unitaires pour chaque script
-├── doc/                            # Documentation, présentations, roadmap
-├── static/                         # Assets pour l'application web (CSS, JS, images)
-├── templates/                      # Templates HTML pour l'application web
-├── app.py                          # Application Flask principale
-├── requirements.txt                # Dépendances Python
-└── README.md                       # Ce fichier
+├── data/                               # Toutes les données (brutes, traitées, finales)
+├── data_generation/                    # Scripts du pipeline de données
+│   ├── import_donnees_obis.py          # Étape 1 : Récupération OBIS
+│   ├── import_donnees_copernicus.py    # Étape 2 : Récupération Copernicus
+│   ├── enrich_meteo_data.py            # Étape 3 : Enrichissement météo
+│   ├── jointure.py                     # Étape 4 : Fusion finale
+│   ├── fonctions_import_copernicus.py  # Fonctions helpers pour Copernicus
+│   └── openmeteo_functions.py          # Fonctions helpers pour Open-Meteo
+├── tests/                              # Tests unitaires pour chaque script
+├── doc/                                # Documentation, présentations, roadmap
+├── static/                             # Assets pour l'application web (CSS, JS, images)
+├── templates/                          # Templates HTML pour l'application web
+├── app.py                              # Application Flask principale
+├── requirements.txt                    # Dépendances Python
+└── README.md                           # Ce fichier
 ```
 
 ## Features in Detail
@@ -76,11 +76,11 @@ BlueObserver/
 **Chloé Monmont** 
 
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **OBIS** (Ocean Biodiversity Information System) for species occurrence data
 - **Copernicus Marine Service** for oceanographic data (temperature, waves)
@@ -136,15 +136,27 @@ python app.py
  **Ouvrir** : [http://localhost:5000](http://localhost:5000)
 
 
-## 🔧 Développement
+## Développement
 
 ### Générer les données
 ```bash
-# Exécuter le script de fusion
+# Se placer dans le dossier de génération de données 
+cd data_generation
+
+# Créer les données obis
+python import_donnes_obis.py
+
+# Créer les données copernicus
+python import_donnes_copernicus.py
+
+# Créer les points météorologiques
+python points.json.py
+
+# Fusionner les données précedemment créées 
 python finalpoints/jointure.py
 
 # Vérifier le fichier généré
-ls -lh finalpoints/final_points.json
+ls -lh ../data/final_points.json
 ```
 
 ### Redémarrer l'application
