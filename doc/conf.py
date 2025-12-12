@@ -18,7 +18,8 @@ extensions = ["sphinx_rtd_theme",
               "sphinx.ext.autodoc",      # Documentation automatique depuis les docstrings
               "sphinx.ext.githubpages",  # Pour GitHub Pages
               "sphinx.ext.napoleon",     # Support des docstrings Google/NumPy style
-              "sphinx.ext.viewcode"]               # Lien vers le code source]
+              "sphinxcontrib.mermaid",     
+              "sphinx.ext.viewcode"]     # Lien vers le code source]
 
 templates_path = ['_templates']
 exclude_patterns = []
