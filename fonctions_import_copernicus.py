@@ -6,6 +6,8 @@ import shutil
 import xarray as xr
 import pandas as pd
 from pathlib import Path
+import os
+
 
 # =================================================================================================================
 # Fonction d'assignation de l'année la plus récente pour la récupération des données

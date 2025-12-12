@@ -36,6 +36,7 @@ import pandas as pd
 import xarray as xr
 import copernicusmarine as cm
 import inspect
+import shutil
 import os # Pour lire et écrire des fichiers
 from fonctions_import_copernicus import recuperer_product_id_temp
 from fonctions_import_copernicus import recuperer_product_id_vagues

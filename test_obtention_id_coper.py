@@ -7,25 +7,25 @@
 PRÉAMBULE
 Comme le type des fichiers téléchargés et les organes qui contrôlent leur téléchargements sont
 différents de ceux d'OBIS, on n'utilise pas les mêmes packages pour faire la récupération.
-Ainsi, comme les satanées données copernicus sont des sortes d'images 3D (lon,lat,temps), je ne peux pas
-directement les traduire en tableaux. En plus il ne me faut pas le monde entier, seulement la
-fenêtre géographique que nous avons pré-définie, donc il faut que :
+Ainsi, comme les satanées données copernicus sont des sortes d'images 3D (lon,lat,temps), je ne  
+peux pas directement les traduire en tableaux. En plus il ne me faut pas le monde entier, 
+seulement la fenêtre géographique que nous avons pré-définie, donc il faut que :
 1 - J'ouvre l'image
 2 - j'extraie ma zone d'intérêt
 3 - je convertie les dimensions en index temporel
 
 Donc on utilise plus csv mais panda
 D'ailleurs il fallait aussi encoder les paramètres dans une URL qu'on construisait pour faire les
-requêtes à l'API. C'était parce qu'on récupérait un tableau JSON. Ici c'est un NetCDF (quel plaisir)
-via la toolbox de Copernicus, donc on peut pas faire pareil :)))
+requêtes à l'API. C'était parce qu'on récupérait un tableau JSON. Ici c'est un NetCDF (quel 
+plaisir) via la toolbox de Copernicus, donc on peut pas faire pareil :)))
 
-donc tous les autres packages utilisés pour Obis deviennent inutiles puisqu'ils servaient à construire
-l'URL et appeler l'API.
+donc tous les autres packages utilisés pour Obis deviennent inutiles puisqu'ils servaient à 
+construire l'URL et appeler l'API.
 
-# Finalement, après dispute avec la documentation et défaite de ne pas pouvoir éviter de me servir de
-# chatGPT, on utilse pathlib plutôt que os.path
+# Finalement, après dispute avec la documentation, on utilse pathlib plutôt que os.path
 
-Par contre, on utilise ce que conseille la docu du site, parce que chatGPT est complètement inutile.
+Par contre, on utilise ce que conseille la docu du site, parce que chatGPT est complètement 
+inutile.
 """
 
 # ÉTAPE 1   | Importation des packages nécessaires aux téléchargements
@@ -38,14 +38,15 @@ import copernicusmarine as cm
 import inspect
 import os # Pour lire et écrire des fichiers
 from datetime import datetime
-from recup_id_donnees_marines import recuperer_product_id_temp
-from recup_id_donnees_marines import recuperer_product_id_vagues
-from recup_id_donnees_marines import choisir_dataset_id
-from recup_id_donnees_marines import choisir_id_dataset_sachant_par_defaut
-from recup_id_donnees_marines import choisir_variable_dans_dataset
-from recup_id_donnees_marines import renseigner_annee_fin
+from fonctions_import_copernicus import recuperer_product_id_temp
+from fonctions_import_copernicus import recuperer_product_id_vagues
+from fonctions_import_copernicus import choisir_dataset_id
+from fonctions_import_copernicus import choisir_id_dataset_sachant_par_defaut
+from fonctions_import_copernicus import choisir_variable_dans_dataset
+from fonctions_import_copernicus import renseigner_annee_fin
+from fonctions_import_copernicus import moyennage_mensuelle_donnees_nc
 
-#________________________________________________________________________________________________
+#_________________________________________________________________________________________________
 
 
 # ÉTAPE 2 | Définition des paramètres de filtration
@@ -59,7 +60,7 @@ annee_deb = 2000
 
 annee_fin, annees = renseigner_annee_fin()
 
-#_______________________________________________________________________________________________
+#_________________________________________________________________________________________________
 
 
 # ÉTAPE 3 | Fabrication des dossiers où seront rangés les fichiers créés
@@ -71,8 +72,7 @@ doss_vagues.mkdir(exist_ok = True) # Quand je fais tourner le programme, ça cr�
 doss_temp = Path("temp")
 doss_temp.mkdir(exist_ok = True)
 
-#__________________________________________________________________________________________
-
+#_________________________________________________________________________________________________
 
 # ÉTAPE 4 | On récupère les adresses et les appelations qui nous intéressent
 
@@ -102,7 +102,8 @@ donnees_temp = choisir_id_dataset_sachant_par_defaut(
     catalogue = catalogue_temp,
     product_id = produit_id_temp,
     mapping_defaut = MAPPING_DATASETS_PAR_DEFAUT)
-print(f"Le dataset utilisé pour obtenir des données sur la température de la mer est '{donnees_temp}'.")
+print(f"Le dataset utilisé pour obtenir des données sur la température"
+      f"\n de la mer est '{donnees_temp}'.")
 
 donnees_vagues = choisir_id_dataset_sachant_par_defaut(
     catalogue = catalogue_vagues,
@@ -127,9 +128,7 @@ variable_vagues, unite_vagues = choisir_variable_dans_dataset(
 print("La variable utilisée pour connaître la hauteur des vagues"
       f"\n est '{variable_vagues}'.Elle est exprimée en {unite_vagues}.")
 
-
-
-#__________________________________________________________________________________________
+#_________________________________________________________________________________________________
 
 
 # ÉTAPE 5 | BOUCLE DE TÉLÉCHARGEMENT DES FICHIERS .NC
@@ -229,7 +228,36 @@ raise_if_updating: bool = False,
 platform_ids: Optional[List[str]] = None) -> copernicusmarine.core_functions.models.ResponseSubset
 """
 
-#__________________________________________________________________________________________
-
+#_________________________________________________________________________________________________
 
 # ÉTAPE 6 | MOYENNAGE MENSUEL + MÉNAGE DES FICHIERS
+
+# Dossier où tu veux stocker les fichiers finaux .csv
+donnees_marines = Path("conditions_limitantes_sortie/donnees_marines")
+
+temp_final_csv = moyennage_mensuelle_donnees_nc(
+    dossier_nc = doss_temp,
+    variable_interet = variable_temp,   # par défaut 'thetao_cglo'
+    dossier_sortie = donnees_marines
+)
+
+csv_vagues = moyennage_mensuelle_donnees_nc(
+    dossier_nc = doss_vagues,
+    variable_interet = variable_vagues,  # par défaut 'VHM0'
+    dossier_sortie = donnees_marines
+)
+
+# Suppression des .nc puis des dossiers temp/ et vagues/
+for dossier in [doss_temp, doss_vagues] :
+    print(f"Suppression des fichiers .nc dans {dossier} ...")
+    for fichier in dossier.glob("*.nc") :
+        fichier.unlink()
+
+    try :
+        dossier.rmdir()
+        print(f"Dossier supprimé : {dossier}")
+    except OSError :
+        print(f"Le dossier {dossier} n'est pas vide, il n'a pas été supprimé.")
+
+print("La pipeline visant à récupérer et moyenner les données issues de Copernicus est à présent "
+      "\nterminé. Les fichiers finaux sont dans :", donnees_marines)
