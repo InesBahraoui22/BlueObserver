@@ -13,7 +13,7 @@ BlueObserver priority is to integrated:
 General Architecture
 ---------------------
 
-The project folloxs a modular architecture:
+The project follows a modular architecture:
 
 .. mermaid::
 
