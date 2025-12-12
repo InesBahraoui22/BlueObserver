@@ -1,4 +1,4 @@
-# 🌊 BlueObserver - Marine Species Observation Platform
+# BlueObserver - Marine Species Observation Platform
 
 **A web-based visualization tool for marine species distribution with environmental data integration**
 
@@ -31,29 +31,24 @@ graph TD
 
 ```mermaid
 BlueObserver/
-├── app.py                      # Flask application
-├── requirements.txt            # Python dependencies
-├── LICENSE                     # MIT License
-├── README.md                   # This file
-├── finalpoints/
-│   ├── jointure.py            # Data fusion script
-│   └── final_points.json      # Processed observation data
-├── tests/                      # Unit tests
-│   ├── test_jointure.py
-│   └── test_copernicus_extraction.py
-├── static/
-│   ├── css/                   # Stylesheets
-│   ├── js/                    # JavaScript files
-│   └── photos/                # Species images
-├── templates/
-│   ├── index.html             # Main page
-│   └── about.html             # About page
-└── especes/                   # Species data files
-    └── nomsespecefin.csv      # Species name mapping
-
+├── data/                           # Toutes les données (brutes, traitées, finales)
+├── data_generation/                # Scripts du pipeline de données
+│   ├── import_donnees_obis.py      # Étape 1 : Récupération OBIS
+│   ├── import_donnees_copernicus.py# Étape 2 : Récupération Copernicus
+│   ├── enrich_meteo_data.py        # Étape 3 : Enrichissement météo
+│   ├── jointure.py                 # Étape 4 : Fusion finale
+│   ├── fonctions_import_copernicus.py # Fonctions helpers pour Copernicus
+│   └── openmeteo_functions.py      # Fonctions helpers pour Open-Meteo
+├── tests/                          # Tests unitaires pour chaque script
+├── doc/                            # Documentation, présentations, roadmap
+├── static/                         # Assets pour l'application web (CSS, JS, images)
+├── templates/                      # Templates HTML pour l'application web
+├── app.py                          # Application Flask principale
+├── requirements.txt                # Dépendances Python
+└── README.md                       # Ce fichier
 ```
 
-## 📊 Features in Detail
+## Features in Detail
 
 ### Interactive Map
 - **Points colored by water temperature** - Visual gradient from cool to warm waters
@@ -94,7 +89,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - **Flask** for the lightweight web framework
 - **GitHub** for project hosting and version control
 
-## 📚 Related Resources
+## Related Resources
 
 - [OBIS API Documentation](https://api.obis.org/) - Species occurrence data API
 - [Copernicus Marine Toolbox](https://marine.copernicus.eu/) - Oceanographic data access
@@ -103,7 +98,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - [GitHub Markdown Guide](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) - Formatting reference
 
   
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Python 3.9 or higher
@@ -138,7 +133,7 @@ pip install -r requirements.txt
 ```bash
 python app.py
 ```
-📍 **Ouvrir** : [http://localhost:5000](http://localhost:5000)
+ **Ouvrir** : [http://localhost:5000](http://localhost:5000)
 
 
 ## 🔧 Développement
