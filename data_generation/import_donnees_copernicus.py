@@ -38,11 +38,15 @@ import copernicusmarine as cm
 import inspect
 import shutil
 import os # Pour lire et écrire des fichiers
+from datetime import datetime
+from fonctions_import_copernicus import renseigner_annee_fin
 from fonctions_import_copernicus import recuperer_product_id_temp
 from fonctions_import_copernicus import recuperer_product_id_vagues
 from fonctions_import_copernicus import choisir_dataset_id
 from fonctions_import_copernicus import choisir_id_dataset_sachant_par_defaut
-from datetime import datetime
+from fonctions_import_copernicus import choisir_variable_dans_dataset
+from fonctions_import_copernicus import moyennage_mensuelle_donnees_nc
+
 
 #________________________________________________________________________________________________
 
@@ -186,3 +190,40 @@ for an in annees :
                              
     print(f"Téléchargement du fichier {an} (réponse : {produit_vagues.status})")
     print(" ")
+
+#__________________________________________________________________________________________
+
+
+# ÉTAPE 6 | MOYENNAGE MENSUEL + MÉNAGE DES FICHIERS
+
+# Dossier où tu veux stocker les fichiers finaux .csv
+conditions_marines = Path("conditions_limitantes_sortie/conditions_marines")
+
+temp_final_csv = moyennage_mensuelle_donnees_nc(
+    dossier_nc = doss_temp,
+    variable_interet = variable_temp,   # par défaut 'thetao_cglo'
+    dossier_sortie = conditions_marines
+)
+
+vagues_final_csv = moyennage_mensuelle_donnees_nc(
+    dossier_nc = doss_vagues,
+    variable_interet = variable_vagues,  # par défaut 'VHM0'
+    dossier_sortie = conditions_marines
+)
+
+# Suppression des .nc puis des dossiers temp/ et vagues/
+for dossier in [doss_temp, doss_vagues] :
+    print(f"Suppression des fichiers .nc dans {dossier} ...")
+    for fichier in dossier.glob("*.nc") :
+        fichier.unlink()
+
+    try :
+        dossier.rmdir()
+        print(f"Dossier supprimé : {dossier}")
+    except OSError :
+        print(f"Le dossier {dossier} n'est pas vide, il n'a pas été supprimé.")
+
+print("La pipeline visant à récupérer et moyenner les données issues de Copernicus est à présent "
+      "\nterminé. Les fichiers finaux sont dans :", conditions_marines)
+
+
