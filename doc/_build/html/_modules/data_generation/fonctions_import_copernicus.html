@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>data_generation.fonctions_import_copernicus &#8212; BlueObserver 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+const defaultStyle = document.createElement('style');
+defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+`;
+document.head.appendChild(defaultStyle);
+
+const fullscreenStyle = document.createElement('style');
+fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+document.head.appendChild(fullscreenStyle);
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        return brightness < 128;
+    }
+    return false;
+};
+
+const load = async () => {
+    await mermaid.run();
+
+    const all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            if(all_mermaids.length !== mermaids_processed.length) {
+                setTimeout(load, 200);
+                return;
+            } else if(svgs.size() !== mermaids_to_add_zoom) {
+                setTimeout(load, 200);
+                return;
+            } else {
+                svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                        inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                });
+            }
+        }
+    } else if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(load, 200);
+        return;
+    }
+
+    const darkTheme = isDarkTheme();
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    const modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    let previousScrollOffset = [window.scrollX, window.scrollY];
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    const allButtons = [];
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        container.appendChild(fullscreenBtn);
+        allButtons.push(fullscreenBtn);
+    });
+
+    // Update theme classes when theme changes
+    const updateTheme = () => {
+        const dark = isDarkTheme();
+        allButtons.forEach(btn => {
+            if (dark) {
+                btn.classList.add('dark-theme');
+            } else {
+                btn.classList.remove('dark-theme');
+            }
+        });
+        if (dark) {
+            modal.classList.add('dark-theme');
+            modalContent.classList.add('dark-theme');
+            closeBtn.classList.add('dark-theme');
+        } else {
+            modal.classList.remove('dark-theme');
+            modalContent.classList.remove('dark-theme');
+            closeBtn.classList.remove('dark-theme');
+        }
+    };
+
+    // Watch for theme changes
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+    });
+};
+
+window.addEventListener("load", load);
+</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for data_generation.fonctions_import_copernicus</h1><div class="highlight"><pre>
+<span></span><span class="c1">### Programme d&#39;assignation des identifiants des produits copernicus, soient les variables destinées à se retrouver</span>
+<span class="c1">### stocker dans le dossier &quot;conditions_limitantes_sortie/conditions_marines&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+
+<span class="c1"># =================================================================================================================</span>
+<span class="c1"># Fonction d&#39;assignation de l&#39;année la plus récente pour la récupération des données</span>
+<span class="c1"># =================================================================================================================</span>
+
+<div class="viewcode-block" id="renseigner_annee_fin">
+<a class="viewcode-back" href="../../api/modules.html#data_generation.fonctions_import_copernicus.renseigner_annee_fin">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">renseigner_annee_fin</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Retourne l&#39;année actuelle et la liste des années allant de 2000 à cette année.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">annee_fin</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span>
+    <span class="n">annees</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">annee_fin</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">annee_fin</span><span class="p">,</span> <span class="n">annees</span></div>
+
+
+<span class="c1"># ==================================================================================================================</span>
+<span class="c1"># Fonction de récupération de l&#39;identifiant du produit Copernicus contenant la variable : hauteur des vagues </span>
+<span class="c1"># ==================================================================================================================</span>
+
+<div class="viewcode-block" id="recuperer_product_id_vagues">
+<a class="viewcode-back" href="../../api/modules.html#data_generation.fonctions_import_copernicus.recuperer_product_id_vagues">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">recuperer_product_id_vagues</span><span class="p">(</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Entrez l&#39;identifiant du produit Copernicus que vous souhaitez utiliser. &quot;</span>
+        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Si vous ne proposez rien, le produit utilisé par les créateurs de ce programme sera exploité par défaut : &quot;</span><span class="p">,</span>
+        <span class="n">produit_defaut_vagues</span> <span class="o">=</span> <span class="s2">&quot;GLOBAL_MULTIYEAR_WAV_001_032&quot;</span><span class="p">):</span>
+    <span class="n">produit_id_vagues</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2"> (défaut =</span><span class="si">{</span><span class="n">produit_defaut_vagues</span><span class="si">}</span><span class="s2">) : &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>  <span class="c1"># enlève les espaces au début/fin</span>
+
+    <span class="k">if</span> <span class="n">produit_id_vagues</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Aucun identifiant n&#39;a été donné, utilisation du fichier par défaut : </span><span class="si">{</span><span class="n">produit_defaut_vagues</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">produit_defaut_vagues</span>
+    
+    <span class="k">return</span> <span class="n">produit_id_vagues</span></div>
+
+
+
+<span class="c1"># =================================================================================================================</span>
+<span class="c1"># Fonction de récupération de l&#39;identifiant du produit Copernicus contenant la variable : température de la mer</span>
+<span class="c1"># =================================================================================================================</span>
+
+<div class="viewcode-block" id="recuperer_product_id_temp">
+<a class="viewcode-back" href="../../api/modules.html#data_generation.fonctions_import_copernicus.recuperer_product_id_temp">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">recuperer_product_id_temp</span><span class="p">(</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Entrez l&#39;identifiant du produit Copernicus que vous souhaitez utiliser. &quot;</span>
+        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Si vous ne proposez rien, le produit utilisé par les créateurs de ce programme sera exploité par défaut : &quot;</span><span class="p">,</span>
+        <span class="n">produit_defaut_temp</span> <span class="o">=</span> <span class="s2">&quot;GLOBAL_MULTIYEAR_PHY_ENS_001_031&quot;</span><span class="p">):</span>
+    <span class="n">produit_id_temp</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2"> (défaut =</span><span class="si">{</span><span class="n">produit_defaut_temp</span><span class="si">}</span><span class="s2">) : &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>  <span class="c1"># enlève les espaces au début/fin</span>
+
+    <span class="k">if</span> <span class="n">produit_id_temp</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Aucun identifiant n&#39;a été donné, utilisation du fichier par défaut : </span><span class="si">{</span><span class="n">produit_defaut_temp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">produit_defaut_temp</span>
+    
+    <span class="k">return</span> <span class="n">produit_id_temp</span></div>
+
+
+<span class="c1"># =================================================================================================================</span>
+<span class="c1"># Fonction de récupération des identifiants des datasets d&#39;un produit Copernicus</span>
+<span class="c1"># =================================================================================================================</span>
+
+<div class="viewcode-block" id="choisir_dataset_id">
+<a class="viewcode-back" href="../../api/modules.html#data_generation.fonctions_import_copernicus.choisir_dataset_id">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">choisir_dataset_id</span><span class="p">(</span>
+        <span class="n">catalogue</span><span class="p">,</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Entrez le nom du dataset dont vous souhaitez utiliser le panel de variables.&quot;</span>
+        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Si vous ne proposez rien, l&#39;id du dataset du produit utilisé par les créateurs de ce programme sera &quot;</span>
+        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> exploité par défaut : &quot;</span><span class="p">)</span> <span class="p">:</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Permet à l&#39;utilisateur de choisir un dataset_id parmi ceux d&#39;un catalogue Copernicus.</span>
+
+<span class="sd">    - Affiche tous les dataset_id disponibles.</span>
+<span class="sd">    - Demande à l&#39;utilisateur d&#39;en choisir un.</span>
+<span class="sd">    - Si l&#39;utilisateur ne choisit rien :</span>
+<span class="sd">        → sélectionne automatiquement un dataset_id qui se termine par (-m) mensuel, (-d) journalier ou (-i) </span>
+<span class="sd">        horaire.</span>
+<span class="sd">        → s&#39;il n&#39;y en a pas : lève une ValueError.</span>
+<span class="sd">    - Si l&#39;utilisateur choisit un dataset qui ne finit pas par (-m) mensuel, (-d) journalier ou (-i) horaire :</span>
+<span class="sd">        → lève une ValueError avec explication.</span>
+
+<span class="sd">    Paramètres</span>
+<span class="sd">    ----------</span>
+<span class="sd">    catalogue : CopernicusMarineCatalogue</span>
+<span class="sd">        Résultat de cm.describe(product_id=...).</span>
+<span class="sd">    suffixe_obligatoire : str</span>
+<span class="sd">        Suffixe exigé pour le dataset (par défaut &quot;-m&quot;).</span>
+
+<span class="sd">    Retourne</span>
+<span class="sd">    --------</span>
+<span class="sd">    str</span>
+<span class="sd">        Le dataset_id choisi.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">datasets</span> <span class="o">=</span> <span class="n">catalogue</span><span class="o">.</span><span class="n">products</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">datasets</span>
+    <span class="n">dataset_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">dataset_id</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Liste des datasets pour ce produit ; choisissez-en un :&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">fichier_nc</span> <span class="ow">in</span> <span class="n">dataset_ids</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; -&quot;</span><span class="p">,</span> <span class="n">fichier_nc</span><span class="p">)</span>
+
+    <span class="n">dataset_choisi</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Si aucun choix n&#39;est fait (vous appuyez sur Entrée), le choix se fera pour vous :&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">dataset_choisi</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="n">priorites</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-m&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;-d&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;-i&quot;</span><span class="p">]</span>
+        
+        <span class="k">for</span> <span class="n">suffixe</span> <span class="ow">in</span> <span class="n">priorites</span> <span class="p">:</span>
+            <span class="n">candidats</span> <span class="o">=</span> <span class="p">[</span><span class="n">fichier_nc</span> <span class="k">for</span> <span class="n">fichier_nc</span> <span class="ow">in</span> <span class="n">dataset_ids</span> <span class="k">if</span> <span class="n">fichier_nc</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">suffixe</span><span class="p">)]</span>
+            <span class="k">if</span> <span class="n">candidats</span> <span class="p">:</span>
+                <span class="n">dataset_choisi</span> <span class="o">=</span> <span class="n">candidats</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Aucun choix n&#39;a été fait, la sélection se fait automatiquement sur le&quot;</span>
+                    <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> dataset mensuel : </span><span class="si">{dataset_choisi}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">dataset_choisi</span>
+        
+        <span class="c1"># si aucun dataset ne se termine avec un suffixe indiquant le pas d&#39;observation :</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Impossible de sélectionner automatiquement un dataset puisque leurs suffixes&quot;</span>
+                         <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> sont non-existants ou ne permettent pas de connaître la périodicité de la &quot;</span>
+                         <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> mesure (</span><span class="si">{priorites}</span><span class="s2">).&quot;</span>
+
+        <span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">dataset_choisi</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataset_ids</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Le dataset &#39;</span><span class="si">{</span><span class="n">dataset_choisi</span><span class="si">}</span><span class="s2">&#39; renseigné ne correspond à aucun de ceux appartenant au produit&quot;</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Le dataset selectionné est </span><span class="si">{</span><span class="n">dataset_choisi</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dataset_choisi</span></div>
+
+
+<span class="c1"># =================================================================================================================</span>
+<span class="c1"># Fonction d&#39;assignation automatique du dataset par défaut si détection du produit par défaut</span>
+<span class="c1"># =================================================================================================================</span>
+
+<div class="viewcode-block" id="choisir_id_dataset_sachant_par_defaut">
+<a class="viewcode-back" href="../../api/modules.html#data_generation.fonctions_import_copernicus.choisir_id_dataset_sachant_par_defaut">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">choisir_id_dataset_sachant_par_defaut</span><span class="p">(</span>
+        <span class="n">catalogue</span><span class="p">,</span>
+        <span class="n">product_id</span><span class="p">,</span>
+        <span class="n">mapping_defaut</span><span class="p">)</span> <span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Choisit un dataset_id pour un produit Copernicus, avec gestion de cas par défaut.</span>
+
+<span class="sd">    - Si product_id est dans mapping_defauts :</span>
+<span class="sd">        → on essaie de choisir le dataset indiqué dans mapping_defauts[product_id].</span>
+<span class="sd">        → si ce dataset n&#39;existe pas dans le catalogue : on bascule sur choisir_dataset_id().</span>
+<span class="sd">    - Sinon :</span>
+<span class="sd">        → on appelle directement choisir_dataset_id().</span>
+
+<span class="sd">    Paramètres</span>
+<span class="sd">    ----------</span>
+<span class="sd">    catalogue : CopernicusMarineCatalogue</span>
+<span class="sd">        Résultat de cm.describe(product_id=...).</span>
+<span class="sd">    product_id : str</span>
+<span class="sd">        Identifiant du produit choisi (par l&#39;utilisateur ou par défaut).</span>
+<span class="sd">    mapping_defauts : dict</span>
+<span class="sd">        Dictionnaire {product_id: dataset_id_defaut}.</span>
+
+<span class="sd">    Retourne</span>
+<span class="sd">    --------</span>
+<span class="sd">    str</span>
+<span class="sd">        Le dataset_id retenu.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">datasets</span> <span class="o">=</span> <span class="n">catalogue</span><span class="o">.</span><span class="n">products</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">datasets</span>
+    <span class="n">dataset_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">dataset_id</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">]</span>
+
+    <span class="c1"># Cas où on a un dataset par défaut associé à ce product_id</span>
+    <span class="k">if</span> <span class="n">product_id</span> <span class="ow">in</span> <span class="n">mapping_defaut</span> <span class="p">:</span>
+        <span class="n">dataset_defaut</span> <span class="o">=</span> <span class="n">mapping_defaut</span><span class="p">[</span><span class="n">product_id</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">dataset_defaut</span> <span class="ow">in</span> <span class="n">dataset_ids</span> <span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Le produit utilisé par les créateurs a été détecté (</span><span class="si">{</span><span class="n">product_id</span><span class="si">}</span><span class="s2">).&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Par conséquent, le dataset concordant est utilisé par défaut : </span><span class="si">{</span><span class="n">dataset_defaut</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">dataset_defaut</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Attention : le dataset par défaut &#39;</span><span class="si">{</span><span class="n">dataset_defaut</span><span class="si">}</span><span class="s2">&#39; n&#39;existe pas &quot;</span>
+                <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">dans ce catalogue pour product_id = </span><span class="si">{product_id}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">choisir_dataset_id</span><span class="p">(</span><span class="n">catalogue</span><span class="p">)</span></div>
+
+
+<span class="c1"># ==============================================================================================================</span>
+<span class="c1"># Fonction d&#39;exploration et de choix des variables exploitées pour hauteur des vagues et température de la mer</span>
+<span class="c1"># ==============================================================================================================</span>
+
+<div class="viewcode-block" id="choisir_variable_dans_dataset">
+<a class="viewcode-back" href="../../api/modules.html#data_generation.fonctions_import_copernicus.choisir_variable_dans_dataset">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">choisir_variable_dans_dataset</span><span class="p">(</span>
+        <span class="n">catalogue</span><span class="p">,</span>
+        <span class="n">dataset_id</span><span class="p">,</span>
+        <span class="n">type_variable</span><span class="p">,</span>
+        <span class="n">mapping_vars_par_defaut</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="p">:</span>
+<span class="w">        </span>
+<span class="w">        </span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Affiche les variables d&#39;un dataset donné et permet à l&#39;utilisateur d&#39;en choisir une.</span>
+
+<span class="sd">    Paramètres</span>
+<span class="sd">    ----------</span>
+<span class="sd">    catalogue : CopernicusMarineCatalogue</span>
+<span class="sd">        Résultat de cm.describe(product_id=...).</span>
+<span class="sd">    dataset_id : str</span>
+<span class="sd">        Nom du dataset (par ex. &#39;cmems_mod_glo_phy-all_my_0.25deg_P1D-m&#39;).</span>
+<span class="sd">        En pratique : la valeur renvoyée par choisir_id_dataset_sachant_par_defaut().</span>
+<span class="sd">    type_variable : str</span>
+<span class="sd">        &#39;temp&#39; pour température de la mer, &#39;vagues&#39; pour les vagues.</span>
+<span class="sd">        Sert à faire un choix intelligent si l&#39;utilisateur ne tape rien.</span>
+<span class="sd">    mapping_vars_par_defaut : dict[str, str]</span>
+<span class="sd">        Dictionnaire optionnel : {dataset_id: shortname_variable_par_defaut}.</span>
+
+<span class="sd">    Retourne</span>
+<span class="sd">    --------</span>
+<span class="sd">    (str, str)</span>
+<span class="sd">        (shortname de la variable à utiliser, unité associée)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+         
+    <span class="k">if</span> <span class="n">mapping_vars_par_defaut</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mapping_vars_par_defaut</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="n">datasets</span> <span class="o">=</span> <span class="n">catalogue</span><span class="o">.</span><span class="n">products</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">datasets</span>
+    <span class="n">dataset_trouve</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">datasets</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">dataset_id</span> <span class="o">==</span> <span class="n">dataset_id</span><span class="p">:</span>
+            <span class="n">dataset_trouve</span> <span class="o">=</span> <span class="n">d</span>
+            <span class="k">break</span>
+    
+    <span class="k">if</span> <span class="n">dataset_trouve</span> <span class="ow">is</span> <span class="kc">None</span> <span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Le dataset &#39;</span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&#39; est introuvable dans le catalogue.&quot;</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Vérifiez éventuellement l&#39;orthographe.&quot;</span>
+        <span class="p">)</span>
+    
+    <span class="n">variables_disponibles</span> <span class="o">=</span> <span class="n">dataset_trouve</span><span class="o">.</span><span class="n">versions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">services</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">variables</span>
+    <span class="n">shortnames_disponibles</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">short_name</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_disponibles</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variables disponibles dans le dataset &#39;</span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s2">&#39; :&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_disponibles</span> <span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Standard name : </span><span class="si">{</span><span class="n">var</span><span class="o">.</span><span class="n">standard_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shortname     : </span><span class="si">{</span><span class="n">var</span><span class="o">.</span><span class="n">short_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unité         : </span><span class="si">{</span><span class="n">var</span><span class="o">.</span><span class="n">units</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+    <span class="n">var_defaut_dataset</span> <span class="o">=</span> <span class="n">mapping_vars_par_defaut</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dataset_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    
+    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Veuillez renseigner le short name de la variable que vous souhaitez retenir.&quot;</span>
+    <span class="k">if</span> <span class="n">var_defaut_dataset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="p">:</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;Par défaut, la variable sera </span><span class="si">{</span><span class="n">var_defaut_dataset</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot; : &quot;</span>
+
+    <span class="n">short_name</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">short_name</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="n">short_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">shortnames_disponibles</span> <span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;La variable &#39;</span><span class="si">{</span><span class="n">short_name</span><span class="si">}</span><span class="s2">&#39; n&#39;existe pas dans le dataset retenu&quot;</span>
+                             <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Vérifiez éventuellement l&#39;orthographe.&quot;</span>
+            <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;La variable choisie est : </span><span class="si">{</span><span class="n">short_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">unite</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">units</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_disponibles</span> <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">short_name</span> <span class="o">==</span> <span class="n">short_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">short_name</span><span class="p">,</span> <span class="n">unite</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">var_defaut_dataset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">var_defaut_dataset</span> <span class="ow">in</span> <span class="n">shortnames_disponibles</span><span class="p">)</span> <span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Aucun short_name n&#39;a été renseigné et le dataset des créateurs du programme&quot;</span>
+        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">est détecté. Celui-ci et la variable (</span><span class="si">{var_defaut_dataset}</span><span class="s2">) qu&#39;ils ont utilisés vont être utilisés.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">unite</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">units</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">variables_disponibles</span> <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">short_name</span> <span class="o">==</span> <span class="n">var_defaut_dataset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">var_defaut_dataset</span><span class="p">,</span> <span class="n">unite</span>
+    
+    <span class="k">if</span> <span class="n">type_variable</span> <span class="o">==</span> <span class="s2">&quot;vagues&quot;</span> <span class="p">:</span>
+        <span class="p">[</span><span class="s2">&quot;VHM0&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;VHM0_WW&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;VHM0_SW1&quot;</span><span class="p">,</span> 
+         <span class="s2">&quot;VHM0_SW2&quot;</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">type_variable</span> <span class="o">==</span> <span class="s2">&quot;temp&quot;</span> <span class="p">:</span>
+        <span class="n">preferences</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;thetao_cglo&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;thetao_oras&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;thetao_glor&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;thetao&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;sst&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;tos&quot;</span><span class="p">]</span>
+    <span class="k">else</span> <span class="p">:</span>
+        <span class="n">preferences</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">candidat</span> <span class="ow">in</span> <span class="n">preferences</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="n">candidat</span> <span class="ow">in</span> <span class="n">shortnames_disponibles</span> <span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;Aucun short name n&#39;a été renseigné mais le dataset utilisé est différent &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">de celui utilisé par les créateurs du programme pour le type &#39;</span><span class="si">{</span><span class="n">type_variable</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> : </span><span class="si">{</span><span class="n">candidat</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="n">unite</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">units</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">variables_disponibles</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">short_name</span> <span class="o">==</span> <span class="n">candidat</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">candidat</span><span class="p">,</span> <span class="n">unite</span>
+    
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+        <span class="s2">&quot;Impossible de choisir automatiquement une variable. Il est nécessaire&quot;</span>
+        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> de renseigner manuellement le short name de la variable souhaitée,&quot;</span>
+        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> éventuellement de vérifier l&#39;orthographe.&quot;</span>
+        
+    <span class="p">)</span></div>
+
+
+<span class="c1"># ==============================================================================================================</span>
+<span class="c1"># Fonction de moyennage des fichiers .nc récupéré</span>
+<span class="c1"># ==============================================================================================================</span>
+
+
+<div class="viewcode-block" id="moyennage_mensuelle_donnees_nc">
+<a class="viewcode-back" href="../../api/modules.html#data_generation.fonctions_import_copernicus.moyennage_mensuelle_donnees_nc">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">moyennage_mensuelle_donnees_nc</span><span class="p">(</span><span class="n">dossier_nc</span> <span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+                                   <span class="n">variable_interet</span> <span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                                   <span class="n">dossier_sortie</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span> <span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Prend tous les .nc d&#39;un dossier, calcule la moyenne mensuelle</span>
+<span class="sd">    toutes années confondues par point GPS, et écrit un CSV.</span>
+<span class="sd">    Retourne le chemin du CSV créé.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Ouvrir tous les fichiers NetCDF d&#39;un coup, un par un c&#39;est trop long et ça fait</span>
+    <span class="c1"># planter le programme</span>
+    <span class="n">fichier_nc</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_mfdataset</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dossier_nc</span><span class="p">,</span> <span class="s2">&quot;*.nc&quot;</span><span class="p">),</span>
+        <span class="n">chunks</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;time&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">},</span>
+        <span class="n">combine</span> <span class="o">=</span> <span class="s1">&#39;by_coords&#39;</span>
+    <span class="p">)</span>
+
+    <span class="n">id_var_interet</span> <span class="o">=</span> <span class="n">fichier_nc</span><span class="p">[</span><span class="n">variable_interet</span><span class="p">]</span>
+
+    <span class="c1"># Moyennes mensuelles (Conversion des données journalières/horaires en données mensuelles)</span>
+    <span class="n">id_var_mensuelle</span> <span class="o">=</span> <span class="n">id_var_interet</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">time</span> <span class="o">=</span> <span class="s1">&#39;1MS&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="c1"># Moyennes toutes années confondues PAR MOIS et PAR POINT GPS</span>
+    <span class="n">moy_mensuelle</span> <span class="o">=</span> <span class="n">id_var_mensuelle</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;time.month&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="s2">&quot;time&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Conversion en tableau (avec latitude, longitude, mois)</span>
+    <span class="n">table_moy_mensuelle</span> <span class="o">=</span> <span class="n">moy_mensuelle</span><span class="o">.</span><span class="n">to_dataframe</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+
+    <span class="n">table_moy_mensuelle</span><span class="p">[</span><span class="s2">&quot;month_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">table_moy_mensuelle</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%m&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month_name</span><span class="p">()</span>
+
+    <span class="n">colonnes</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;month_name&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s2">&quot;latitude&quot;</span> <span class="ow">in</span> <span class="n">table_moy_mensuelle</span><span class="o">.</span><span class="n">columns</span> <span class="p">:</span>
+        <span class="n">colonnes</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;latitude&quot;</span><span class="p">,</span>
+                         <span class="s2">&quot;longitude&quot;</span><span class="p">])</span>
+    <span class="n">colonnes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variable_interet</span><span class="p">)</span>
+    <span class="n">table_moy_mensuelle</span> <span class="o">=</span> <span class="n">table_moy_mensuelle</span><span class="p">[</span><span class="n">colonnes</span><span class="p">]</span>
+
+    <span class="c1"># Sauvegarde en CSV dans le dossier de sortie</span>
+    <span class="n">dossier_sortie</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                         <span class="n">exist_ok</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="n">fichier_sortie</span> <span class="o">=</span> <span class="n">dossier_sortie</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;moyennes_mensuelles_par_GPS_</span><span class="si">{</span><span class="n">variable_interet</span><span class="si">}</span><span class="s2">.csv&quot;</span>
+    <span class="n">table_moy_mensuelle</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">fichier_sortie</span><span class="p">,</span>
+                               <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fichier créé : </span><span class="si">{</span><span class="n">fichier_sortie</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">fichier_nc</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">fichier_sortie</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">BlueObserver</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Table of Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction to BlueObserver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hello.html">Hello World</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">Référence API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Ines et Chloé.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
