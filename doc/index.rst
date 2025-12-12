@@ -3,10 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-hello.rst
-
 BlueObserver Documentation
-==================
+==========================
 
 Add your content using ``reStructuredText`` syntax. See the
 `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
@@ -16,9 +14,6 @@ documentation for details.
 
 Introduction
 ============
-.. toctree::
-   :maxdepth: 2 
-   :caption: Contents:
 
 BlueObserver is a scientifical pipeline that has been produced to collect, enrich
 and visualise observational data of marine mammals thanks to multiple sources (OBIS, Copernicus Marine, Open-Meteo).
@@ -26,7 +21,7 @@ This is to be used by curious, environmentally-friendly travelers that seek to w
 with respects to European policies regarding the animal well-being.
 
 Main fonctionnalities
----------------------------
+---------------------
 * Recovery of species observations via the API OBIS
 * Implementation of the marine conditions (Copernicus Marine)
 * Combination of the meteorological data (Open-Meteo)
@@ -34,7 +29,7 @@ Main fonctionnalities
 * Interactive Web interface using Flask
 
 Quick Install
-===================
+=============
 
 .. code-block:: bash
 
@@ -45,18 +40,15 @@ Quick Install
    pip install -r requirements.txt
 
 User guide book
-===================
+===============
 
 See main README for additional details on the executing of the pipeline.
 
 .. toctree::
-   :hidden:
+   :maxdepth: 2
+   :caption: Table of Contents:
    
    introduction
    installation
-   usage
+   hello
    api/modules
-   contributing
-
-
-
