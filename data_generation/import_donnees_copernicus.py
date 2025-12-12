@@ -148,23 +148,25 @@ for an in annees :
     print(f"Température : téléchargement vers {fichier_temp}")
     print(f"\nVariable choisie : {variable_temp} ({unite_temp})")
 
-    produit_temp = cm.subset(dataset_id = donnees_temp,
-                             variables = [variable_temp],
-                             minimum_latitude = LAT_MIN,
-                             maximum_latitude = LAT_MAX,
-                             minimum_longitude = LON_MIN,
-                             maximum_longitude = LON_MAX,
-                             minimum_depth = 0.0,
-                             maximum_depth = 25.0, # ça sert à rien de prendre très profond,
-                                                   # on va garder une profondeur de baignade
-                                                   # cohérente.
-                             start_datetime = deb,
-                             end_datetime = fin,
-                             output_directory = doss_temp,
-                             output_filename = fichier_temp.name,
-                             )
-    
-    print(f"Téléchargement du fichier {an} (réponse : {produit_temp.status})")
+    if not fichier_temp.exists() :
+        produit_temp = cm.subset(dataset_id = donnees_temp,
+                                variables = [variable_temp],
+                                minimum_latitude = LAT_MIN,
+                                maximum_latitude = LAT_MAX,
+                                minimum_longitude = LON_MIN,
+                                maximum_longitude = LON_MAX,
+                                minimum_depth = 0.0,
+                                maximum_depth = 25.0, # ça sert à rien de prendre très profond,
+                                                    # on va garder une profondeur de baignade
+                                                    # cohérente.
+                                start_datetime = deb,
+                                end_datetime = fin,
+                                output_directory = doss_temp,
+                                output_filename = fichier_temp.name,
+                                )
+        print(f"Téléchargement du fichier {an} (réponse : {produit_temp.status})")
+    else : 
+        print(f"Fichier déjà présent, skip : {fichier_temp}")
     print(" ")
 
     # LES  VAGUES
@@ -172,21 +174,22 @@ for an in annees :
 
     print(f"Téléchargement des données de l'an {an} des vagues vers {fichier_vagues}")
     
-    produit_vagues = cm.subset(dataset_id = donnees_vagues,
-                             variables = [variable_vagues],
-                             minimum_latitude = LAT_MIN,
-                             maximum_latitude = LAT_MAX,
-                             minimum_longitude = LON_MIN,
-                             maximum_longitude = LON_MAX,
-                             start_datetime = deb,
-                             end_datetime = fin,
-                             output_directory = doss_vagues,
-                             output_filename = fichier_vagues.name,
+    if not fichier_vagues.exists():
+        produit_vagues = cm.subset(dataset_id = donnees_vagues,
+                                variables = [variable_vagues],
+                                minimum_latitude = LAT_MIN,
+                                maximum_latitude = LAT_MAX,
+                                minimum_longitude = LON_MIN,
+                                maximum_longitude = LON_MAX,
+                                start_datetime = deb,
+                                end_datetime = fin,
+                                output_directory = doss_vagues,
+                                output_filename = fichier_vagues.name,
+                                )
                              
-
-    )
-                             
-    print(f"Téléchargement du fichier {an} (réponse : {produit_vagues.status})")
+        print(f"Téléchargement du fichier {an} (réponse : {produit_vagues.status})")
+    else : 
+        print(f"Fichier déjà présent, skip : {fichier_vagues}")
     print(" ")
 
 #__________________________________________________________________________________________
@@ -223,14 +226,4 @@ for dossier in [doss_temp, doss_vagues] :
 
 print("La pipeline visant à récupérer et moyenner les données issues de Copernicus est à présent "
       "\nterminé. Les fichiers finaux sont dans :", conditions_marines)
-
-#_________________________________________________________________________________________
-
-# ÉTAPE 7 : 
-
-def creer_fichiers_tests_nc():
-    ...
-
-if __name__ == "__main__":
-    creer_fichiers_tests_nc()
 
