@@ -6,17 +6,24 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'test'
-copyright = '2025, Ines'
-author = 'Ines'
+project = 'BlueObserver'
+copyright = '2025, Ines et Chloé'
+author = 'Ines et Chloé'
+release = '1.0.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ["sphinx_rtd_theme","sphinx.ext.autodoc","sphinx.ext.githubpages"]
+extensions = ["sphinx_rtd_theme",
+              "sphinx.ext.autodoc",      # Documentation automatique depuis les docstrings
+              "sphinx.ext.githubpages",  # Pour GitHub Pages
+              "sphinx.ext.napoleon",     # Support des docstrings Google/NumPy style
+              "sphinx.ext.viewcode"]               # Lien vers le code source]
 
 templates_path = ['_templates']
 exclude_patterns = []
+
+# -- napoleon configuration -------------------------------------------------
 
 
 
