@@ -22,8 +22,7 @@ via la toolbox de Copernicus, donc on peut pas faire pareil :)))
 donc tous les autres packages utilisés pour Obis deviennent inutiles puisqu'ils servaient à construire
 l'URL et appeler l'API.
 
-# Finalement, après dispute avec la documentation et défaite de ne pas pouvoir éviter de me servir de
-# chatGPT, on utilse pathlib plutôt que os.path
+# Finalement, après dispute avec la documentation, on utilse pathlib plutôt que os.path
 
 Par contre, on utilise ce que conseille la docu du site, parce que chatGPT est complètement inutile.
 """

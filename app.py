@@ -8,7 +8,7 @@ app = Flask(__name__)
 # --- CHEMIN ABSOLU VERS VOTRE FICHIER JSON ---
 # IMPORTANT: Utilisez ce chemin ABSOLU uniquement pour le fichier de données
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # dossier contenant app.py
-DATA_FILE_PATH = os.path.join(BASE_DIR, "finalpoints", "final_points.json")
+DATA_FILE_PATH = os.path.join(BASE_DIR, "data", "final_points.json")
 
 # Charger les données au démarrage
 # S'assure que le fichier existe avant de le charger
