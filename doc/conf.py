@@ -34,7 +34,7 @@ napoleon_include_special_with_doc = True
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'alabaster'
 html_static_path = ['_static']
 html_logo = '../static/logo_final.jpg'  # Votre logo
 html_favicon = '../static/logo_final.jpg'
