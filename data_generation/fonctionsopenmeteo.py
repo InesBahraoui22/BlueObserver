@@ -66,7 +66,7 @@ def get_weather(lat, lon, start_date, end_date):
 
 
 # Example usage
-with open('./_site/data/points.json', 'r', encoding='utf-8') as f:
+with open('../data/points.json', 'r', encoding='utf-8') as f:
     all_points = json.load(f)
 
 updated_points = []
@@ -88,11 +88,11 @@ for point in all_points:
 
     updated_points.append(point)
 
-output_path = './_site/data/points.json'
+output_path = '../data/points.json'
 with open(output_path, 'w', encoding='utf-8') as f:
     json.dump(updated_points, f, indent=4, ensure_ascii=False)
 
-with open('./_site/data/points.json', 'r', encoding='utf-8') as f:
+with open('../data/points.json', 'r', encoding='utf-8') as f:
     all_points = json.load(f)
 
 # --- FILTRE EUROPE OCCIDENTALE ---
@@ -121,6 +121,6 @@ for point in filtered_points:
 
     updated_points.append(point)
 
-output_path = './_site/data/points.json'
+output_path = '../data/points.json'
 with open(output_path, 'w', encoding='utf-8') as f:
     json.dump(updated_points, f, indent=4, ensure_ascii=False)

@@ -198,7 +198,7 @@ for an in annees :
 # ÉTAPE 6 | MOYENNAGE MENSUEL + MÉNAGE DES FICHIERS
 
 # Dossier où tu veux stocker les fichiers finaux .csv
-conditions_marines = Path("conditions_limitantes_sortie/conditions_marines")
+conditions_marines = Path("data/conditions_marines")
 
 temp_final_csv = moyennage_mensuelle_donnees_nc(
     dossier_nc = doss_temp,

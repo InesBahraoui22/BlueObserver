@@ -48,7 +48,7 @@ SPECIES = [
     ]
 
 
-FILE_PATH = "../data/obis_observation_espèces/"
+FILE_PATH = "../data/obis_observation_especes/"
 
 SIZE = 10000  # Nombre d'enregistrements à demander par sous-requête
 

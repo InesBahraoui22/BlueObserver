@@ -2,7 +2,7 @@ import os
 import json
 import pandas as pd
 
-# --------- 1️⃣ CONFIGURATION DES PATHS ---------
+# --------- CONFIGURATION DES PATHS ---------
 ESPECES_FOLDER = "/Users/ines/Desktop/M1/OceanAware/especes"
 DATASET_FOLDER = "/Users/ines/Desktop/M1/OceanAware/dataset"
 POINTS_FILE = "/Users/ines/Desktop/M1/OceanAware/meteo/_site/data/points.json"
@@ -22,10 +22,10 @@ def load_obis_points(tsv_path):
         df = df.dropna(subset=['decimalLatitude','decimalLongitude'])
         return species_name, df.to_dict(orient='records')
     except Exception as e:
-        print(f"⚠ Impossible de charger {tsv_path}: {e}")
+        print(f"Impossible de charger {tsv_path}: {e}")
         return species_name, []
 
-# --------- 2️⃣ Charger les données ---------
+# --------- Charger les données ---------
 # Points météo
 with open(POINTS_FILE, "r", encoding="utf-8") as f:
     meteo_points = json.load(f)
@@ -34,7 +34,7 @@ total_points = len(meteo_points)
 # Noms communs
 df_noms = pd.read_csv(NOMS_FILE, sep=";", skiprows=1)
 nom_map = dict(zip(df_noms['Nom scientifique'], df_noms['Nom vernaculaire (français)']))
-print(f"✅ {len(nom_map)} noms scientifiques chargés")
+print(f"{len(nom_map)} noms scientifiques chargés")
 
 # Images
 images = {os.path.splitext(f)[0]: os.path.join(ESPECES_FOLDER, f)
@@ -49,7 +49,7 @@ for f in os.listdir(DATASET_FOLDER):
         if points:
             obis_points[species] = points
 
-# --------- 3️⃣ Générateur de points ---------
+# --------- Générateur de points ---------
 def generate_points():
     print("Génération des points finaux avec enrichissement OBIS...")
     for i, p in enumerate(meteo_points, start=1):
@@ -79,7 +79,7 @@ def generate_points():
         if i % 1000 == 0 or i == total_points:
             print_progress(i, total_points, prefix="Traitement des points")
 
-# --------- 4️⃣ Écriture du JSON ---------
+# --------- Écriture du JSON ---------
 with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     print("\nÉcriture du fichier JSON final...")
     points_iter = generate_points()
@@ -92,4 +92,4 @@ with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         first_point = False
     f.write("\n]")
 
-print(f"\n✅ JSON final généré dans {OUTPUT_FILE}")
+print(f"\n JSON final généré dans {OUTPUT_FILE}")
