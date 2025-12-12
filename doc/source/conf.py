@@ -43,9 +43,9 @@ napoleon_include_special_with_doc = True
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'alabaster'
-html_static_path = ['static']
-html_logo = 'static/logo_final.jpg'  # Votre logo
-html_favicon = 'static/logo_final.jpg'
+html_static_path = ['_static']
+html_logo = '_static/logo_final.jpg'  # Votre logo
+html_favicon = '_static/logo_final.jpg'
 
 # -- Options autodoc --------------------------------------------------------
 autodoc_default_options = {
