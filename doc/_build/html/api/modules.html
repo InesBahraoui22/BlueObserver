@@ -14,6 +14,7 @@
     <script src="../_static/documentation_options.js?v=8d563738"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="../_static/logo_final.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="User guide" href="../usage.html" />
@@ -70,6 +71,28 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="data_generation.import_donnees_obis.main">
 <span class="sig-prename descclassname"><span class="pre">data_generation.import_donnees_obis.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_generation/import_donnees_obis.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data_generation.import_donnees_obis.main" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<p id="module-data_generation.import_donnees_copernicus">PRÉAMBULE
+Comme le type des fichiers téléchargés et les organes qui contrôlent leur téléchargements sont
+différents de ceux d’OBIS, on n’utilise pas les mêmes packages pour faire la récupération.
+Ainsi, comme les satanées données copernicus sont des sortes d’images 3D (lon,lat,temps), je ne peux pas
+directement les traduire en tableaux. En plus il ne me faut pas le monde entier, seulement la
+fenêtre géographique que nous avons pré-définie, donc il faut que :
+1 - J’ouvre l’image
+2 - j’extraie ma zone d’intérêt
+3 - je convertie les dimensions en index temporel</p>
+<p>Donc on utilise plus csv mais panda
+D’ailleurs il fallait aussi encoder les paramètres dans une URL qu’on construisait pour faire les
+requêtes à l’API. C’était parce qu’on récupérait un tableau JSON. Ici c’est un NetCDF (quel plaisir)
+via la toolbox de Copernicus, donc on peut pas faire pareil :)))</p>
+<p>donc tous les autres packages utilisés pour Obis deviennent inutiles puisqu’ils servaient à construire
+l’URL et appeler l’API.</p>
+<p># Finalement, après dispute avec la documentation, on utilse pathlib plutôt que os.path</p>
+<p>Par contre, on utilise ce que conseille la docu du site, parce que chatGPT est complètement inutile.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="data_generation.import_donnees_copernicus.main">
+<span class="sig-prename descclassname"><span class="pre">data_generation.import_donnees_copernicus.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/data_generation/import_donnees_copernicus.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data_generation.import_donnees_copernicus.main" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function" id="module-data_generation.fonctions_import_copernicus">
@@ -209,6 +232,9 @@ Retourne le chemin du CSV créé.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="Main">
         <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/logo_final.png" alt="Logo of BlueObserver"/>
+            </a></p>
 <h1 class="logo"><a href="../index.html">BlueObserver</a></h1>
 
 

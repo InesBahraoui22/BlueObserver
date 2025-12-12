@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>data_generation.import_donnees_copernicus &#8212; BlueObserver 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+const defaultStyle = document.createElement('style');
+defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+`;
+document.head.appendChild(defaultStyle);
+
+const fullscreenStyle = document.createElement('style');
+fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+document.head.appendChild(fullscreenStyle);
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        return brightness < 128;
+    }
+    return false;
+};
+
+const load = async () => {
+    await mermaid.run();
+
+    const all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            if(all_mermaids.length !== mermaids_processed.length) {
+                setTimeout(load, 200);
+                return;
+            } else if(svgs.size() !== mermaids_to_add_zoom) {
+                setTimeout(load, 200);
+                return;
+            } else {
+                svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                        inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                });
+            }
+        }
+    } else if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(load, 200);
+        return;
+    }
+
+    const darkTheme = isDarkTheme();
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    const modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    let previousScrollOffset = [window.scrollX, window.scrollY];
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    const allButtons = [];
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        container.appendChild(fullscreenBtn);
+        allButtons.push(fullscreenBtn);
+    });
+
+    // Update theme classes when theme changes
+    const updateTheme = () => {
+        const dark = isDarkTheme();
+        allButtons.forEach(btn => {
+            if (dark) {
+                btn.classList.add('dark-theme');
+            } else {
+                btn.classList.remove('dark-theme');
+            }
+        });
+        if (dark) {
+            modal.classList.add('dark-theme');
+            modalContent.classList.add('dark-theme');
+            closeBtn.classList.add('dark-theme');
+        } else {
+            modal.classList.remove('dark-theme');
+            modalContent.classList.remove('dark-theme');
+            closeBtn.classList.remove('dark-theme');
+        }
+    };
+
+    // Watch for theme changes
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+    });
+};
+
+window.addEventListener("load", load);
+</script>
+    <link rel="icon" href="../../_static/logo_final.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for data_generation.import_donnees_copernicus</h1><div class="highlight"><pre>
+<span></span><span class="c1">###################################################################################################</span>
+<span class="c1">###################### Importation des fichiers COPERNICUS par codage #############################</span>
+<span class="c1">###################################################################################################</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">PRÉAMBULE</span>
+<span class="sd">Comme le type des fichiers téléchargés et les organes qui contrôlent leur téléchargements sont</span>
+<span class="sd">différents de ceux d&#39;OBIS, on n&#39;utilise pas les mêmes packages pour faire la récupération.</span>
+<span class="sd">Ainsi, comme les satanées données copernicus sont des sortes d&#39;images 3D (lon,lat,temps), je ne peux pas</span>
+<span class="sd">directement les traduire en tableaux. En plus il ne me faut pas le monde entier, seulement la</span>
+<span class="sd">fenêtre géographique que nous avons pré-définie, donc il faut que :</span>
+<span class="sd">1 - J&#39;ouvre l&#39;image</span>
+<span class="sd">2 - j&#39;extraie ma zone d&#39;intérêt</span>
+<span class="sd">3 - je convertie les dimensions en index temporel</span>
+
+<span class="sd">Donc on utilise plus csv mais panda</span>
+<span class="sd">D&#39;ailleurs il fallait aussi encoder les paramètres dans une URL qu&#39;on construisait pour faire les</span>
+<span class="sd">requêtes à l&#39;API. C&#39;était parce qu&#39;on récupérait un tableau JSON. Ici c&#39;est un NetCDF (quel plaisir)</span>
+<span class="sd">via la toolbox de Copernicus, donc on peut pas faire pareil :)))</span>
+
+<span class="sd">donc tous les autres packages utilisés pour Obis deviennent inutiles puisqu&#39;ils servaient à construire</span>
+<span class="sd">l&#39;URL et appeler l&#39;API.</span>
+
+<span class="sd"># Finalement, après dispute avec la documentation, on utilse pathlib plutôt que os.path</span>
+
+<span class="sd">Par contre, on utilise ce que conseille la docu du site, parce que chatGPT est complètement inutile.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># ÉTAPE 1   | Importation des packages nécessaires aux téléchargements</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">xr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copernicusmarine</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span> <span class="c1"># Pour lire et écrire des fichiers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">data_generation.fonctions_import_copernicus</span><span class="w"> </span><span class="kn">import</span> <span class="n">renseigner_annee_fin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">data_generation.fonctions_import_copernicus</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_product_id_temp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">data_generation.fonctions_import_copernicus</span><span class="w"> </span><span class="kn">import</span> <span class="n">recuperer_product_id_vagues</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">data_generation.fonctions_import_copernicus</span><span class="w"> </span><span class="kn">import</span> <span class="n">choisir_dataset_id</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">data_generation.fonctions_import_copernicus</span><span class="w"> </span><span class="kn">import</span> <span class="n">choisir_id_dataset_sachant_par_defaut</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">data_generation.fonctions_import_copernicus</span><span class="w"> </span><span class="kn">import</span> <span class="n">choisir_variable_dans_dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">data_generation.fonctions_import_copernicus</span><span class="w"> </span><span class="kn">import</span> <span class="n">moyennage_mensuelle_donnees_nc</span>
+
+
+<span class="c1">#________________________________________________________________________________________________</span>
+
+
+<span class="c1"># ÉTAPE 2 | Définition des paramètres de filtration</span>
+
+<span class="n">LON_MIN</span><span class="p">,</span> <span class="n">LON_MAX</span> <span class="o">=</span> <span class="o">-</span><span class="mf">25.0</span><span class="p">,</span> <span class="mf">45.0</span> <span class="c1"># Ouest, Est</span>
+<span class="n">LAT_MIN</span><span class="p">,</span> <span class="n">LAT_MAX</span> <span class="o">=</span> <span class="mf">27.0</span><span class="p">,</span> <span class="mf">69.0</span> <span class="c1"># Sud, Nord</span>
+
+<span class="n">polygone</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">25</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">69</span><span class="p">)</span> <span class="c1"># Ouest, Est, Sud, Nord</span>
+
+<span class="n">annee_deb</span> <span class="o">=</span> <span class="mi">2000</span>
+
+<span class="n">annee_fin</span><span class="p">,</span> <span class="n">annees</span> <span class="o">=</span> <span class="n">renseigner_annee_fin</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">annees</span><span class="p">)</span>
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../api/modules.html#data_generation.import_donnees_copernicus.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="c1">#_______________________________________________________________________________________________</span>
+
+
+    <span class="c1"># ÉTAPE 3 | Fabrication des dossiers où seront rangés les fichiers créés</span>
+
+    <span class="n">doss_vagues</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;vagues&quot;</span><span class="p">)</span>
+    <span class="n">doss_vagues</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="c1"># Quand je fais tourner le programme, ça crée le dossier</span>
+                                    <span class="c1"># n&#39;existe pas déjà</span>
+
+    <span class="n">doss_temp</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;temp&quot;</span><span class="p">)</span>
+    <span class="n">doss_temp</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1">#__________________________________________________________________________________________</span>
+
+
+    <span class="c1"># ÉTAPE 4 | On récupère les adresses et les appelations qui nous intéressent</span>
+
+    <span class="c1"># Dico des outils et ressources par défaut</span>
+    <span class="n">MAPPING_DATASETS_PAR_DEFAUT</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;GLOBAL_MULTIYEAR_PHY_ENS_001_031&quot;</span><span class="p">:</span> <span class="s2">&quot;cmems_mod_glo_phy-all_my_0.25deg_P1D-m&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;GLOBAL_MULTIYEAR_WAV_001_032&quot;</span><span class="p">:</span> <span class="s2">&quot;cmems_mod_glo_wav_my_0.2deg_PT3H-i&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="n">MAPPING_VARS_DEFAUT</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;cmems_mod_glo_phy-all_my_0.25deg_P1D-m&quot;</span><span class="p">:</span> <span class="s2">&quot;thetao_cglo&quot;</span><span class="p">,</span>  <span class="c1"># adapte si besoin</span>
+        <span class="s2">&quot;cmems_mod_glo_wav_my_0.2deg_PT3H-i&quot;</span><span class="p">:</span> <span class="s2">&quot;VHM0&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1">#       VAGUES :</span>
+    <span class="n">produit_id_vagues</span> <span class="o">=</span> <span class="n">recuperer_product_id_vagues</span><span class="p">()</span>
+    <span class="n">catalogue_vagues</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">produit_id_vagues</span><span class="p">)</span>
+
+    <span class="c1">#       TEMPÉRATURE :</span>
+    <span class="n">produit_id_temp</span> <span class="o">=</span> <span class="n">recuperer_product_id_temp</span><span class="p">()</span>
+    <span class="n">catalogue_temp</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">product_id</span> <span class="o">=</span> <span class="n">produit_id_temp</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Produit choisi :&quot;</span><span class="p">,</span> <span class="n">produit_id_temp</span><span class="p">)</span>
+
+
+    <span class="n">donnees_temp</span> <span class="o">=</span> <span class="n">choisir_id_dataset_sachant_par_defaut</span><span class="p">(</span>
+        <span class="n">catalogue</span> <span class="o">=</span> <span class="n">catalogue_temp</span><span class="p">,</span>
+        <span class="n">product_id</span> <span class="o">=</span> <span class="n">produit_id_temp</span><span class="p">,</span>
+        <span class="n">mapping_defaut</span> <span class="o">=</span> <span class="n">MAPPING_DATASETS_PAR_DEFAUT</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Le dataset utilisé pour obtenir des données sur la température de la mer est &#39;</span><span class="si">{</span><span class="n">donnees_temp</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="n">donnees_vagues</span> <span class="o">=</span> <span class="n">choisir_id_dataset_sachant_par_defaut</span><span class="p">(</span>
+        <span class="n">catalogue</span> <span class="o">=</span> <span class="n">catalogue_vagues</span><span class="p">,</span>
+        <span class="n">product_id</span> <span class="o">=</span> <span class="n">produit_id_vagues</span><span class="p">,</span>
+        <span class="n">mapping_defaut</span> <span class="o">=</span> <span class="n">MAPPING_DATASETS_PAR_DEFAUT</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Le dataset utilisé pour obtenir des données sur les vagues est &#39;</span><span class="si">{</span><span class="n">donnees_vagues</span><span class="si">}</span><span class="s2">&#39;.&quot;</span><span class="p">)</span>
+
+    <span class="n">variable_temp</span><span class="p">,</span> <span class="n">unite_temp</span> <span class="o">=</span> <span class="n">choisir_variable_dans_dataset</span><span class="p">(</span>
+        <span class="n">catalogue</span> <span class="o">=</span> <span class="n">catalogue_temp</span><span class="p">,</span>
+        <span class="n">dataset_id</span> <span class="o">=</span> <span class="n">donnees_temp</span><span class="p">,</span>
+        <span class="n">type_variable</span> <span class="o">=</span> <span class="s2">&quot;temp&quot;</span><span class="p">,</span>
+        <span class="n">mapping_vars_par_defaut</span> <span class="o">=</span> <span class="n">MAPPING_VARS_DEFAUT</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;La variable utilisée pour connaître la température est &#39;</span><span class="si">{</span><span class="n">variable_temp</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> Elle est exprimée en </span><span class="si">{</span><span class="n">unite_temp</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+
+    <span class="n">variable_vagues</span><span class="p">,</span> <span class="n">unite_vagues</span> <span class="o">=</span> <span class="n">choisir_variable_dans_dataset</span><span class="p">(</span>
+        <span class="n">catalogue</span> <span class="o">=</span> <span class="n">catalogue_vagues</span><span class="p">,</span>
+        <span class="n">dataset_id</span> <span class="o">=</span> <span class="n">donnees_vagues</span><span class="p">,</span>
+        <span class="n">type_variable</span> <span class="o">=</span> <span class="s2">&quot;vagues&quot;</span><span class="p">,</span>
+        <span class="n">mapping_vars_par_defaut</span> <span class="o">=</span> <span class="n">MAPPING_VARS_DEFAUT</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;La variable utilisée pour connaître la hauteur des vagues&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> est &#39;</span><span class="si">{</span><span class="n">variable_vagues</span><span class="si">}</span><span class="s2">&#39;.Elle est exprimée en </span><span class="si">{</span><span class="n">unite_vagues</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+
+    <span class="c1">#__________________________________________________________________________________________</span>
+
+
+    <span class="c1"># ÉTAPE 5 | BOUCLE</span>
+
+    <span class="k">for</span> <span class="n">an</span> <span class="ow">in</span> <span class="n">annees</span> <span class="p">:</span>
+
+        <span class="n">deb</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">an</span><span class="si">}</span><span class="s2">-01-01T00:00:00&quot;</span> <span class="c1"># f-string = f juste devant les guillements et entre {} </span>
+                                    <span class="c1"># c&#39;est du Python </span>
+        <span class="n">fin</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">an</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">-01-01T00:00:00&quot;</span>
+
+        <span class="c1"># LA TEMPÉRATURE </span>
+        <span class="n">fichier_temp</span> <span class="o">=</span> <span class="n">doss_temp</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;temp_</span><span class="si">{</span><span class="n">an</span><span class="si">}</span><span class="s2">.nc&quot;</span> <span class="c1"># On crée le fichier vide et on le place dans</span>
+                                                <span class="c1"># sa destination. (Le format n&#39;est pas encore </span>
+                                                <span class="c1"># celui que je veux.)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Température : téléchargement vers </span><span class="si">{</span><span class="n">fichier_temp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Variable choisie : </span><span class="si">{</span><span class="n">variable_temp</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">unite_temp</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fichier_temp</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="p">:</span>
+            <span class="n">produit_temp</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">dataset_id</span> <span class="o">=</span> <span class="n">donnees_temp</span><span class="p">,</span>
+                                    <span class="n">variables</span> <span class="o">=</span> <span class="p">[</span><span class="n">variable_temp</span><span class="p">],</span>
+                                    <span class="n">minimum_latitude</span> <span class="o">=</span> <span class="n">LAT_MIN</span><span class="p">,</span>
+                                    <span class="n">maximum_latitude</span> <span class="o">=</span> <span class="n">LAT_MAX</span><span class="p">,</span>
+                                    <span class="n">minimum_longitude</span> <span class="o">=</span> <span class="n">LON_MIN</span><span class="p">,</span>
+                                    <span class="n">maximum_longitude</span> <span class="o">=</span> <span class="n">LON_MAX</span><span class="p">,</span>
+                                    <span class="n">minimum_depth</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+                                    <span class="n">maximum_depth</span> <span class="o">=</span> <span class="mf">25.0</span><span class="p">,</span> <span class="c1"># ça sert à rien de prendre très profond,</span>
+                                                        <span class="c1"># on va garder une profondeur de baignade</span>
+                                                        <span class="c1"># cohérente.</span>
+                                    <span class="n">start_datetime</span> <span class="o">=</span> <span class="n">deb</span><span class="p">,</span>
+                                    <span class="n">end_datetime</span> <span class="o">=</span> <span class="n">fin</span><span class="p">,</span>
+                                    <span class="n">output_directory</span> <span class="o">=</span> <span class="n">doss_temp</span><span class="p">,</span>
+                                    <span class="n">output_filename</span> <span class="o">=</span> <span class="n">fichier_temp</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Téléchargement du fichier </span><span class="si">{</span><span class="n">an</span><span class="si">}</span><span class="s2"> (réponse : </span><span class="si">{</span><span class="n">produit_temp</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="k">else</span> <span class="p">:</span> 
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fichier déjà présent, skip : </span><span class="si">{</span><span class="n">fichier_temp</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+        <span class="c1"># LES  VAGUES</span>
+        <span class="n">fichier_vagues</span> <span class="o">=</span> <span class="n">doss_vagues</span> <span class="o">/</span><span class="sa">f</span><span class="s2">&quot;vagues_</span><span class="si">{</span><span class="n">an</span><span class="si">}</span><span class="s2">.nc&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Téléchargement des données de l&#39;an </span><span class="si">{</span><span class="n">an</span><span class="si">}</span><span class="s2"> des vagues vers </span><span class="si">{</span><span class="n">fichier_vagues</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">fichier_vagues</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">produit_vagues</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">subset</span><span class="p">(</span><span class="n">dataset_id</span> <span class="o">=</span> <span class="n">donnees_vagues</span><span class="p">,</span>
+                                    <span class="n">variables</span> <span class="o">=</span> <span class="p">[</span><span class="n">variable_vagues</span><span class="p">],</span>
+                                    <span class="n">minimum_latitude</span> <span class="o">=</span> <span class="n">LAT_MIN</span><span class="p">,</span>
+                                    <span class="n">maximum_latitude</span> <span class="o">=</span> <span class="n">LAT_MAX</span><span class="p">,</span>
+                                    <span class="n">minimum_longitude</span> <span class="o">=</span> <span class="n">LON_MIN</span><span class="p">,</span>
+                                    <span class="n">maximum_longitude</span> <span class="o">=</span> <span class="n">LON_MAX</span><span class="p">,</span>
+                                    <span class="n">start_datetime</span> <span class="o">=</span> <span class="n">deb</span><span class="p">,</span>
+                                    <span class="n">end_datetime</span> <span class="o">=</span> <span class="n">fin</span><span class="p">,</span>
+                                    <span class="n">output_directory</span> <span class="o">=</span> <span class="n">doss_vagues</span><span class="p">,</span>
+                                    <span class="n">output_filename</span> <span class="o">=</span> <span class="n">fichier_vagues</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                    <span class="p">)</span>
+                                
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Téléchargement du fichier </span><span class="si">{</span><span class="n">an</span><span class="si">}</span><span class="s2"> (réponse : </span><span class="si">{</span><span class="n">produit_vagues</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="k">else</span> <span class="p">:</span> 
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fichier déjà présent, skip : </span><span class="si">{</span><span class="n">fichier_vagues</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+    <span class="c1">#__________________________________________________________________________________________</span>
+
+
+    <span class="c1"># ÉTAPE 6 | MOYENNAGE MENSUEL + MÉNAGE DES FICHIERS</span>
+
+    <span class="c1"># Dossier où tu veux stocker les fichiers finaux .csv</span>
+    <span class="n">conditions_marines</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data/conditions_marines&quot;</span><span class="p">)</span>
+
+    <span class="n">temp_final_csv</span> <span class="o">=</span> <span class="n">moyennage_mensuelle_donnees_nc</span><span class="p">(</span>
+        <span class="n">dossier_nc</span> <span class="o">=</span> <span class="n">doss_temp</span><span class="p">,</span>
+        <span class="n">variable_interet</span> <span class="o">=</span> <span class="n">variable_temp</span><span class="p">,</span>   <span class="c1"># par défaut &#39;thetao_cglo&#39;</span>
+        <span class="n">dossier_sortie</span> <span class="o">=</span> <span class="n">conditions_marines</span>
+    <span class="p">)</span>
+
+    <span class="n">vagues_final_csv</span> <span class="o">=</span> <span class="n">moyennage_mensuelle_donnees_nc</span><span class="p">(</span>
+        <span class="n">dossier_nc</span> <span class="o">=</span> <span class="n">doss_vagues</span><span class="p">,</span>
+        <span class="n">variable_interet</span> <span class="o">=</span> <span class="n">variable_vagues</span><span class="p">,</span>  <span class="c1"># par défaut &#39;VHM0&#39;</span>
+        <span class="n">dossier_sortie</span> <span class="o">=</span> <span class="n">conditions_marines</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Suppression des .nc puis des dossiers temp/ et vagues/</span>
+    <span class="k">for</span> <span class="n">dossier</span> <span class="ow">in</span> <span class="p">[</span><span class="n">doss_temp</span><span class="p">,</span> <span class="n">doss_vagues</span><span class="p">]</span> <span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Suppression des fichiers .nc dans </span><span class="si">{</span><span class="n">dossier</span><span class="si">}</span><span class="s2"> ...&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">fichier</span> <span class="ow">in</span> <span class="n">dossier</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.nc&quot;</span><span class="p">)</span> <span class="p">:</span>
+            <span class="n">fichier</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+
+        <span class="k">try</span> <span class="p">:</span>
+            <span class="n">dossier</span><span class="o">.</span><span class="n">rmdir</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dossier supprimé : </span><span class="si">{</span><span class="n">dossier</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span> <span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Le dossier </span><span class="si">{</span><span class="n">dossier</span><span class="si">}</span><span class="s2"> n&#39;est pas vide, il n&#39;a pas été supprimé.&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;La pipeline visant à récupérer et moyenner les données issues de Copernicus est à présent &quot;</span>
+        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">terminé. Les fichiers finaux sont dans :&quot;</span><span class="p">,</span> <span class="n">conditions_marines</span><span class="p">)</span>
+
+    <span class="o">...</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/logo_final.png" alt="Logo of BlueObserver"/>
+            </a></p>
+<h1 class="logo"><a href="../../index.html">BlueObserver</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Table of Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../introduction.html">Introduction to BlueObserver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hello.html">Hello World</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">Référence API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">User guide</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Ines et Chloé.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

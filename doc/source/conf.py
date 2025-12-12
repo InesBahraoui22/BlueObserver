@@ -44,8 +44,8 @@ napoleon_include_special_with_doc = True
 
 html_theme = 'alabaster'
 html_static_path = ['_static']
-html_logo = '_static/logo_final.jpg'  # Votre logo
-html_favicon = '_static/logo_final.jpg'
+html_logo = '_static/logo_final.png'  # Votre logo
+html_favicon = '_static/logo_final.png'
 
 # -- Options autodoc --------------------------------------------------------
 autodoc_default_options = {
