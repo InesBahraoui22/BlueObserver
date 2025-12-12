@@ -70,7 +70,7 @@ BlueObserver/
 | 2 - 3 | Class 3 | 🔴 | Heavy sea - Difficult conditions |
 | > 3 | Class 4 | ⚫ | Very heavy sea - Dangerous conditions |
 
-## 👤 Authors
+## Authors
 
 **Ines Bahraoui** 
 **Chloé Monmont** 
