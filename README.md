@@ -16,7 +16,6 @@ BlueObserver is an interactive web application that visualizes marine species ob
 - 🐋 **Species filtering** by region, month, and species type
 - 📊 **Environmental data** integration (Copernicus Marine Service)
 - 🔍 **Detailed observation cards** with wave height classification
-- 📱 **Responsive design** for all devices
 
 
 ```mermaid
@@ -141,14 +140,6 @@ python app.py
 ```
 📍 **Ouvrir** : [http://localhost:5000](http://localhost:5000)
 
-### 4. Tester (optionnel)
-```bash
-# Vérifier que tout marche
-python tests/test_jointure.py --quick
-
-# Lancer tous les tests
-python -m pytest tests/ -v
-```
 
 ## 🔧 Développement
 
