@@ -139,7 +139,7 @@ function displayDetails(data) {
         <!-- Image (si disponible) -->
         ${data.image && data.image !== 'default.jpg' ? `
         <div class="mt-3">
-            <img src="/static/photos/${data.image.split('/').pop()}" 
+            <img src="/static/photos/${data.image}" 
                  alt="${data.common_name || 'Observation'}"
                  class="w-full h-32 object-cover rounded-lg shadow">
         </div>
