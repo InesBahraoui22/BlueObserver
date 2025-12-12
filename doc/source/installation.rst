@@ -1,14 +1,14 @@
 Installation
-============
+==============
 
 Prerequisites
----------
+--------------
 
 * Python 3.8 or up
 * pip (Python packages gestionary)
 
 Dependencies installation
-----------------------------
+------------------------------
 
 1. Cloning of the repository:
 
@@ -38,7 +38,7 @@ Dependencies installation
       pip install -r requirements.txt
 
 APIs configuration
----------------------
+------------------------
 
 * **Copernicus Marine** : Create a free account on `marine.copernicus.eu`
 * **Open-Meteo** : No API key needed to use the archive API
@@ -54,7 +54,7 @@ Test that everyting is working smoothly:
    python -c "import xarray; print('Xarray OK')"
 
 To produce the documentation
------------------------------
+---------------------------------------
 
 .. code-block:: bash
 

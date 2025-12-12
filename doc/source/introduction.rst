@@ -11,7 +11,7 @@ BlueObserver priority is to integrated:
 3. **Temporal meteorological data** from Open-Meteo
 
 General Architecture
----------------------
+------------------------
 
 The project follows a modular architecture:
 
