@@ -2,6 +2,11 @@
 ### stocker dans le dossier "conditions_limitantes_sortie/conditions_marines"
 
 from datetime import datetime
+import shutil
+import xarray as xr
+import pandas as pd
+from pathlib import Path
+
 # =================================================================================================================
 # Fonction d'assignation de l'année la plus récente pour la récupération des données
 # =================================================================================================================
@@ -86,8 +91,8 @@ def choisir_dataset_id(
     dataset_ids = [d.dataset_id for d in datasets]
 
     print("Liste des datasets pour ce produit ; choisissez-en un :")
-    for ds in dataset_ids:
-        print(" -", ds)
+    for fichier_nc in dataset_ids:
+        print(" -", fichier_nc)
 
     dataset_choisi = input(
         f"Si aucun choix n'est fait (vous appuyez sur Entrée), le choix se fera pour vous :").strip()
@@ -98,7 +103,7 @@ def choisir_dataset_id(
                      "-i"]
         
         for suffixe in priorites :
-            candidats = [ds for ds in dataset_ids if ds.endswith(suffixe)]
+            candidats = [fichier_nc for fichier_nc in dataset_ids if fichier_nc.endswith(suffixe)]
             if candidats :
                 dataset_choisi = candidats[0]
                 print(
@@ -287,3 +292,57 @@ def choisir_variable_dans_dataset(
         
     )
 
+# ==============================================================================================================
+# Fonction de moyennage des fichiers .nc récupéré
+# ==============================================================================================================
+
+
+def moyennage_mensuelle_donnees_nc(dossier_nc : Path,
+                                   variable_interet : str,
+                                   dossier_sortie: Path) -> Path :
+    """
+    Prend tous les .nc d'un dossier, calcule la moyenne mensuelle
+    toutes années confondues par point GPS, et écrit un CSV.
+    Retourne le chemin du CSV créé.
+    """
+
+    # Ouvrir tous les fichiers NetCDF d'un coup, un par un c'est trop long et ça fait
+    # planter le programme
+    fichier_nc = xr.open_mfdataset(
+        os.path.join(dossier_nc, "*.nc"),
+        chunks = {'time': 100},
+        combine = 'by_coords'
+    )
+
+    id_var_interet = fichier_nc[variable_interet]
+
+    # Moyennes mensuelles (Conversion des données journalières/horaires en données mensuelles)
+    id_var_mensuelle = id_var_interet.resample(time = '1MS').mean()
+
+    # Moyennes toutes années confondues PAR MOIS et PAR POINT GPS
+    moy_mensuelle = id_var_mensuelle.groupby("time.month").mean("time")
+
+    # Conversion en tableau (avec latitude, longitude, mois)
+    table_moy_mensuelle = moy_mensuelle.to_dataframe().reset_index()
+
+    table_moy_mensuelle["month_name"] = pd.to_datetime(table_moy_mensuelle["month"], format="%m").dt.month_name()
+
+    colonnes = ["month",
+                "month_name"]
+    if "latitude" in table_moy_mensuelle.columns :
+        colonnes.extend(["latitude",
+                         "longitude"])
+    colonnes.append(variable_interet)
+    table_moy_mensuelle = table_moy_mensuelle[colonnes]
+
+    # Sauvegarde en CSV dans le dossier de sortie
+    dossier_sortie.mkdir(parents = True,
+                         exist_ok = True)
+    fichier_sortie = dossier_sortie / f"moyennes_mensuelles_par_GPS_{variable_interet}.csv"
+    table_moy_mensuelle.to_csv(fichier_sortie,
+                               index = False)
+
+    print(f"Fichier créé : {fichier_sortie}")
+
+    fichier_nc.close()
+    return fichier_sortie
