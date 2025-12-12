@@ -1,13 +1,20 @@
 import os
+from pathlib import Path
 import json
 import pandas as pd
 
 # --------- CONFIGURATION DES PATHS ---------
-ESPECES_FOLDER = "/Users/ines/Desktop/M1/OceanAware/especes"
-DATASET_FOLDER = "/Users/ines/Desktop/M1/OceanAware/dataset"
-POINTS_FILE = "/Users/ines/Desktop/M1/OceanAware/meteo/_site/data/points.json"
-NOMS_FILE = "/Users/ines/Desktop/M1/OceanAware/especes/nomsespecefin.csv"
-OUTPUT_FILE = "/Users/ines/Desktop/M1/OceanAware/finalpoints/final_points.json"
+SCRIPT_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = SCRIPT_DIR.parent
+
+DATA_FOLDER = PROJECT_ROOT / "data"
+ESPECES_FOLDER = PROJECT_ROOT / "static" / "photos"
+DATASET_FOLDER = DATA_FOLDER / "obis_observation_especes"
+POINTS_FILE = DATA_FOLDER / "points.json"
+NOMS_FILE = DATA_FOLDER / "nomsespecefin.csv"
+OUTPUT_FILE = DATA_FOLDER / "final_points.json"
+
+OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
 
 # --------- FONCTIONS UTILITAIRES ---------
 def print_progress(current, total, prefix="Progress"):
@@ -16,13 +23,14 @@ def print_progress(current, total, prefix="Progress"):
 
 def load_obis_points(tsv_path):
     """Charge les points OBIS d'un fichier TSV et retourne une liste de dictionnaires."""
-    species_name = os.path.splitext(os.path.basename(tsv_path))[0]
+    species_name = tsv_path.stem
+    
     try:
-        df = pd.read_parquet(tsv_path.replace(".tsv", ".parquet"), columns=['decimalLatitude','decimalLongitude'])
+        parquet_path = tsv_path.with_suffix('.parquet')
+        df = pd.read_parquet(parquet_path, columns=['decimalLatitude','decimalLongitude'])
         df = df.dropna(subset=['decimalLatitude','decimalLongitude'])
         return species_name, df.to_dict(orient='records')
-    except Exception as e:
-        print(f"Impossible de charger {tsv_path}: {e}")
+    except FileNotFoundError:
         return species_name, []
 
 # --------- Charger les données ---------
@@ -37,17 +45,15 @@ nom_map = dict(zip(df_noms['Nom scientifique'], df_noms['Nom vernaculaire (fran�
 print(f"{len(nom_map)} noms scientifiques chargés")
 
 # Images
-images = {os.path.splitext(f)[0]: os.path.join(ESPECES_FOLDER, f)
-          for f in os.listdir(ESPECES_FOLDER) if f.lower().endswith(".jpg")}
+images = {p.stem: p.name
+          for p in ESPECES_FOLDER.glob("*.jpg")}
 
 # Points OBIS
 obis_points = {}
-for f in os.listdir(DATASET_FOLDER):
-    if f.lower().endswith(".tsv"):
-        tsv_path = os.path.join(DATASET_FOLDER, f)
-        species, points = load_obis_points(tsv_path)
-        if points:
-            obis_points[species] = points
+for tsv_file in DATASET_FOLDER.glob("*.tsv"):
+    species, points = load_obis_points(tsv_file)
+    if points:
+        obis_points[species] = points
 
 # --------- Générateur de points ---------
 def generate_points():
