@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import pandas as pd
 import json
 from glob import glob
@@ -10,11 +11,16 @@ import time
 # -----------------------------
 # Chemins relatifs
 # -----------------------------
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-OBIS_DIR = "/Users/ines/Desktop/M1/OceanAware/dataset"
-OUTPUT_JSON = "/Users/ines/Desktop/M1/OceanAware/meteo/_site/data/points.json"
 
-os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
+OBIS_DIR = "../data/obis_observation_especes/"
+OUTPUT_DIR = "../data/"
+OUTPUT_JSON = "points.json"
+
+SCRIPT_DIR = Path(__file__).parent
+DATA_DIR = SCRIPT_DIR / OUTPUT_DIR
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+OUTPUT_PATH = DATA_DIR / OUTPUT_JSON
+
 
 # -----------------------------
 # Open-Meteo config
@@ -73,8 +79,8 @@ def get_weather(lat, lon, start_date, end_date):
 # -----------------------------
 # Charger points déjà traités
 # -----------------------------
-if os.path.exists(OUTPUT_JSON):
-    with open(OUTPUT_JSON, "r", encoding="utf-8") as f:
+if os.path.exists(OUTPUT_PATH):
+    with open(OUTPUT_PATH, "r", encoding="utf-8") as f:
         updated_points = json.load(f)
 else:
     updated_points = []
@@ -105,7 +111,7 @@ for tsv_file in glob(f"{OBIS_DIR}/*.tsv"):
 
     # Gestion des dates
     if "eventDate" in df.columns:
-        df["eventDate_parsed"] = pd.to_datetime(df["eventDate"], errors="coerce", utc=True)
+        df["eventDate_parsed"] = pd.to_datetime(df["eventDate"], format="ISO8601", errors="coerce", utc=True)
         df["month"] = df["eventDate_parsed"].dt.month_name().str.lower().fillna("january")
     else:
         df["month"] = "january"
@@ -135,19 +141,16 @@ for i, point in enumerate(all_points):
     updated_points.append(point)
     processed_coords.add(key)
 
-    # Pause pour limiter le nombre de requêtes/min
-    time.sleep(1)
-
     # Sauvegarde intermédiaire toutes les 100 requêtes
     if (i + 1) % 100 == 0:
-        with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
+        with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
             json.dump(updated_points, f, indent=4, ensure_ascii=False)
         print(f"✔ Sauvegarde intermédiaire après {i+1} points")
 
 # -----------------------------
 # Sauvegarde finale
 # -----------------------------
-with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
+with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
     json.dump(updated_points, f, indent=4, ensure_ascii=False)
 
 print(f"🎉 points.json créé avec {len(updated_points)} points enrichis avec météo")

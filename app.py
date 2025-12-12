@@ -51,7 +51,7 @@ def observations_data():
     print(f"Observations JSON chargées: {len(observations)}")
     
     # --- 2. Charger le CSV des vagues ---
-    csv_path = os.path.join(directory, "moyennes_mensuelles_par_GPS_VHM0.csv")
+    csv_path = os.path.join(directory, "conditions_marines", "moyennes_mensuelles_par_GPS_VHM0.csv")
     
     waves = {}
     
