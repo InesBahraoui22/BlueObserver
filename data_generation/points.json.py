@@ -146,6 +146,7 @@ for i, point in enumerate(all_points):
         with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
             json.dump(updated_points, f, indent=4, ensure_ascii=False)
         print(f"✔ Sauvegarde intermédiaire après {i+1} points")
+    time.sleep(0.3) # pour respecter les limites de l'API
 
 # -----------------------------
 # Sauvegarde finale
