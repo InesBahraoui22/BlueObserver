@@ -170,7 +170,7 @@ for an in annees :
     # LES  VAGUES
     fichier_vagues = doss_vagues /f"vagues_{an}.nc"
 
-    print(f"Téléchargement des données de l'an {2000} des vagues vers {fichier_vagues}")
+    print(f"Téléchargement des données de l'an {an} des vagues vers {fichier_vagues}")
     
     produit_vagues = cm.subset(dataset_id = donnees_vagues,
                              variables = [variable_vagues],
