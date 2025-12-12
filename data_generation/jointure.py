@@ -16,6 +16,8 @@ OUTPUT_FILE = DATA_FOLDER / "final_points.json"
 
 OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
 
+IMAGE_EXTENSIONS = [".jpg", ".png", ".webp"]
+
 # --------- FONCTIONS UTILITAIRES ---------
 def print_progress(current, total, prefix="Progress"):
     percent = (current / total) * 100
@@ -45,8 +47,11 @@ nom_map = dict(zip(df_noms['Nom scientifique'], df_noms['Nom vernaculaire (fran�
 print(f"{len(nom_map)} noms scientifiques chargés")
 
 # Images
-images = {p.stem: p.name
-          for p in ESPECES_FOLDER.glob("*.jpg")}
+images = {}
+
+for extension in IMAGE_EXTENSIONS:
+    for p in ESPECES_FOLDER.glob(f"*{extension}"):
+        images[p.stem] = p.name
 
 # Points OBIS
 obis_points = {}
@@ -84,6 +89,7 @@ def generate_points():
         # Progression
         if i % 1000 == 0 or i == total_points:
             print_progress(i, total_points, prefix="Traitement des points")
+
 
 # --------- Écriture du JSON ---------
 with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
