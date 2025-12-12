@@ -52,3 +52,4 @@ See main README for additional details on the executing of the pipeline.
    installation
    hello
    api/modules
+   usage
