@@ -155,13 +155,13 @@ python points.json.py
 # Fusing all the previously-cited data 
 python finalpoints/jointure.py
 
-# BVerifying if the file has been generated
+# Verifying if the file has been generated
 ls -lh ../data/final_points.json
 ```
 
 ### Relaunching the app
 ```bash
-# Sstill with the environment activated
+# Still with the environment activated
 python app.py
 # Click Ctrl+C to stop
 ```
