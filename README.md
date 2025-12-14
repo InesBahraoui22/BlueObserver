@@ -12,10 +12,10 @@
 BlueObserver is an interactive web application that visualizes marine species observations combined with oceanographic data (temperature, waves, wind, rain). The platform allows researchers and marine enthusiasts to explore species distribution patterns across different regions and seasons.
 
 **Key Features:**
-- 🗺️ **Interactive map** with D3.js visualization
-- 🐋 **Species filtering** by region, month, and species type
-- 📊 **Environmental data** integration (Copernicus Marine Service)
-- 🔍 **Detailed observation cards** with wave height classification
+-  **Interactive map** with D3.js visualization
+-  **Species filtering** by region, month, and species type
+-  **Environmental data** integration (Copernicus Marine Service)
+-  **Detailed observation cards** with wave height classification
 
 
 ```mermaid
@@ -108,13 +108,13 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ### Installation
 
 
-### 1. Cloner et se déplacer
+### 1. Cloning and moving
 ```bash
 git clone https://github.com/InesBahraoui22/BlueObserver.git
 cd BlueObserver
 ```
 
-### 2. Installer les dépendances
+### 2. Dependencies installing
 ```bash
 # Créer l'environnement
 python -m venv venv
@@ -129,39 +129,42 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Lancer l'application
+### 3. Launching the app
 ```bash
 python app.py
 ```
- **Ouvrir** : [http://localhost:5000](http://localhost:5000)
+ **Open** : [http://localhost:5000](http://localhost:5000)
 
 
-## Développement
+## Development
 
-### Générer les données
+### Data generation
 ```bash
-# Se placer dans le dossier de génération de données 
+# Moving into the data generating directory 
 cd data_generation
 
-# Créer les données obis
+# Creating the obis data
 python import_donnes_obis.py
 
-# Créer les données copernicus
+# Creating the copernicus data
 python import_donnes_copernicus.py
 
-# Créer les points météorologiques
+# Creating the meteorological data
 python points.json.py
 
-# Fusionner les données précedemment créées 
+# Fusing all the previously-cited data 
 python finalpoints/jointure.py
 
-# Vérifier le fichier généré
+# BVerifying if the file has been generated
 ls -lh ../data/final_points.json
 ```
 
-### Redémarrer l'application
+### Relaunching the app
 ```bash
-# Toujours avec l'environnement activé
+# Sstill with the environment activated
 python app.py
-# Appuyer sur Ctrl+C pour arrêter
+# Click Ctrl+C to stop
 ```
+### Access to the website
+
+ **Open** : https://blueobserver.onrender.com/ 
